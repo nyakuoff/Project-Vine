@@ -7,14 +7,14 @@ Goal: launch the official Roblox client on Linux, sign in, join experiences, ren
 | Milestone | Status |
 |---|---|
 | A. Feasibility established | **Done.** Windows route blocked, macOS route impractical, Android client via Sober works |
-| B. Reproducible startup | **Done** for the Windows client. It reaches Hyperion init, then exits deterministically (`0xC00000BB`) |
+| B. Reproducible startup | **Done** for the Windows client. It reaches Hyperion init, which shows "Wine is not supported." and exits. Identical on all 7 Wine/Proton builds, including umu-run with the EAC runtime |
 | C. Functional app init | Windows/macOS: not achievable (see below). Sober: yes |
 | D. Authenticated session | Sober: evidenced in the user's 2026-10-08 logs |
 | E. Playable experience | Sober: join, server connection and a 16-minute session are evidenced in the user's logs. A fresh observed session is TODO #1 |
 | F. Usable Linux implementation | Sober is that implementation. Vine adds diagnostics only |
 
 **Bottom line:**
-- **Windows Player under Wine/Proton:** stopped by Roblox's Hyperion anti-tamper on every Wine build tested, before any graphics code runs. Not something configuration can fix, and we do not bypass it.
+- **Windows Player under Wine/Proton:** Roblox's Hyperion anti-tamper explicitly detects Wine ("Wine is not supported.") and exits, before any graphics code runs. Proton's anti-cheat support (EAC/BattlEye runtimes) doesn't apply because Roblox uses neither. No configuration fixes this, and we do not bypass it.
 - **macOS client:** would need a large part of Apple's frameworks reimplemented. There is no runtime close to that today.
 - **What works:** the official Android client running natively through [Sober](https://sober.vinegarhq.org/).
 

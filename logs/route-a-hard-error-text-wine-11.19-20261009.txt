@@ -1,0 +1,6 @@
+HARDERROR status=0x50000018 count=4 mask=0x3
+HARDERROR param[0] string: 'Wine is not supported.'
+HARDERROR param[1] string: 'Version Error'
+HARDERROR param[2] = 0x10
+HARDERROR param[3] = 0x0
+[Inferior 1 (process 67874) exited with code 0273]

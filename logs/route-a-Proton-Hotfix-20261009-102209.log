@@ -1,0 +1,1918 @@
+# wine: wine-11.0  kernel: 7.2.9-1-cachyos  date: 2026-10-09T10:22:09+00:00
+# exe sha256: 11a30ada177d15a9
+ntsync: up and running.
+0024:trace:process:NtCreateUserProcess L"\\??\\C:\\windows\\system32\\wineboot.exe" image L"C:\\windows\\system32\\wineboot.exe" cmdline L"\"C:\\windows\\system32\\wineboot.exe\" --init" parent (nil) machine 0
+002c:trace:seh:install_bpf Installing seccomp filters.
+002c:trace:seh:check_bpf_jit_enable enabled 0x31.
+0024:trace:process:NtCreateUserProcess L"\\??\\C:\\windows\\system32\\wineboot.exe" pid 0028 tid 002c handles 0x14/0x18
+002c:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x00000025,0x31fa10,0x00000040,(nil))
+002c:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\wineboot.exe" at 0000000140000000: builtin
+002c:trace:loaddll:build_ntdll_module Loaded L"C:\\windows\\system32\\ntdll.dll" at 00006FFFFFF30000: builtin
+002c:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\kernelbase.dll" at 00006FFFFFBF0000: builtin
+002c:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\kernel32.dll" at 00006FFFFFEB0000: builtin
+002c:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\msvcrt.dll" at 00006FFFFFAE0000: builtin
+002c:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\ucrtbase.dll" at 00006FFFFF9B0000: builtin
+002c:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\sechost.dll" at 00006FFFFFAA0000: builtin
+002c:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\advapi32.dll" at 00006FFFFFBA0000: builtin
+002c:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\cryptbase.dll" at 00006FFFFF990000: builtin
+002c:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\ws2_32.dll" at 00006FFFFF950000: builtin
+002c:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000001a,0x31f548,0x00000008,(nil))
+002c:trace:process:GetEnvironmentVariableW (L"WINEUNIXCP" 000000000031F2E0 85)
+002c:fixme:ntdll:find_reg_tz_info Can't find matching timezone information in the registry for bias 0, std (d/m/y): 22/03/2026, dlt (d/m/y): 15/02/2026
+002c:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x00000007,0x31f9a0,0x00000008,(nil))
+002c:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000001a,0x31ee68,0x00000008,(nil))
+002c:trace:process:CreateProcessInternalW app L"C:\\windows\\system32\\services.exe" cmdline (null), inherit 1, flags 0x8, env 0000000000000000 ((null))
+002c:trace:process:GetEnvironmentVariableW (L"PROTON_ORIG_LAUNCHER_NAME" 0000000000000000 0)
+002c:trace:process:NtCreateUserProcess L"\\??\\C:\\windows\\system32\\services.exe" image L"C:\\windows\\system32\\services.exe" cmdline L"\"C:\\windows\\system32\\services.exe\"" parent (nil) machine 0
+0034:trace:seh:sigsys_handler SIGSYS, rax 0xffff, rip 0x600000000005.
+0034:trace:seh:install_bpf Seccomp filters already installed.
+002c:trace:process:NtCreateUserProcess L"\\??\\C:\\windows\\system32\\services.exe" pid 0030 tid 0034 handles 0x3c/0x40
+002c:trace:process:CreateProcessInternalW started process pid 0030 tid 0034
+0034:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x00000025,0x31fa10,0x00000040,(nil))
+0034:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\services.exe" at 0000000140000000: builtin
+0034:trace:loaddll:build_ntdll_module Loaded L"C:\\windows\\system32\\ntdll.dll" at 00006FFFFFF30000: builtin
+0034:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\kernelbase.dll" at 00006FFFFFBF0000: builtin
+0034:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\kernel32.dll" at 00006FFFFFEB0000: builtin
+0034:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\msvcrt.dll" at 00006FFFFFAE0000: builtin
+0034:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\ucrtbase.dll" at 00006FFFFF9B0000: builtin
+0034:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\sechost.dll" at 00006FFFFFAA0000: builtin
+0034:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\advapi32.dll" at 00006FFFFFBA0000: builtin
+0034:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\cryptbase.dll" at 00006FFFFF990000: builtin
+0034:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\rpcrt4.dll" at 00006FFFFF8B0000: builtin
+0034:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\cfgmgr32.dll" at 00006FFFFF7E0000: builtin
+0034:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\setupapi.dll" at 00006FFFFF820000: builtin
+0034:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\userenv.dll" at 00006FFFFF7C0000: builtin
+0034:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000001a,0x31f548,0x00000008,(nil))
+0034:trace:process:GetEnvironmentVariableW (L"WINEUNIXCP" 000000000031F2E0 85)
+0034:fixme:ntdll:find_reg_tz_info Can't find matching timezone information in the registry for bias 0, std (d/m/y): 22/03/2026, dlt (d/m/y): 15/02/2026
+0034:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x00000007,0x31f9a0,0x00000008,(nil))
+0034:trace:process:ExpandEnvironmentStringsW (L"C:\\windows\\system32\\svchost.exe -k netsvcs" 0000000000000000 0)
+0034:trace:process:ExpandEnvironmentStringsW (L"C:\\windows\\system32\\svchost.exe -k netsvcs" 00000000000362C0 43)
+0034:trace:process:ExpandEnvironmentStringsW (L"C:\\windows\\system32\\svchost.exe -k LocalServiceNetworkRestricted" 0000000000000000 0)
+0034:trace:process:ExpandEnvironmentStringsW (L"C:\\windows\\system32\\svchost.exe -k LocalServiceNetworkRestricted" 000000000003D530 65)
+0034:trace:process:ExpandEnvironmentStringsW (L"C:\\windows\\system32\\svchost.exe -k netsvcs" 0000000000000000 0)
+0034:trace:process:ExpandEnvironmentStringsW (L"C:\\windows\\system32\\svchost.exe -k netsvcs" 0000000000036320 43)
+0034:trace:process:ExpandEnvironmentStringsW (L"C:\\windows\\Microsoft.Net\\Framework\\v3.0\\wpf\\presentationfontcache.exe" 0000000000000000 0)
+0034:trace:process:ExpandEnvironmentStringsW (L"C:\\windows\\Microsoft.Net\\Framework\\v3.0\\wpf\\presentationfontcache.exe" 000000000003D840 70)
+0034:trace:process:ExpandEnvironmentStringsW (L"C:\\windows\\system32\\drivers\\http.sys" 0000000000000000 0)
+0034:trace:process:ExpandEnvironmentStringsW (L"C:\\windows\\system32\\drivers\\http.sys" 0000000000036380 37)
+0034:trace:process:ExpandEnvironmentStringsW (L"C:\\windows\\system32\\svchost.exe -k netsvcs" 0000000000000000 0)
+0034:trace:process:ExpandEnvironmentStringsW (L"C:\\windows\\system32\\svchost.exe -k netsvcs" 00000000000363E0 43)
+0034:trace:process:ExpandEnvironmentStringsW (L"C:\\windows\\system32\\drivers\\mountmgr.sys" 0000000000000000 0)
+0034:trace:process:ExpandEnvironmentStringsW (L"C:\\windows\\system32\\drivers\\mountmgr.sys" 0000000000036440 41)
+0034:trace:process:ExpandEnvironmentStringsW (L"C:\\windows\\system32\\msiexec.exe /V" 0000000000000000 0)
+0034:trace:process:ExpandEnvironmentStringsW (L"C:\\windows\\system32\\msiexec.exe /V" 000000000003DDA0 35)
+0034:trace:process:ExpandEnvironmentStringsW (L"C:\\windows\\system32\\drivers\\ndis.sys" 0000000000000000 0)
+0034:trace:process:ExpandEnvironmentStringsW (L"C:\\windows\\system32\\drivers\\ndis.sys" 00000000000364A0 37)
+0034:trace:process:ExpandEnvironmentStringsW (L"C:\\windows\\system32\\drivers\\nsiproxy.sys" 0000000000000000 0)
+0034:trace:process:ExpandEnvironmentStringsW (L"C:\\windows\\system32\\drivers\\nsiproxy.sys" 0000000000036500 41)
+0034:trace:process:ExpandEnvironmentStringsW (L"C:\\windows\\system32\\plugplay.exe" 0000000000000000 0)
+0034:trace:process:ExpandEnvironmentStringsW (L"C:\\windows\\system32\\plugplay.exe" 000000000003E150 33)
+0034:trace:process:ExpandEnvironmentStringsW (L"C:\\windows\\system32\\rpcss.exe" 0000000000000000 0)
+0034:trace:process:ExpandEnvironmentStringsW (L"C:\\windows\\system32\\rpcss.exe" 000000000003E1A0 30)
+0034:trace:process:ExpandEnvironmentStringsW (L"C:\\windows\\system32\\svchost.exe -k netsvcs" 0000000000000000 0)
+0034:trace:process:ExpandEnvironmentStringsW (L"C:\\windows\\system32\\svchost.exe -k netsvcs" 00000000000365C0 43)
+0034:trace:process:ExpandEnvironmentStringsW (L"C:\\windows\\system32\\svchost.exe -k netsvcs" 0000000000000000 0)
+0034:trace:process:ExpandEnvironmentStringsW (L"C:\\windows\\system32\\svchost.exe -k netsvcs" 0000000000036620 43)
+0034:trace:process:ExpandEnvironmentStringsW (L"C:\\windows\\system32\\spoolsv.exe" 0000000000000000 0)
+0034:trace:process:ExpandEnvironmentStringsW (L"C:\\windows\\system32\\spoolsv.exe" 0000000000801810 32)
+0034:trace:process:ExpandEnvironmentStringsW (L"C:\\windows\\system32\\svchost.exe -k imgsvc" 0000000000000000 0)
+0034:trace:process:ExpandEnvironmentStringsW (L"C:\\windows\\system32\\svchost.exe -k imgsvc" 00000000000366E0 42)
+0034:trace:process:ExpandEnvironmentStringsW (L"C:\\windows\\system32\\termsv.exe" 0000000000000000 0)
+0034:trace:process:ExpandEnvironmentStringsW (L"C:\\windows\\system32\\termsv.exe" 000000000003A760 31)
+0034:trace:process:ExpandEnvironmentStringsW (L"C:\\windows\\system32\\drivers\\winebth.sys" 0000000000000000 0)
+0034:trace:process:ExpandEnvironmentStringsW (L"C:\\windows\\system32\\drivers\\winebth.sys" 0000000000036740 40)
+0034:trace:process:ExpandEnvironmentStringsW (L"C:\\windows\\system32\\drivers\\winebus.sys" 0000000000000000 0)
+0034:trace:process:ExpandEnvironmentStringsW (L"C:\\windows\\system32\\drivers\\winebus.sys" 00000000000367A0 40)
+0034:trace:process:ExpandEnvironmentStringsW (L"C:\\windows\\system32\\drivers\\winehid.sys" 0000000000000000 0)
+0034:trace:process:ExpandEnvironmentStringsW (L"C:\\windows\\system32\\drivers\\winehid.sys" 0000000000036800 40)
+0034:trace:process:ExpandEnvironmentStringsW (L"C:\\windows\\system32\\drivers\\wineusb.sys" 0000000000000000 0)
+0034:trace:process:ExpandEnvironmentStringsW (L"C:\\windows\\system32\\drivers\\wineusb.sys" 0000000000036860 40)
+0034:trace:process:ExpandEnvironmentStringsW (L"C:\\windows\\system32\\winmgmt.exe" 0000000000000000 0)
+0034:trace:process:ExpandEnvironmentStringsW (L"C:\\windows\\system32\\winmgmt.exe" 000000000003A7B0 32)
+0034:trace:process:ExpandEnvironmentStringsW (L"C:\\windows\\system32\\wuauserv.exe" 0000000000000000 0)
+0034:trace:process:ExpandEnvironmentStringsW (L"C:\\windows\\system32\\wuauserv.exe" 000000000003A880 33)
+0034:trace:process:ExpandEnvironmentStringsW (L"C:\\windows\\system32\\drivers\\mountmgr.sys" 0000000000000000 0)
+0034:trace:process:ExpandEnvironmentStringsW (L"C:\\windows\\system32\\drivers\\mountmgr.sys" 00000000000368C0 41)
+0034:trace:process:ExpandEnvironmentStringsW (L"C:\\windows\\system32\\winedevice.exe" 0000000000000000 0)
+0034:trace:process:ExpandEnvironmentStringsW (L"C:\\windows\\system32\\winedevice.exe" 0000000000803BF0 35)
+0034:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000030E690 32767)
+0034:trace:process:GetEnvironmentVariableW (L"SystemDrive" 000000000030E690 32767)
+0034:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000001a,0x30e2f8,0x00000008,(nil))
+0034:trace:process:GetEnvironmentVariableW (L"WINEBOOTSTRAPMODE" 000000000031E7F0 1024)
+0034:trace:process:GetEnvironmentVariableW (L"PROTON_DISABLE_HIDRAW" 000000000031E7F0 1024)
+0034:trace:process:GetEnvironmentVariableW (L"PROTON_ENABLE_HIDRAW" 000000000031E7F0 1024)
+0034:trace:process:GetEnvironmentVariableW (L"FEX_APP_DATA_LOCATION" 000000000031E7F0 1024)
+0034:trace:process:GetEnvironmentVariableW (L"FEX_APP_CONFIG_LOCATION" 000000000031E7F0 1024)
+0034:trace:process:GetEnvironmentVariableW (L"FEX_APP_CONFIG" 000000000031E7F0 1024)
+0034:trace:process:CreateProcessInternalW app (null) cmdline L"C:\\windows\\system32\\winedevice.exe", inherit 0, flags 0x408, env 0000000000868AE0 (L"SystemRoot=C:\\windows")
+0034:trace:process:find_exe_file looking for L"C:\\windows\\system32\\winedevice.exe" in L"C:\\windows\\system32;.;C:\\windows\\system32;C:\\windows\\system;C:\\windows;C:\\Program Files (x86)\\Steam;C:\\windows\\system32;C:\\windows;C:\\windows\\system32\\wbem;C:\\windows\\system32\\WindowsPowershell\\v1.0"
+0034:trace:process:GetEnvironmentVariableW (L"PROTON_ORIG_LAUNCHER_NAME" 0000000000000000 0)
+0034:trace:process:NtCreateUserProcess L"\\??\\C:\\windows\\system32\\winedevice.exe" image L"C:\\windows\\system32\\winedevice.exe" cmdline L"C:\\windows\\system32\\winedevice.exe" parent (nil) machine 0
+0040:trace:seh:sigsys_handler SIGSYS, rax 0xffff, rip 0x600000000005.
+0040:trace:seh:install_bpf Seccomp filters already installed.
+0034:trace:process:NtCreateUserProcess L"\\??\\C:\\windows\\system32\\winedevice.exe" pid 003c tid 0040 handles 0xf4/0xf8
+0034:trace:process:CreateProcessInternalW started process pid 003c tid 0040
+0040:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x00000025,0x31fa10,0x00000040,(nil))
+0040:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\winedevice.exe" at 0000000140000000: builtin
+0040:trace:loaddll:build_ntdll_module Loaded L"C:\\windows\\system32\\ntdll.dll" at 00006FFFFFF30000: builtin
+0040:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\kernelbase.dll" at 00006FFFFFBF0000: builtin
+0040:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\kernel32.dll" at 00006FFFFFEB0000: builtin
+0040:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\msvcrt.dll" at 00006FFFFFAE0000: builtin
+0040:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\ucrtbase.dll" at 00006FFFFF9B0000: builtin
+0040:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\sechost.dll" at 00006FFFFFAA0000: builtin
+0040:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\advapi32.dll" at 00006FFFFFBA0000: builtin
+0040:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\cryptbase.dll" at 00006FFFFF990000: builtin
+0040:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\ntoskrnl.exe" at 00006FFFFF740000: builtin
+0040:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000001a,0x31f548,0x00000008,(nil))
+0040:trace:process:GetEnvironmentVariableW (L"WINEUNIXCP" 000000000031F2E0 85)
+0040:fixme:ntdll:find_reg_tz_info Can't find matching timezone information in the registry for bias 0, std (d/m/y): 22/03/2026, dlt (d/m/y): 15/02/2026
+0040:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x00000024,0x31f57c,0x00000004,(nil))
+0040:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x00000007,0x31f9a0,0x00000008,(nil))
+0040:trace:process:GetEnvironmentVariableW (L"WINE_SHRINK_ENV" 000000000031FE40 80)
+0040:trace:process:GetEnvironmentVariableW (L"SteamGameId" 000000000031FE40 80)
+0040:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\rpcrt4.dll" at 00006FFFFF8B0000: builtin
+0050:trace:process:NtQueryInformationProcess (0x50,0x00000000,0x3fc48,0x00000030,(nil))
+0050:trace:process:NtQueryInformationProcess (0x50,0x0000001a,0xc1f638,0x00000008,(nil))
+004c:trace:process:ExpandEnvironmentStringsW (L"C:\\windows\\system32\\drivers\\mountmgr.sys" 0000000000000000 0)
+004c:trace:process:ExpandEnvironmentStringsW (L"C:\\windows\\system32\\drivers\\mountmgr.sys" 000000000003CBE0 41)
+004c:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\drivers\\mountmgr.sys" at 00006FFFFF710000: builtin
+004c:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\cfgmgr32.dll" at 00006FFFFF7E0000: builtin
+004c:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\setupapi.dll" at 00006FFFFF820000: builtin
+0034:trace:process:ExpandEnvironmentStringsW (L"C:\\windows\\system32\\plugplay.exe" 0000000000000000 0)
+0034:trace:process:ExpandEnvironmentStringsW (L"C:\\windows\\system32\\plugplay.exe" 0000000000803BF0 33)
+0034:trace:process:CreateProcessInternalW app (null) cmdline L"C:\\windows\\system32\\plugplay.exe", inherit 0, flags 0x408, env 0000000000868AE0 (L"SystemRoot=C:\\windows")
+0034:trace:process:find_exe_file looking for L"C:\\windows\\system32\\plugplay.exe" in L"C:\\windows\\system32;.;C:\\windows\\system32;C:\\windows\\system;C:\\windows;C:\\Program Files (x86)\\Steam;C:\\windows\\system32;C:\\windows;C:\\windows\\system32\\wbem;C:\\windows\\system32\\WindowsPowershell\\v1.0"
+0034:trace:process:GetEnvironmentVariableW (L"PROTON_ORIG_LAUNCHER_NAME" 0000000000000000 0)
+0034:trace:process:NtCreateUserProcess L"\\??\\C:\\windows\\system32\\plugplay.exe" image L"C:\\windows\\system32\\plugplay.exe" cmdline L"C:\\windows\\system32\\plugplay.exe" parent (nil) machine 0
+006c:trace:seh:sigsys_handler SIGSYS, rax 0xffff, rip 0x600000000005.
+006c:trace:seh:install_bpf Seccomp filters already installed.
+0034:trace:process:NtCreateUserProcess L"\\??\\C:\\windows\\system32\\plugplay.exe" pid 0068 tid 006c handles 0x11c/0x120
+0034:trace:process:CreateProcessInternalW started process pid 0068 tid 006c
+006c:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x00000025,0x31fa10,0x00000040,(nil))
+006c:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\plugplay.exe" at 0000000140000000: builtin
+006c:trace:loaddll:build_ntdll_module Loaded L"C:\\windows\\system32\\ntdll.dll" at 00006FFFFFF30000: builtin
+006c:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\kernelbase.dll" at 00006FFFFFBF0000: builtin
+006c:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\kernel32.dll" at 00006FFFFFEB0000: builtin
+006c:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\msvcrt.dll" at 00006FFFFFAE0000: builtin
+006c:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\ucrtbase.dll" at 00006FFFFF9B0000: builtin
+006c:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\sechost.dll" at 00006FFFFFAA0000: builtin
+006c:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\advapi32.dll" at 00006FFFFFBA0000: builtin
+006c:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\cryptbase.dll" at 00006FFFFF990000: builtin
+006c:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\rpcrt4.dll" at 00006FFFFF8B0000: builtin
+006c:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\win32u.dll" at 00006FFFFF450000: builtin
+006c:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\gdi32.dll" at 00006FFFFF4A0000: builtin
+006c:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\user32.dll" at 00006FFFFF540000: builtin
+006c:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000001a,0x31f548,0x00000008,(nil))
+006c:trace:process:GetEnvironmentVariableW (L"WINEUNIXCP" 000000000031F2E0 85)
+006c:fixme:ntdll:find_reg_tz_info Can't find matching timezone information in the registry for bias 0, std (d/m/y): 22/03/2026, dlt (d/m/y): 15/02/2026
+006c:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\imm32.dll" at 00006FFFFF420000: builtin
+006c:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x00000007,0x31f9a0,0x00000008,(nil))
+006c:trace:process:GetEnvironmentVariableW (L"WINE_SHRINK_ENV" 000000000031FE40 80)
+006c:trace:process:GetEnvironmentVariableW (L"SteamGameId" 000000000031FE40 80)
+0034:trace:process:ExpandEnvironmentStringsW (L"C:\\windows\\system32\\svchost.exe -k LocalServiceNetworkRestricted" 0000000000000000 0)
+0034:trace:process:ExpandEnvironmentStringsW (L"C:\\windows\\system32\\svchost.exe -k LocalServiceNetworkRestricted" 0000000000872DB0 65)
+0034:trace:process:CreateProcessInternalW app (null) cmdline L"C:\\windows\\system32\\svchost.exe -k LocalServiceNetworkRestricted", inherit 0, flags 0x408, env 0000000000868AE0 (L"SystemRoot=C:\\windows")
+0034:trace:process:find_exe_file looking for L"C:\\windows\\system32\\svchost.exe" in L"C:\\windows\\system32;.;C:\\windows\\system32;C:\\windows\\system;C:\\windows;C:\\Program Files (x86)\\Steam;C:\\windows\\system32;C:\\windows;C:\\windows\\system32\\wbem;C:\\windows\\system32\\WindowsPowershell\\v1.0"
+0034:trace:process:GetEnvironmentVariableW (L"PROTON_ORIG_LAUNCHER_NAME" 0000000000000000 0)
+0034:trace:process:NtCreateUserProcess L"\\??\\C:\\windows\\system32\\svchost.exe" image L"C:\\windows\\system32\\svchost.exe" cmdline L"C:\\windows\\system32\\svchost.exe -k LocalServiceNetworkRestricted" parent (nil) machine 0
+0084:trace:seh:sigsys_handler SIGSYS, rax 0xffff, rip 0x600000000005.
+0084:trace:seh:install_bpf Seccomp filters already installed.
+0034:trace:process:NtCreateUserProcess L"\\??\\C:\\windows\\system32\\svchost.exe" pid 0080 tid 0084 handles 0x138/0x13c
+0034:trace:process:CreateProcessInternalW started process pid 0080 tid 0084
+0084:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x00000025,0x31fa10,0x00000040,(nil))
+0084:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\svchost.exe" at 0000000140000000: builtin
+0084:trace:loaddll:build_ntdll_module Loaded L"C:\\windows\\system32\\ntdll.dll" at 00006FFFFFF30000: builtin
+0084:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\kernelbase.dll" at 00006FFFFFBF0000: builtin
+0084:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\kernel32.dll" at 00006FFFFFEB0000: builtin
+0084:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\msvcrt.dll" at 00006FFFFFAE0000: builtin
+0084:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\ucrtbase.dll" at 00006FFFFF9B0000: builtin
+0084:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\sechost.dll" at 00006FFFFFAA0000: builtin
+0084:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\advapi32.dll" at 00006FFFFFBA0000: builtin
+0084:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000001a,0x31f548,0x00000008,(nil))
+0084:trace:process:GetEnvironmentVariableW (L"WINEUNIXCP" 000000000031F2E0 85)
+0084:fixme:ntdll:find_reg_tz_info Can't find matching timezone information in the registry for bias 0, std (d/m/y): 22/03/2026, dlt (d/m/y): 15/02/2026
+0084:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x00000007,0x31f9a0,0x00000008,(nil))
+0084:trace:process:GetEnvironmentVariableW (L"WINE_SHRINK_ENV" 000000000031FE40 80)
+0084:trace:process:GetEnvironmentVariableW (L"SteamGameId" 000000000031FE40 80)
+0084:trace:process:ExpandEnvironmentStringsW (L"C:\\windows\\system32\\wevtsvc.dll" 0000000000000000 0)
+0084:trace:process:ExpandEnvironmentStringsW (L"C:\\windows\\system32\\wevtsvc.dll" 0000000000039850 32)
+0084:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\wevtsvc.dll" at 00006FFFFF400000: builtin
+0084:warn:module:LdrGetProcedureAddress "SvchostPushServiceGlobals" (ordinal 0) not found in L"C:\\windows\\system32\\wevtsvc.dll"
+0084:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\cryptbase.dll" at 00006FFFFF990000: builtin
+0084:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\rpcrt4.dll" at 00006FFFFF8B0000: builtin
+0034:trace:process:ExpandEnvironmentStringsW (L"C:\\windows\\system32\\drivers\\nsiproxy.sys" 0000000000000000 0)
+0034:trace:process:ExpandEnvironmentStringsW (L"C:\\windows\\system32\\drivers\\nsiproxy.sys" 00000000000368C0 41)
+004c:trace:process:ExpandEnvironmentStringsW (L"C:\\windows\\system32\\drivers\\nsiproxy.sys" 0000000000000000 0)
+004c:trace:process:ExpandEnvironmentStringsW (L"C:\\windows\\system32\\drivers\\nsiproxy.sys" 000000000003CD00 41)
+004c:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\drivers\\nsiproxy.sys" at 00006FFFFF3E0000: builtin
+0034:trace:process:ExpandEnvironmentStringsW (L"C:\\windows\\system32\\drivers\\ndis.sys" 0000000000000000 0)
+0034:trace:process:ExpandEnvironmentStringsW (L"C:\\windows\\system32\\drivers\\ndis.sys" 00000000000368C0 37)
+004c:trace:process:ExpandEnvironmentStringsW (L"C:\\windows\\system32\\drivers\\ndis.sys" 0000000000000000 0)
+004c:trace:process:ExpandEnvironmentStringsW (L"C:\\windows\\system32\\drivers\\ndis.sys" 000000000003CE20 37)
+004c:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\dnsapi.dll" at 00006FFFFF340000: builtin
+004c:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\nsi.dll" at 00006FFFFF320000: builtin
+004c:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\ws2_32.dll" at 00006FFFFF950000: builtin
+004c:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\iphlpapi.dll" at 00006FFFFF370000: builtin
+004c:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\drivers\\ndis.sys" at 00006FFFFF3B0000: builtin
+0034:trace:process:ExpandEnvironmentStringsW (L"C:\\windows\\system32\\drivers\\winebus.sys" 0000000000000000 0)
+0034:trace:process:ExpandEnvironmentStringsW (L"C:\\windows\\system32\\drivers\\winebus.sys" 00000000000368C0 40)
+0034:trace:process:ExpandEnvironmentStringsW (L"C:\\windows\\system32\\winedevice.exe" 0000000000000000 0)
+0034:trace:process:ExpandEnvironmentStringsW (L"C:\\windows\\system32\\winedevice.exe" 0000000000803D30 35)
+0034:trace:process:CreateProcessInternalW app (null) cmdline L"C:\\windows\\system32\\winedevice.exe", inherit 0, flags 0x408, env 0000000000868AE0 (L"SystemRoot=C:\\windows")
+0034:trace:process:find_exe_file looking for L"C:\\windows\\system32\\winedevice.exe" in L"C:\\windows\\system32;.;C:\\windows\\system32;C:\\windows\\system;C:\\windows;C:\\Program Files (x86)\\Steam;C:\\windows\\system32;C:\\windows;C:\\windows\\system32\\wbem;C:\\windows\\system32\\WindowsPowershell\\v1.0"
+0034:trace:process:GetEnvironmentVariableW (L"PROTON_ORIG_LAUNCHER_NAME" 0000000000000000 0)
+0034:trace:process:NtCreateUserProcess L"\\??\\C:\\windows\\system32\\winedevice.exe" image L"C:\\windows\\system32\\winedevice.exe" cmdline L"C:\\windows\\system32\\winedevice.exe" parent (nil) machine 0
+00a0:trace:seh:sigsys_handler SIGSYS, rax 0xffff, rip 0x600000000005.
+00a0:trace:seh:install_bpf Seccomp filters already installed.
+0034:trace:process:NtCreateUserProcess L"\\??\\C:\\windows\\system32\\winedevice.exe" pid 009c tid 00a0 handles 0x158/0x15c
+0034:trace:process:CreateProcessInternalW started process pid 009c tid 00a0
+00a0:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x00000025,0x31fa10,0x00000040,(nil))
+00a0:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\winedevice.exe" at 0000000140000000: builtin
+00a0:trace:loaddll:build_ntdll_module Loaded L"C:\\windows\\system32\\ntdll.dll" at 00006FFFFFF30000: builtin
+00a0:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\kernelbase.dll" at 00006FFFFFBF0000: builtin
+00a0:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\kernel32.dll" at 00006FFFFFEB0000: builtin
+00a0:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\msvcrt.dll" at 00006FFFFFAE0000: builtin
+00a0:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\ucrtbase.dll" at 00006FFFFF9B0000: builtin
+00a0:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\sechost.dll" at 00006FFFFFAA0000: builtin
+00a0:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\advapi32.dll" at 00006FFFFFBA0000: builtin
+00a0:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\cryptbase.dll" at 00006FFFFF990000: builtin
+00a0:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\ntoskrnl.exe" at 00006FFFFF740000: builtin
+00a0:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000001a,0x31f548,0x00000008,(nil))
+00a0:trace:process:GetEnvironmentVariableW (L"WINEUNIXCP" 000000000031F2E0 85)
+00a0:fixme:ntdll:find_reg_tz_info Can't find matching timezone information in the registry for bias 0, std (d/m/y): 22/03/2026, dlt (d/m/y): 15/02/2026
+00a0:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x00000024,0x31f57c,0x00000004,(nil))
+00a0:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x00000007,0x31f9a0,0x00000008,(nil))
+00a0:trace:process:GetEnvironmentVariableW (L"WINE_SHRINK_ENV" 000000000031FE40 80)
+00a0:trace:process:GetEnvironmentVariableW (L"SteamGameId" 000000000031FE40 80)
+00a0:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\rpcrt4.dll" at 00006FFFFF8B0000: builtin
+00ac:trace:process:NtQueryInformationProcess (0x48,0x00000000,0x3bc18,0x00000030,(nil))
+00ac:trace:process:NtQueryInformationProcess (0x48,0x0000001a,0xc1f638,0x00000008,(nil))
+00a8:trace:process:ExpandEnvironmentStringsW (L"C:\\windows\\system32\\drivers\\winebus.sys" 0000000000000000 0)
+00a8:trace:process:ExpandEnvironmentStringsW (L"C:\\windows\\system32\\drivers\\winebus.sys" 000000000003CBE0 40)
+00a8:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\drivers\\hidparse.sys" at 00006FFFFF2D0000: builtin
+00a8:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\drivers\\winebus.sys" at 00006FFFFF300000: builtin
+00a8:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\cfgmgr32.dll" at 00006FFFFF7E0000: builtin
+00a8:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\setupapi.dll" at 00006FFFFF820000: builtin
+00b0:trace:process:ExpandEnvironmentStringsW (L"C:\\windows\\system32\\drivers\\winehid.sys" 0000000000000000 0)
+00b0:trace:process:ExpandEnvironmentStringsW (L"C:\\windows\\system32\\drivers\\winehid.sys" 0000000000E21A30 40)
+00b0:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\win32u.dll" at 00006FFFFF450000: builtin
+00b0:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\gdi32.dll" at 00006FFFFF4A0000: builtin
+00b0:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\user32.dll" at 00006FFFFF540000: builtin
+00b0:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\drivers\\hidclass.sys" at 00006FFFFF290000: builtin
+00b0:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\drivers\\winehid.sys" at 00006FFFFF2B0000: builtin
+00b0:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\imm32.dll" at 00006FFFFF420000: builtin
+0034:trace:process:ExpandEnvironmentStringsW (L"C:\\windows\\system32\\drivers\\wineusb.sys" 0000000000000000 0)
+0034:trace:process:ExpandEnvironmentStringsW (L"C:\\windows\\system32\\drivers\\wineusb.sys" 00000000000368C0 40)
+00a8:trace:process:ExpandEnvironmentStringsW (L"C:\\windows\\system32\\drivers\\wineusb.sys" 0000000000000000 0)
+00a8:trace:process:ExpandEnvironmentStringsW (L"C:\\windows\\system32\\drivers\\wineusb.sys" 000000000003CE80 40)
+00a8:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\drivers\\wineusb.sys" at 00006FFFFF270000: builtin
+0034:trace:process:ExpandEnvironmentStringsW (L"C:\\windows\\system32\\drivers\\winebth.sys" 0000000000000000 0)
+0034:trace:process:ExpandEnvironmentStringsW (L"C:\\windows\\system32\\drivers\\winebth.sys" 00000000000368C0 40)
+00a8:trace:process:ExpandEnvironmentStringsW (L"C:\\windows\\system32\\drivers\\winebth.sys" 0000000000000000 0)
+00a8:trace:process:ExpandEnvironmentStringsW (L"C:\\windows\\system32\\drivers\\winebth.sys" 000000000003CF40 40)
+00a8:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\drivers\\winebth.sys" at 00006FFFFF240000: builtin
+002c:trace:process:GetEnvironmentVariableW (L"WINE_SHRINK_ENV" 000000000031ED10 80)
+002c:trace:process:GetEnvironmentVariableW (L"SteamGameId" 000000000031ED10 80)
+002c:trace:process:CreateProcessInternalW app L"C:\\windows\\system32\\rundll32.exe" cmdline L"C:\\windows\\system32\\rundll32.exe setupapi,InstallHinfSection PreInstall 128 \\\\?\\Z:\\home\\loganp\\.local\\share\\Steam\\steamapps\\common\\Proton Hotfix\\files\\share\\wine\\wine.inf", inherit 0, flags 0, env 0000000000000000 ((null))
+002c:trace:process:GetEnvironmentVariableW (L"PROTON_ORIG_LAUNCHER_NAME" 0000000000000000 0)
+002c:trace:process:NtCreateUserProcess L"\\??\\C:\\windows\\system32\\rundll32.exe" image L"C:\\windows\\system32\\rundll32.exe" cmdline L"C:\\windows\\system32\\rundll32.exe setupapi,InstallHinfSection PreInstall 128 \\\\?\\Z:\\home\\loganp\\.local\\share\\Steam\\steamapps\\common\\Proton Hotfix\\files\\share\\wine\\wine.inf" parent (nil) machine 0
+00e8:trace:seh:sigsys_handler SIGSYS, rax 0xffff, rip 0x600000000005.
+00e8:trace:seh:install_bpf Seccomp filters already installed.
+002c:trace:process:NtCreateUserProcess L"\\??\\C:\\windows\\system32\\rundll32.exe" pid 00e4 tid 00e8 handles 0x40/0x44
+002c:trace:process:CreateProcessInternalW started process pid 00e4 tid 00e8
+00e8:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x00000025,0x31fa10,0x00000040,(nil))
+00e8:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\rundll32.exe" at 0000000140000000: builtin
+00e8:trace:loaddll:build_ntdll_module Loaded L"C:\\windows\\system32\\ntdll.dll" at 00006FFFFFF30000: builtin
+00e8:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\kernelbase.dll" at 00006FFFFFBF0000: builtin
+00e8:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\kernel32.dll" at 00006FFFFFEB0000: builtin
+002c:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\win32u.dll" at 00006FFFFF450000: builtin
+002c:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\gdi32.dll" at 00006FFFFF4A0000: builtin
+00e8:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\ucrtbase.dll" at 00006FFFFF9B0000: builtin
+002c:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\user32.dll" at 00006FFFFF540000: builtin
+00e8:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\msvcrt.dll" at 00006FFFFFAE0000: builtin
+00e8:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\sechost.dll" at 00006FFFFFAA0000: builtin
+00e8:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\advapi32.dll" at 00006FFFFFBA0000: builtin
+00e8:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\win32u.dll" at 00006FFFFF450000: builtin
+00e8:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\gdi32.dll" at 00006FFFFF4A0000: builtin
+00e8:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\user32.dll" at 00006FFFFF540000: builtin
+00e8:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000001a,0x31f548,0x00000008,(nil))
+00e8:trace:process:GetEnvironmentVariableW (L"WINEUNIXCP" 000000000031F2E0 85)
+00e8:fixme:ntdll:find_reg_tz_info Can't find matching timezone information in the registry for bias 0, std (d/m/y): 22/03/2026, dlt (d/m/y): 15/02/2026
+002c:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\imm32.dll" at 00006FFFFF420000: builtin
+00e8:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\imm32.dll" at 00006FFFFF420000: builtin
+00e8:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x00000007,0x31f9a0,0x00000008,(nil))
+00e8:trace:process:GetEnvironmentVariableW (L"WINE_SHRINK_ENV" 000000000031FE40 80)
+00e8:trace:process:GetEnvironmentVariableW (L"SteamGameId" 000000000031FE40 80)
+00e8:trace:process:NtCreateUserProcess L"\\??\\C:\\windows\\system32\\explorer.exe" image L"C:\\windows\\system32\\explorer.exe" cmdline L"\"C:\\windows\\system32\\explorer.exe\" /desktop" parent (nil) machine 0
+00f0:trace:seh:sigsys_handler SIGSYS, rax 0xffff, rip 0x600000000005.
+00f0:trace:seh:install_bpf Seccomp filters already installed.
+00e8:trace:process:NtCreateUserProcess L"\\??\\C:\\windows\\system32\\explorer.exe" pid 00ec tid 00f0 handles 0x54/0x58
+00f0:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x00000025,0x31fa10,0x00000040,(nil))
+00f0:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\explorer.exe" at 0000000140000000: builtin
+00f0:trace:loaddll:build_ntdll_module Loaded L"C:\\windows\\system32\\ntdll.dll" at 00006FFFFFF30000: builtin
+00f0:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\kernelbase.dll" at 00006FFFFFBF0000: builtin
+00f0:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\kernel32.dll" at 00006FFFFFEB0000: builtin
+00f0:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\msvcrt.dll" at 00006FFFFFAE0000: builtin
+00f0:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\ucrtbase.dll" at 00006FFFFF9B0000: builtin
+00f0:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\sechost.dll" at 00006FFFFFAA0000: builtin
+00f0:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\advapi32.dll" at 00006FFFFFBA0000: builtin
+00f0:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\win32u.dll" at 00006FFFFF450000: builtin
+00f0:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\user32.dll" at 00006FFFFF540000: builtin
+00f0:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\gdi32.dll" at 00006FFFFF4A0000: builtin
+00f0:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\cryptbase.dll" at 00006FFFFF990000: builtin
+00f0:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\rpcrt4.dll" at 00006FFFFF8B0000: builtin
+00f0:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000001a,0x31f548,0x00000008,(nil))
+00f0:trace:process:GetEnvironmentVariableW (L"WINEUNIXCP" 000000000031F2E0 85)
+00f0:fixme:ntdll:find_reg_tz_info Can't find matching timezone information in the registry for bias 0, std (d/m/y): 22/03/2026, dlt (d/m/y): 15/02/2026
+00f0:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\imm32.dll" at 00006FFFFF420000: builtin
+00f0:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x00000007,0x31f9a0,0x00000008,(nil))
+00f0:trace:process:GetEnvironmentVariableW (L"WINE_SHRINK_ENV" 000000000031FE40 80)
+00f0:trace:process:GetEnvironmentVariableW (L"SteamGameId" 000000000031FE40 80)
+00f0:warn:module:load_dll Failed to load module L"winemac.drv"; status=c0000135
+00f0:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\winex11.drv" at 00006FFFFF220000: builtin
+00f0:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\uxtheme.dll" at 00006FFFFF1D0000: builtin
+00f0:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\shcore.dll" at 00006FFFFE7F0000: builtin
+00f0:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\shlwapi.dll" at 00006FFFFE820000: builtin
+00f0:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\shell32.dll" at 00006FFFFE880000: builtin
+00f0:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31e73c,0x00000004,(nil))
+00f0:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31e73c,0x00000004,(nil))
+00f0:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\combase.dll" at 00006FFFFE6B0000: builtin
+00f0:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\coml2.dll" at 00006FFFFE680000: builtin
+00f0:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\ole32.dll" at 00006FFFFE720000: builtin
+00f0:warn:module:LdrGetProcedureAddress "DllCanUnloadNow" (ordinal 0) not found in L"C:\\windows\\system32\\ole32.dll"
+00f0:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\oleaut32.dll" at 00006FFFFE530000: builtin
+00f0:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\actxprxy.dll" at 00006FFFFE620000: builtin
+00f0:trace:process:GetEnvironmentVariableW (L"oanocache" 0000000000000000 0)
+00f0:trace:seh:dispatch_exception code=6ba (RPC_S_SERVER_UNAVAILABLE) flags=0 addr=00006FFFFFBFD947
+00f0:trace:seh:dispatch_exception rip=00006fffffbfd947 rsp=000000000031d570 rbp=000000000031d660 eflags=00000202
+00f0:trace:seh:dispatch_exception rax=000000000031d590 rbx=000000000031e430 rcx=000000000031d590 rdx=0000000000000000
+00f0:trace:seh:dispatch_exception rsi=0000000000000064 rdi=000000000082fe40  r8=0000000000000000  r9=0000000000000000
+00f0:trace:seh:dispatch_exception r10=000000000082ff80 r11=0000000000000019 r12=000000000031d738 r13=0000000000000005
+00f0:trace:seh:dispatch_exception r14=00006fffff8fe260 r15=00006ffffe6ee414 mxcsr=00001f80 cs=0033 ss=002b
+00f0:trace:seh:call_seh_handlers calling TEB handler 00006FFFFF8E8150 (rec=000000000031D590 frame=000000000031D7C0 context=000000000031D090 dispatch=000000000031C800) sp=31e140
+00f0:trace:seh:call_seh_handlers TEB handler at 00006FFFFF8E8150 returned 1
+00f0:trace:seh:call_seh_handlers calling TEB handler 00006FFFFE6C64B0 (rec=000000000031D590 frame=000000000031ECB0 context=000000000031D090 dispatch=000000000031C800) sp=31ee00
+00f0:trace:seh:RtlUnwindEx code=6ba flags=2 end_frame=000000000031ECB0 target_ip=00006FFFFE6B4E3A
+00f0:trace:seh:RtlUnwindEx rip=00006ffffff67856 rsp=000000000031bae0 rbp=000000000031bb60 eflags=00000202
+00f0:trace:seh:RtlUnwindEx rax=000000007ffc0000 rbx=000000000031d590 rcx=000000000031c1b0 rdx=00006ffffe6b4e3a
+00f0:trace:seh:RtlUnwindEx rsi=000000000031d590 rdi=000000000031c1b0  r8=000000000031d590  r9=00006ffffe6d6530
+00f0:trace:seh:RtlUnwindEx r10=00007fa9e989d740 r11=0000000000000246 r12=000000000031d7c0 r13=000000000031ecb0
+00f0:trace:seh:RtlUnwindEx r14=000000007ffc0000 r15=000000000031bc50 mxcsr=00001f80 cs=0033 ss=002b
+00f0:trace:seh:RtlUnwindEx calling TEB handler 00006FFFFF8E8150 (rec=000000000031D590, frame=000000000031D7C0 context=000000000031C1B0, dispatch=000000000031BB60)
+00f0:trace:seh:RtlUnwindEx handler at 00006FFFFF8E8150 returned 1
+00f0:trace:seh:RtlRestoreContext returning to 00006FFFFE6B4E3A stack 000000000031EC60
+0048:trace:process:ExpandEnvironmentStringsW (L"C:\\windows\\system32\\rpcss.exe" 0000000000000000 0)
+0048:trace:process:ExpandEnvironmentStringsW (L"C:\\windows\\system32\\rpcss.exe" 000000000088AB60 30)
+0048:trace:process:CreateProcessInternalW app (null) cmdline L"C:\\windows\\system32\\rpcss.exe", inherit 0, flags 0x408, env 0000000000868AE0 (L"SystemRoot=C:\\windows")
+0048:trace:process:find_exe_file looking for L"C:\\windows\\system32\\rpcss.exe" in L"C:\\windows\\system32;.;C:\\windows\\system32;C:\\windows\\system;C:\\windows;C:\\Program Files (x86)\\Steam;C:\\windows\\system32;C:\\windows;C:\\windows\\system32\\wbem;C:\\windows\\system32\\WindowsPowershell\\v1.0"
+0048:trace:process:GetEnvironmentVariableW (L"PROTON_ORIG_LAUNCHER_NAME" 0000000000000000 0)
+0048:trace:process:NtCreateUserProcess L"\\??\\C:\\windows\\system32\\rpcss.exe" image L"C:\\windows\\system32\\rpcss.exe" cmdline L"C:\\windows\\system32\\rpcss.exe" parent (nil) machine 0
+0108:trace:seh:sigsys_handler SIGSYS, rax 0xffff, rip 0x600000000005.
+0108:trace:seh:install_bpf Seccomp filters already installed.
+0048:trace:process:NtCreateUserProcess L"\\??\\C:\\windows\\system32\\rpcss.exe" pid 0104 tid 0108 handles 0x184/0x188
+0048:trace:process:CreateProcessInternalW started process pid 0104 tid 0108
+0108:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x00000025,0x31fa10,0x00000040,(nil))
+0108:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\rpcss.exe" at 0000000140000000: builtin
+0108:trace:loaddll:build_ntdll_module Loaded L"C:\\windows\\system32\\ntdll.dll" at 00006FFFFFF30000: builtin
+0108:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\kernelbase.dll" at 00006FFFFFBF0000: builtin
+0108:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\kernel32.dll" at 00006FFFFFEB0000: builtin
+0108:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\msvcrt.dll" at 00006FFFFFAE0000: builtin
+0108:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\ucrtbase.dll" at 00006FFFFF9B0000: builtin
+0108:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\sechost.dll" at 00006FFFFFAA0000: builtin
+0108:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\advapi32.dll" at 00006FFFFFBA0000: builtin
+0108:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\cryptbase.dll" at 00006FFFFF990000: builtin
+0108:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\rpcrt4.dll" at 00006FFFFF8B0000: builtin
+0108:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000001a,0x31f548,0x00000008,(nil))
+0108:trace:process:GetEnvironmentVariableW (L"WINEUNIXCP" 000000000031F2E0 85)
+0108:fixme:ntdll:find_reg_tz_info Can't find matching timezone information in the registry for bias 0, std (d/m/y): 22/03/2026, dlt (d/m/y): 15/02/2026
+0108:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x00000007,0x31f9a0,0x00000008,(nil))
+0108:trace:process:GetEnvironmentVariableW (L"WINE_SHRINK_ENV" 000000000031FE40 80)
+0108:trace:process:GetEnvironmentVariableW (L"SteamGameId" 000000000031FE40 80)
+00f0:trace:process:CreateProcessInternalW app L"C:\\windows\\system32\\tabtip.exe" cmdline (null), inherit 1, flags 0x8, env 0000000000000000 ((null))
+00f0:trace:process:GetEnvironmentVariableW (L"PROTON_ORIG_LAUNCHER_NAME" 0000000000000000 0)
+00f0:trace:process:NtCreateUserProcess L"\\??\\C:\\windows\\system32\\tabtip.exe" image L"C:\\windows\\system32\\tabtip.exe" cmdline L"\"C:\\windows\\system32\\tabtip.exe\"" parent (nil) machine 0
+0130:trace:seh:sigsys_handler SIGSYS, rax 0xffff, rip 0x600000000005.
+0130:trace:seh:install_bpf Seccomp filters already installed.
+00f0:trace:process:NtCreateUserProcess L"\\??\\C:\\windows\\system32\\tabtip.exe" pid 012c tid 0130 handles 0xdc/0xe0
+00f0:trace:process:CreateProcessInternalW started process pid 012c tid 0130
+0130:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x00000025,0x31fa10,0x00000040,(nil))
+0130:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\tabtip.exe" at 0000000140000000: builtin
+0130:trace:loaddll:build_ntdll_module Loaded L"C:\\windows\\system32\\ntdll.dll" at 00006FFFFFF30000: builtin
+0130:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\kernelbase.dll" at 00006FFFFFBF0000: builtin
+0130:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\kernel32.dll" at 00006FFFFFEB0000: builtin
+0130:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\msvcrt.dll" at 00006FFFFFAE0000: builtin
+0130:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\ucrtbase.dll" at 00006FFFFF9B0000: builtin
+0130:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\sechost.dll" at 00006FFFFFAA0000: builtin
+0130:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\advapi32.dll" at 00006FFFFFBA0000: builtin
+0130:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\win32u.dll" at 00006FFFFF450000: builtin
+0130:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\user32.dll" at 00006FFFFF540000: builtin
+0130:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\gdi32.dll" at 00006FFFFF4A0000: builtin
+0130:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\cryptbase.dll" at 00006FFFFF990000: builtin
+0130:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\rpcrt4.dll" at 00006FFFFF8B0000: builtin
+0130:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\combase.dll" at 00006FFFFE6B0000: builtin
+0130:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\coml2.dll" at 00006FFFFE680000: builtin
+0130:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\ole32.dll" at 00006FFFFE720000: builtin
+0130:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\oleaut32.dll" at 00006FFFFE530000: builtin
+0130:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\shcore.dll" at 00006FFFFE7F0000: builtin
+0130:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\shlwapi.dll" at 00006FFFFE820000: builtin
+0130:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\shell32.dll" at 00006FFFFE880000: builtin
+0130:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000001a,0x31f548,0x00000008,(nil))
+0130:trace:process:GetEnvironmentVariableW (L"WINEUNIXCP" 000000000031F2E0 85)
+0130:fixme:ntdll:find_reg_tz_info Can't find matching timezone information in the registry for bias 0, std (d/m/y): 22/03/2026, dlt (d/m/y): 15/02/2026
+0130:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\imm32.dll" at 00006FFFFF420000: builtin
+0130:trace:process:GetEnvironmentVariableW (L"oanocache" 0000000000000000 0)
+0130:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x00000007,0x31f9a0,0x00000008,(nil))
+0130:trace:process:GetEnvironmentVariableW (L"WINE_SHRINK_ENV" 000000000031FE40 80)
+0130:trace:process:GetEnvironmentVariableW (L"SteamGameId" 000000000031FE40 80)
+00f0:trace:process:GetEnvironmentVariableW (L"PROTON_USE_XALIA" 000000000031F0C0 2)
+00e8:trace:loaddll:build_module Loaded L"c:\\windows\\system32\\winex11.drv" at 00006FFFFF220000: builtin
+0130:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\oleacc.dll" at 00006FFFFE450000: builtin
+0130:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\uiautomationcore.dll" at 00006FFFFE4A0000: builtin
+0130:trace:loaddll:build_module Loaded L"c:\\windows\\system32\\winex11.drv" at 00006FFFFF220000: builtin
+0130:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\uxtheme.dll" at 00006FFFFF1D0000: builtin
+00e8:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\uxtheme.dll" at 00006FFFFF1D0000: builtin
+00e8:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\cfgmgr32.dll" at 00006FFFFF7E0000: builtin
+00e8:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\cryptbase.dll" at 00006FFFFF990000: builtin
+00e8:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\rpcrt4.dll" at 00006FFFFF8B0000: builtin
+00e8:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\setupapi.dll" at 00006FFFFF820000: builtin
+00e8:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\combase.dll" at 00006FFFFE6B0000: builtin
+00e8:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\coml2.dll" at 00006FFFFE680000: builtin
+00e8:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\ole32.dll" at 00006FFFFE720000: builtin
+00e8:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000001a,0x31b1d8,0x00000008,(nil))
+00e8:trace:process:NtTerminateProcess handle (nil), exit_code 0, process_exiting 0.
+00e8:trace:process:NtTerminateProcess handle (nil), self 1, process_exiting 0.
+00e8:trace:process:NtTerminateProcess handle 0xffffffffffffffff, exit_code 0, process_exiting 1.
+00e8:trace:process:NtTerminateProcess handle 0xffffffffffffffff, self 1, process_exiting 1.
+002c:trace:process:CreateProcessInternalW app L"C:\\windows\\system32\\rundll32.exe" cmdline L"C:\\windows\\system32\\rundll32.exe setupapi,InstallHinfSection DefaultInstall 128 \\\\?\\Z:\\home\\loganp\\.local\\share\\Steam\\steamapps\\common\\Proton Hotfix\\files\\share\\wine\\wine.inf", inherit 0, flags 0, env 0000000000000000 ((null))
+002c:trace:process:GetEnvironmentVariableW (L"PROTON_ORIG_LAUNCHER_NAME" 0000000000000000 0)
+002c:trace:process:NtCreateUserProcess L"\\??\\C:\\windows\\system32\\rundll32.exe" image L"C:\\windows\\system32\\rundll32.exe" cmdline L"C:\\windows\\system32\\rundll32.exe setupapi,InstallHinfSection DefaultInstall 128 \\\\?\\Z:\\home\\loganp\\.local\\share\\Steam\\steamapps\\common\\Proton Hotfix\\files\\share\\wine\\wine.inf" parent (nil) machine 0
+0130:fixme:oleacc:find_class_data unhandled window class: L"#32769"
+0130:fixme:uiautomation:uia_get_providers_for_hwnd Override provider callback currently unimplemented.
+0130:fixme:uiautomation:default_uia_provider_callback Default ProviderType_NonClientArea provider unimplemented.
+0130:warn:module:LdrGetProcedureAddress "DllCanUnloadNow" (ordinal 0) not found in L"C:\\windows\\system32\\ole32.dll"
+0140:trace:seh:sigsys_handler SIGSYS, rax 0xffff, rip 0x600000000005.
+0140:trace:seh:install_bpf Seccomp filters already installed.
+002c:trace:process:NtCreateUserProcess L"\\??\\C:\\windows\\system32\\rundll32.exe" pid 013c tid 0140 handles 0x6c/0x70
+002c:trace:process:CreateProcessInternalW started process pid 013c tid 0140
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x00000025,0x31fa10,0x00000040,(nil))
+0140:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\rundll32.exe" at 0000000140000000: builtin
+0140:trace:loaddll:build_ntdll_module Loaded L"C:\\windows\\system32\\ntdll.dll" at 00006FFFFFF30000: builtin
+0140:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\kernelbase.dll" at 00006FFFFFBF0000: builtin
+0140:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\kernel32.dll" at 00006FFFFFEB0000: builtin
+0140:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\ucrtbase.dll" at 00006FFFFF9B0000: builtin
+0130:fixme:oleacc:find_class_data unhandled window class: L"#32769"
+0140:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\msvcrt.dll" at 00006FFFFFAE0000: builtin
+0140:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\sechost.dll" at 00006FFFFFAA0000: builtin
+0140:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\advapi32.dll" at 00006FFFFFBA0000: builtin
+0140:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\win32u.dll" at 00006FFFFF450000: builtin
+0140:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\gdi32.dll" at 00006FFFFF4A0000: builtin
+0140:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\user32.dll" at 00006FFFFF540000: builtin
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000001a,0x31f548,0x00000008,(nil))
+0140:trace:process:GetEnvironmentVariableW (L"WINEUNIXCP" 000000000031F2E0 85)
+0140:fixme:ntdll:find_reg_tz_info Can't find matching timezone information in the registry for bias 0, std (d/m/y): 22/03/2026, dlt (d/m/y): 15/02/2026
+0130:fixme:uiautomation:base_hwnd_fragment_get_FragmentRoot 00000000008284C8, 000000000031F9A0: stub!
+0130:fixme:uiautomation:base_hwnd_fragment_GetEmbeddedFragmentRoots 00000000008284C8, 000000000031F9B0: stub!
+0140:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\imm32.dll" at 00006FFFFF420000: builtin
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x00000007,0x31f9a0,0x00000008,(nil))
+0140:trace:process:GetEnvironmentVariableW (L"WINE_SHRINK_ENV" 000000000031FE40 80)
+0140:trace:process:GetEnvironmentVariableW (L"SteamGameId" 000000000031FE40 80)
+0140:trace:loaddll:build_module Loaded L"c:\\windows\\system32\\winex11.drv" at 00006FFFFF220000: builtin
+0140:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\uxtheme.dll" at 00006FFFFF1D0000: builtin
+0140:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\cfgmgr32.dll" at 00006FFFFF7E0000: builtin
+0140:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\cryptbase.dll" at 00006FFFFF990000: builtin
+0140:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\rpcrt4.dll" at 00006FFFFF8B0000: builtin
+0140:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\setupapi.dll" at 00006FFFFF820000: builtin
+0140:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\combase.dll" at 00006FFFFE6B0000: builtin
+0140:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\coml2.dll" at 00006FFFFE680000: builtin
+0140:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\ole32.dll" at 00006FFFFE720000: builtin
+0140:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\shcore.dll" at 00006FFFFE7F0000: builtin
+0140:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\shlwapi.dll" at 00006FFFFE820000: builtin
+0140:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\shell32.dll" at 00006FFFFE880000: builtin
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31c72c,0x00000004,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31c72c,0x00000004,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31c72c,0x00000004,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31c72c,0x00000004,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31c72c,0x00000004,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31c72c,0x00000004,(nil))
+0140:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\oleaut32.dll" at 00006FFFFE530000: builtin
+0140:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\atl100.dll" at 00006FFFFE410000: builtin
+0140:trace:process:GetEnvironmentVariableW (L"oanocache" 0000000000000000 0)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031CB90 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031CB90 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031CB90 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031CB90 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031CB90 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031CB90 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031CB90 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031CB90 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031CB90 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031CB90 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031CB90 260)
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31c60c,0x00000004,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31c60c,0x00000004,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31c60c,0x00000004,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31c60c,0x00000004,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31c60c,0x00000004,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31c60c,0x00000004,(nil))
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031CB90 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031CB90 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031CB90 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031CB90 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C810 260)
+0140:warn:module:find_builtin_dll cannot find builtin library for L"\\??\\Z:\\home\\loganp\\.local\\share\\Steam\\steamapps\\common\\Proton Hotfix\\files\\share\\wine\\winmd\\windows.applicationmodel.winmd"
+0140:warn:module:find_builtin_dll cannot find builtin library for L"\\??\\C:\\windows\\system32\\winmetadata\\windows.applicationmodel.winmd"
+0140:warn:module:find_builtin_dll cannot find builtin library for L"\\??\\Z:\\home\\loganp\\.local\\share\\Steam\\steamapps\\common\\Proton Hotfix\\files\\share\\wine\\winmd\\windows.globalization.winmd"
+0140:warn:module:find_builtin_dll cannot find builtin library for L"\\??\\C:\\windows\\system32\\winmetadata\\windows.globalization.winmd"
+0140:warn:module:find_builtin_dll cannot find builtin library for L"\\??\\Z:\\home\\loganp\\.local\\share\\Steam\\steamapps\\common\\Proton Hotfix\\files\\share\\wine\\winmd\\windows.graphics.winmd"
+0140:warn:module:find_builtin_dll cannot find builtin library for L"\\??\\C:\\windows\\system32\\winmetadata\\windows.graphics.winmd"
+0140:warn:module:find_builtin_dll cannot find builtin library for L"\\??\\Z:\\home\\loganp\\.local\\share\\Steam\\steamapps\\common\\Proton Hotfix\\files\\share\\wine\\winmd\\windows.media.winmd"
+0140:warn:module:find_builtin_dll cannot find builtin library for L"\\??\\C:\\windows\\system32\\winmetadata\\windows.media.winmd"
+0140:warn:module:find_builtin_dll cannot find builtin library for L"\\??\\Z:\\home\\loganp\\.local\\share\\Steam\\steamapps\\common\\Proton Hotfix\\files\\share\\wine\\winmd\\windows.networking.winmd"
+0140:warn:module:map_image_into_view L"\\??\\Z:\\home\\loganp\\.local\\share\\Steam\\steamapps\\common\\Proton Hotfix\\files\\share\\wine\\winmd\\windows.networking.winmd" section .text too large (1000+2000/2000)
+0140:warn:module:find_builtin_dll cannot find builtin library for L"\\??\\C:\\windows\\system32\\winmetadata\\windows.networking.winmd"
+0140:warn:module:map_image_into_view L"\\??\\C:\\windows\\system32\\winmetadata\\windows.networking.winmd" section .text too large (1000+2000/2000)
+0140:warn:module:find_builtin_dll cannot find builtin library for L"\\??\\Z:\\home\\loganp\\.local\\share\\Steam\\steamapps\\common\\Proton Hotfix\\files\\share\\wine\\winmd\\windows.perception.winmd"
+0140:warn:module:find_builtin_dll cannot find builtin library for L"\\??\\C:\\windows\\system32\\winmetadata\\windows.perception.winmd"
+0140:warn:module:find_builtin_dll cannot find builtin library for L"\\??\\Z:\\home\\loganp\\.local\\share\\Steam\\steamapps\\common\\Proton Hotfix\\files\\share\\wine\\winmd\\windows.storage.winmd"
+0140:warn:module:find_builtin_dll cannot find builtin library for L"\\??\\C:\\windows\\system32\\winmetadata\\windows.storage.winmd"
+0140:warn:module:find_builtin_dll cannot find builtin library for L"\\??\\Z:\\home\\loganp\\.local\\share\\Steam\\steamapps\\common\\Proton Hotfix\\files\\share\\wine\\winmd\\windows.system.winmd"
+0140:warn:module:find_builtin_dll cannot find builtin library for L"\\??\\C:\\windows\\system32\\winmetadata\\windows.system.winmd"
+0140:warn:module:find_builtin_dll cannot find builtin library for L"\\??\\Z:\\home\\loganp\\.local\\share\\Steam\\steamapps\\common\\Proton Hotfix\\files\\share\\wine\\winmd\\windows.ui.winmd"
+0140:warn:module:find_builtin_dll cannot find builtin library for L"\\??\\C:\\windows\\system32\\winmetadata\\windows.ui.winmd"
+0140:warn:module:find_builtin_dll cannot find builtin library for L"\\??\\Z:\\home\\loganp\\.local\\share\\Steam\\steamapps\\common\\Proton Hotfix\\files\\share\\wine\\winmd\\windows.ui.xaml.winmd"
+0140:warn:module:map_image_into_view L"\\??\\Z:\\home\\loganp\\.local\\share\\Steam\\steamapps\\common\\Proton Hotfix\\files\\share\\wine\\winmd\\windows.ui.xaml.winmd" section .text too large (1000+2000/2000)
+0140:warn:module:find_builtin_dll cannot find builtin library for L"\\??\\C:\\windows\\system32\\winmetadata\\windows.ui.xaml.winmd"
+0140:warn:module:map_image_into_view L"\\??\\C:\\windows\\system32\\winmetadata\\windows.ui.xaml.winmd" section .text too large (1000+2000/2000)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C870 260)
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31bf9c,0x00000004,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31bf9c,0x00000004,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31bf9c,0x00000004,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31bf9c,0x00000004,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31bf9c,0x00000004,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31bf9c,0x00000004,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31bf9c,0x00000004,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31bf9c,0x00000004,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31bf9c,0x00000004,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31bf9c,0x00000004,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31bf9c,0x00000004,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31bf9c,0x00000004,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31bf9c,0x00000004,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31bf9c,0x00000004,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31bf9c,0x00000004,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31bf9c,0x00000004,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31bf9c,0x00000004,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31bf9c,0x00000004,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31bf9c,0x00000004,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31bf9c,0x00000004,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31bf9c,0x00000004,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31bf9c,0x00000004,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31bf9c,0x00000004,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31bf9c,0x00000004,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31bf9c,0x00000004,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31bf9c,0x00000004,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31bf9c,0x00000004,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31bf9c,0x00000004,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31bf9c,0x00000004,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31bf9c,0x00000004,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31bf9c,0x00000004,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31bf9c,0x00000004,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31bf9c,0x00000004,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31bf9c,0x00000004,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31bf9c,0x00000004,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31bf9c,0x00000004,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31bf9c,0x00000004,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31bf9c,0x00000004,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31bf9c,0x00000004,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31bf9c,0x00000004,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31bf9c,0x00000004,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31bf9c,0x00000004,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31bf9c,0x00000004,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31bf9c,0x00000004,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31bf9c,0x00000004,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31bf9c,0x00000004,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31bf9c,0x00000004,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31bf9c,0x00000004,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31bf9c,0x00000004,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31bf9c,0x00000004,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31bf9c,0x00000004,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31bf9c,0x00000004,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31bf9c,0x00000004,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31bf9c,0x00000004,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31bf9c,0x00000004,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31bf9c,0x00000004,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31bf9c,0x00000004,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31bf9c,0x00000004,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31bf9c,0x00000004,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31bf9c,0x00000004,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31bf9c,0x00000004,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31bf9c,0x00000004,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31bf9c,0x00000004,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31bf9c,0x00000004,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31bf9c,0x00000004,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31bf9c,0x00000004,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31bf9c,0x00000004,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31bf9c,0x00000004,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31bf9c,0x00000004,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31bf9c,0x00000004,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31bf9c,0x00000004,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31bf9c,0x00000004,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31bf9c,0x00000004,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31bf9c,0x00000004,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31bf9c,0x00000004,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31bf9c,0x00000004,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31bf9c,0x00000004,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31bf9c,0x00000004,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31bf9c,0x00000004,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31bf9c,0x00000004,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31bf9c,0x00000004,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31bf9c,0x00000004,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31bf9c,0x00000004,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31bf9c,0x00000004,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31bf9c,0x00000004,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31bf9c,0x00000004,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31bf9c,0x00000004,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31bf9c,0x00000004,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31bf9c,0x00000004,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31bf9c,0x00000004,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31bf9c,0x00000004,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31bf9c,0x00000004,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31bf9c,0x00000004,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31bf9c,0x00000004,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31bf9c,0x00000004,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31bf9c,0x00000004,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31bf9c,0x00000004,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31bf9c,0x00000004,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31bf9c,0x00000004,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31bf9c,0x00000004,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31bf9c,0x00000004,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31bf9c,0x00000004,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31bf9c,0x00000004,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31bf9c,0x00000004,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31bf9c,0x00000004,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31bf9c,0x00000004,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31bf9c,0x00000004,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31bf9c,0x00000004,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31c41c,0x00000004,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31c41c,0x00000004,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31c41c,0x00000004,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31c41c,0x00000004,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31c41c,0x00000004,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31c41c,0x00000004,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31c41c,0x00000004,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31c41c,0x00000004,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31c41c,0x00000004,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31c41c,0x00000004,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31c41c,0x00000004,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31c41c,0x00000004,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31c41c,0x00000004,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31c41c,0x00000004,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31c41c,0x00000004,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31c41c,0x00000004,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31c41c,0x00000004,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31c41c,0x00000004,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31c41c,0x00000004,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31c41c,0x00000004,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31c41c,0x00000004,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31c41c,0x00000004,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31c41c,0x00000004,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31c41c,0x00000004,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31c4dc,0x00000004,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31c4dc,0x00000004,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31c4dc,0x00000004,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31c4dc,0x00000004,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31c4dc,0x00000004,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31c4dc,0x00000004,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31c4dc,0x00000004,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31c4dc,0x00000004,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31c4dc,0x00000004,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31c4dc,0x00000004,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31c4dc,0x00000004,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31c4dc,0x00000004,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31c4dc,0x00000004,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31c4dc,0x00000004,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31c4dc,0x00000004,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31c4dc,0x00000004,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31c4dc,0x00000004,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31c4dc,0x00000004,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31c4dc,0x00000004,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31c4dc,0x00000004,(nil))
+0140:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\dsound.dll" at 00006FFFFE310000: builtin
+0140:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\winmm.dll" at 00006FFFFE200000: builtin
+0140:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\msacm32.dll" at 00006FFFFE2E0000: builtin
+0140:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\comctl32.dll" at 00006FFFFE090000: builtin
+0140:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\msvfw32.dll" at 00006FFFFE1C0000: builtin
+0140:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\quartz.dll" at 00006FFFFE370000: builtin
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C830 260)
+0140:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\avicap32.dll" at 00006FFFFE030000: builtin
+0140:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\msdmo.dll" at 00006FFFFE000000: builtin
+0140:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\devenum.dll" at 00006FFFFE050000: builtin
+0140:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\propsys.dll" at 00006FFFFDF20000: builtin
+0140:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\rtworkq.dll" at 00006FFFFDEF0000: builtin
+0140:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\mfplat.dll" at 00006FFFFDF60000: builtin
+0140:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\colorcnv.dll" at 00006FFFFDFD0000: builtin
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031BE90 260)
+0140:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\bcrypt.dll" at 00006FFFFDDA0000: builtin
+0140:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\crypt32.dll" at 00006FFFFDDD0000: builtin
+0140:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\comdlg32.dll" at 00006FFFFDB70000: builtin
+0140:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\cryptui.dll" at 00006FFFFDC80000: builtin
+0140:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\wintrust.dll" at 00006FFFFDB30000: builtin
+0140:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\cryptdlg.dll" at 00006FFFFDEC0000: builtin
+0140:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\cryptnet.dll" at 00006FFFFDB00000: builtin
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C840 260)
+0140:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\l3codecx.ax" at 00006FFFFDAD0000: builtin
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C830 260)
+0140:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\winedmo.dll" at 00006FFFFDA70000: builtin
+0140:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\mfasfsrcsnk.dll" at 00006FFFFDA90000: builtin
+0140:warn:module:load_builtin_unixlib failed to load "~/.local/share/Steam/steamapps/common/Proton Hotfix/files/lib/wine/x86_64-unix/winedmo.so": libavutil.so.56: cannot open shared object file: No such file or directory
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C8A0 260)
+0140:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\mfh264enc.dll" at 00006FFFFDA40000: builtin
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C780 260)
+0140:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\mfmp4srcsnk.dll" at 00006FFFFDA00000: builtin
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C8A0 260)
+0140:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\mp3dmod.dll" at 00006FFFFD990000: builtin
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C7A0 260)
+0140:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\msauddecmft.dll" at 00006FFFFD960000: builtin
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C6E0 260)
+0140:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\dbghelp.dll" at 00006FFFFD870000: builtin
+0140:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\mscoree.dll" at 00006FFFFD910000: builtin
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000001a,0x31c8c8,0x00000008,(nil))
+0140:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\cabinet.dll" at 00006FFFFD700000: builtin
+0140:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\imagehlp.dll" at 00006FFFFD6D0000: builtin
+0140:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\mspatcha.dll" at 00006FFFFD6B0000: builtin
+0140:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\odbccp32.dll" at 00006FFFFD680000: builtin
+0140:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\sxs.dll" at 00006FFFFD660000: builtin
+0140:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\mpr.dll" at 00006FFFFD500000: builtin
+0140:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\ws2_32.dll" at 00006FFFFF950000: builtin
+0140:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\wininet.dll" at 00006FFFFD530000: builtin
+0140:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\urlmon.dll" at 00006FFFFD5D0000: builtin
+0140:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\version.dll" at 00006FFFFD4E0000: builtin
+0140:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\msi.dll" at 00006FFFFD730000: builtin
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31b5fc,0x00000004,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31b5fc,0x00000004,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31b5fc,0x00000004,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31b5fc,0x00000004,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31b5fc,0x00000004,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31b5fc,0x00000004,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000001a,0x31c3c8,0x00000008,(nil))
+0140:trace:loaddll:free_modref Unloaded module L"C:\\windows\\system32\\msi.dll" : builtin
+0140:trace:loaddll:free_modref Unloaded module L"C:\\windows\\system32\\version.dll" : builtin
+0140:trace:loaddll:free_modref Unloaded module L"C:\\windows\\system32\\urlmon.dll" : builtin
+0140:trace:loaddll:free_modref Unloaded module L"C:\\windows\\system32\\wininet.dll" : builtin
+0140:trace:loaddll:free_modref Unloaded module L"C:\\windows\\system32\\ws2_32.dll" : builtin
+0140:trace:loaddll:free_modref Unloaded module L"C:\\windows\\system32\\mpr.dll" : builtin
+0140:trace:loaddll:free_modref Unloaded module L"C:\\windows\\system32\\sxs.dll" : builtin
+0140:trace:loaddll:free_modref Unloaded module L"C:\\windows\\system32\\odbccp32.dll" : builtin
+0140:trace:loaddll:free_modref Unloaded module L"C:\\windows\\system32\\mspatcha.dll" : builtin
+0140:trace:loaddll:free_modref Unloaded module L"C:\\windows\\system32\\imagehlp.dll" : builtin
+0140:trace:loaddll:free_modref Unloaded module L"C:\\windows\\system32\\cabinet.dll" : builtin
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C8A0 260)
+0140:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\mpr.dll" at 00006FFFFD500000: builtin
+0140:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\ws2_32.dll" at 00006FFFFF950000: builtin
+0140:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\wininet.dll" at 00006FFFFD530000: builtin
+0140:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\urlmon.dll" at 00006FFFFD5D0000: builtin
+0140:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\mshtml.dll" at 00006FFFFD660000: builtin
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31bb5c,0x00000004,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31bb5c,0x00000004,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31bb5c,0x00000004,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31bb5c,0x00000004,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31bb5c,0x00000004,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31bb5c,0x00000004,(nil))
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C870 260)
+0140:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\version.dll" at 00006FFFFD4B0000: builtin
+0140:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\advpack.dll" at 00006FFFFD4D0000: builtin
+0140:trace:process:GetEnvironmentVariableW (L"TMP" 000000000031BF00 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C3B0 260)
+0140:trace:loaddll:free_modref Unloaded module L"C:\\windows\\system32\\advpack.dll" : builtin
+0140:trace:loaddll:free_modref Unloaded module L"C:\\windows\\system32\\version.dll" : builtin
+0140:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\msisip.dll" at 00006FFFFD4E0000: builtin
+0140:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\msmpeg2vdec.dll" at 00006FFFFD4B0000: builtin
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C740 260)
+0140:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\msvdsp.dll" at 00006FFFFD480000: builtin
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031BE90 260)
+0140:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\msvproc.dll" at 00006FFFFD450000: builtin
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C1E0 260)
+0140:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\qcap.dll" at 00006FFFFD400000: builtin
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C840 260)
+0140:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\qedit.dll" at 00006FFFFD3B0000: builtin
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C840 260)
+0140:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\resampledmo.dll" at 00006FFFFD380000: builtin
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C7A0 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C870 260)
+0140:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\version.dll" at 00006FFFFD330000: builtin
+0140:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\advpack.dll" at 00006FFFFD350000: builtin
+0140:trace:process:GetEnvironmentVariableW (L"TMP" 000000000031C200 260)
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C6B0 260)
+0140:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\vidreszr.dll" at 00006FFFFD300000: builtin
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031BE90 260)
+0140:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\windowscodecs.dll" at 00006FFFFD180000: builtin
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C6F0 260)
+0140:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\winegstreamer.dll" at 00006FFFFD0F0000: builtin
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C840 260)
+0140:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\spool\\prtprocs\\x64\\wineps.drv" at 00006FFFFD060000: builtin
+0140:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\compstui.dll" at 00006FFFFCFE0000: builtin
+0140:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\winspool.drv" at 00006FFFFD010000: builtin
+0140:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\spoolss.dll" at 00006FFFFCF70000: builtin
+0140:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\localspl.dll" at 00006FFFFCFA0000: builtin
+0140:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\winevulkan.dll" at 00006FFFFCF10000: builtin
+0140:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\spool\\prtprocs\\x64\\winprint.dll" at 00006FFFFCEF0000: builtin
+0140:trace:process:ExpandEnvironmentStringsW (L"C:\\windows\\system32\\rsaenh.dll" 0000000000000000 0)
+0140:trace:process:ExpandEnvironmentStringsW (L"C:\\windows\\system32\\rsaenh.dll" 0000000000B84210 31)
+0140:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\rsaenh.dll" at 00006FFFFCE90000: builtin
+0140:trace:loaddll:free_modref Unloaded module L"C:\\windows\\system32\\rsaenh.dll" : builtin
+0140:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\wmadmod.dll" at 00006FFFFCEC0000: builtin
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C6A0 260)
+0140:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\wmvdecod.dll" at 00006FFFFCE90000: builtin
+0140:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031C250 260)
+0140:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\iexplore.exe" at 0000000100100000: builtin
+0140:trace:loaddll:free_modref Unloaded module L"C:\\windows\\system32\\iexplore.exe" : builtin
+0140:trace:process:CreateProcessInternalW app L"C:\\windows\\system32\\iexplore.exe" cmdline L"\"C:\\windows\\system32\\iexplore.exe\" /RegServer", inherit 0, flags 0, env 0000000000000000 ((null))
+0140:trace:process:GetEnvironmentVariableW (L"PROTON_ORIG_LAUNCHER_NAME" 0000000000000000 0)
+0140:trace:process:NtCreateUserProcess L"\\??\\C:\\windows\\system32\\iexplore.exe" image L"C:\\windows\\system32\\iexplore.exe" cmdline L"\"C:\\windows\\system32\\iexplore.exe\" /RegServer" parent (nil) machine 0
+0150:trace:seh:sigsys_handler SIGSYS, rax 0xffff, rip 0x600000000005.
+0150:trace:seh:install_bpf Seccomp filters already installed.
+0140:trace:process:NtCreateUserProcess L"\\??\\C:\\windows\\system32\\iexplore.exe" pid 014c tid 0150 handles 0xc4/0xc8
+0140:trace:process:CreateProcessInternalW started process pid 014c tid 0150
+0150:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x00000025,0x31fa10,0x00000040,(nil))
+0150:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\iexplore.exe" at 0000000140000000: builtin
+0150:trace:loaddll:build_ntdll_module Loaded L"C:\\windows\\system32\\ntdll.dll" at 00006FFFFFF30000: builtin
+0150:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\kernelbase.dll" at 00006FFFFFBF0000: builtin
+0150:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\kernel32.dll" at 00006FFFFFEB0000: builtin
+0150:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\msvcrt.dll" at 00006FFFFFAE0000: builtin
+0150:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\ucrtbase.dll" at 00006FFFFF9B0000: builtin
+0150:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\sechost.dll" at 00006FFFFFAA0000: builtin
+0150:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\advapi32.dll" at 00006FFFFFBA0000: builtin
+0150:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\win32u.dll" at 00006FFFFF450000: builtin
+0150:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\user32.dll" at 00006FFFFF540000: builtin
+0150:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\gdi32.dll" at 00006FFFFF4A0000: builtin
+0150:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\comctl32.dll" at 00006FFFFE090000: builtin
+0150:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\cryptbase.dll" at 00006FFFFF990000: builtin
+0150:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\rpcrt4.dll" at 00006FFFFF8B0000: builtin
+0150:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\combase.dll" at 00006FFFFE6B0000: builtin
+0150:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\coml2.dll" at 00006FFFFE680000: builtin
+0150:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\ole32.dll" at 00006FFFFE720000: builtin
+0150:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\oleaut32.dll" at 00006FFFFE530000: builtin
+0150:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\shcore.dll" at 00006FFFFE7F0000: builtin
+0150:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\shlwapi.dll" at 00006FFFFE820000: builtin
+0150:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\shell32.dll" at 00006FFFFE880000: builtin
+0150:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\mpr.dll" at 00006FFFFD500000: builtin
+0150:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\ws2_32.dll" at 00006FFFFF950000: builtin
+0150:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\wininet.dll" at 00006FFFFD530000: builtin
+0150:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\urlmon.dll" at 00006FFFFD5D0000: builtin
+0150:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\ieframe.dll" at 00006FFFFCE00000: builtin
+0150:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000001a,0x31f548,0x00000008,(nil))
+0150:trace:process:GetEnvironmentVariableW (L"WINEUNIXCP" 000000000031F2E0 85)
+0150:fixme:ntdll:find_reg_tz_info Can't find matching timezone information in the registry for bias 0, std (d/m/y): 22/03/2026, dlt (d/m/y): 15/02/2026
+0150:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\imm32.dll" at 00006FFFFF420000: builtin
+0150:trace:process:GetEnvironmentVariableW (L"oanocache" 0000000000000000 0)
+0150:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31e80c,0x00000004,(nil))
+0150:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31e80c,0x00000004,(nil))
+0150:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31e80c,0x00000004,(nil))
+0150:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31e80c,0x00000004,(nil))
+0150:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31e80c,0x00000004,(nil))
+0150:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31e80c,0x00000004,(nil))
+0150:trace:loaddll:build_module Loaded L"c:\\windows\\system32\\winex11.drv" at 00006FFFFF220000: builtin
+0150:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\uxtheme.dll" at 00006FFFFF1D0000: builtin
+0150:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x00000007,0x31f9a0,0x00000008,(nil))
+0150:trace:process:GetEnvironmentVariableW (L"WINE_SHRINK_ENV" 000000000031FE40 80)
+0150:trace:process:GetEnvironmentVariableW (L"SteamGameId" 000000000031FE40 80)
+0150:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\version.dll" at 00006FFFFD330000: builtin
+0150:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\cfgmgr32.dll" at 00006FFFFF7E0000: builtin
+0150:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\setupapi.dll" at 00006FFFFF820000: builtin
+0150:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\advpack.dll" at 00006FFFFD350000: builtin
+0150:trace:process:GetEnvironmentVariableW (L"TMP" 000000000031F190 260)
+0150:trace:process:GetEnvironmentVariableW (L"SystemRoot" 000000000031F640 260)
+0150:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31c4cc,0x00000004,(nil))
+0150:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31c4cc,0x00000004,(nil))
+0150:trace:process:NtTerminateProcess handle (nil), exit_code 0, process_exiting 0.
+0150:trace:process:NtTerminateProcess handle (nil), self 1, process_exiting 0.
+0150:trace:process:NtTerminateProcess handle 0xffffffffffffffff, exit_code 0, process_exiting 1.
+0150:trace:process:NtTerminateProcess handle 0xffffffffffffffff, self 1, process_exiting 1.
+0140:trace:loaddll:free_modref Unloaded module L"C:\\windows\\system32\\colorcnv.dll" : builtin
+0140:trace:loaddll:free_modref Unloaded module L"C:\\windows\\system32\\cryptdlg.dll" : builtin
+0140:trace:loaddll:free_modref Unloaded module L"C:\\windows\\system32\\cryptui.dll" : builtin
+0140:trace:loaddll:free_modref Unloaded module L"C:\\windows\\system32\\comdlg32.dll" : builtin
+0140:trace:loaddll:free_modref Unloaded module L"C:\\windows\\system32\\cryptnet.dll" : builtin
+0140:trace:loaddll:free_modref Unloaded module L"C:\\windows\\system32\\l3codecx.ax" : builtin
+0140:trace:loaddll:free_modref Unloaded module L"C:\\windows\\system32\\mfasfsrcsnk.dll" : builtin
+0140:trace:loaddll:free_modref Unloaded module L"C:\\windows\\system32\\mfh264enc.dll" : builtin
+0140:trace:loaddll:free_modref Unloaded module L"C:\\windows\\system32\\mfmp4srcsnk.dll" : builtin
+0140:trace:loaddll:free_modref Unloaded module L"C:\\windows\\system32\\winedmo.dll" : builtin
+0140:trace:loaddll:free_modref Unloaded module L"C:\\windows\\system32\\mp3dmod.dll" : builtin
+0140:trace:loaddll:free_modref Unloaded module L"C:\\windows\\system32\\msauddecmft.dll" : builtin
+0140:trace:loaddll:free_modref Unloaded module L"C:\\windows\\system32\\mscoree.dll" : builtin
+0140:trace:loaddll:free_modref Unloaded module L"C:\\windows\\system32\\dbghelp.dll" : builtin
+0140:trace:loaddll:free_modref Unloaded module L"C:\\windows\\system32\\mshtml.dll" : builtin
+0140:trace:loaddll:free_modref Unloaded module L"C:\\windows\\system32\\msisip.dll" : builtin
+0140:trace:loaddll:free_modref Unloaded module L"C:\\windows\\system32\\msmpeg2vdec.dll" : builtin
+0140:trace:loaddll:free_modref Unloaded module L"C:\\windows\\system32\\msvdsp.dll" : builtin
+0140:trace:loaddll:free_modref Unloaded module L"C:\\windows\\system32\\msvproc.dll" : builtin
+0140:trace:loaddll:free_modref Unloaded module L"C:\\windows\\system32\\qcap.dll" : builtin
+0140:trace:loaddll:free_modref Unloaded module L"C:\\windows\\system32\\qedit.dll" : builtin
+0140:trace:loaddll:free_modref Unloaded module L"C:\\windows\\system32\\resampledmo.dll" : builtin
+0140:trace:loaddll:free_modref Unloaded module L"C:\\windows\\system32\\urlmon.dll" : builtin
+0140:trace:loaddll:free_modref Unloaded module L"C:\\windows\\system32\\wininet.dll" : builtin
+0140:trace:loaddll:free_modref Unloaded module L"C:\\windows\\system32\\ws2_32.dll" : builtin
+0140:trace:loaddll:free_modref Unloaded module L"C:\\windows\\system32\\mpr.dll" : builtin
+0140:trace:loaddll:free_modref Unloaded module L"C:\\windows\\system32\\vidreszr.dll" : builtin
+0140:trace:loaddll:free_modref Unloaded module L"C:\\windows\\system32\\windowscodecs.dll" : builtin
+0140:trace:loaddll:free_modref Unloaded module L"C:\\windows\\system32\\winegstreamer.dll" : builtin
+0140:trace:loaddll:free_modref Unloaded module L"C:\\windows\\system32\\spool\\prtprocs\\x64\\wineps.drv" : builtin
+0140:trace:loaddll:free_modref Unloaded module L"C:\\windows\\system32\\winevulkan.dll" : builtin
+0140:trace:loaddll:free_modref Unloaded module L"C:\\windows\\system32\\spool\\prtprocs\\x64\\winprint.dll" : builtin
+0140:trace:loaddll:free_modref Unloaded module L"C:\\windows\\system32\\wintrust.dll" : builtin
+0140:trace:loaddll:free_modref Unloaded module L"C:\\windows\\system32\\crypt32.dll" : builtin
+0140:trace:loaddll:free_modref Unloaded module L"C:\\windows\\system32\\bcrypt.dll" : builtin
+0140:trace:loaddll:free_modref Unloaded module L"C:\\windows\\system32\\wmadmod.dll" : builtin
+0140:trace:loaddll:free_modref Unloaded module L"C:\\windows\\system32\\wmvdecod.dll" : builtin
+0140:trace:loaddll:free_modref Unloaded module L"C:\\windows\\system32\\mfplat.dll" : builtin
+0140:trace:loaddll:free_modref Unloaded module L"C:\\windows\\system32\\rtworkq.dll" : builtin
+0140:trace:loaddll:free_modref Unloaded module L"C:\\windows\\system32\\propsys.dll" : builtin
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000001a,0x31b1d8,0x00000008,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000001a,0x31b1d8,0x00000008,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000001a,0x31b1d8,0x00000008,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000001a,0x31b1d8,0x00000008,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000001a,0x31b1d8,0x00000008,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000001a,0x31b1d8,0x00000008,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000001a,0x31b1d8,0x00000008,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000001a,0x31b1d8,0x00000008,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000001a,0x31b1d8,0x00000008,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000001a,0x31b1d8,0x00000008,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000001a,0x31b1d8,0x00000008,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000001a,0x31b1d8,0x00000008,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000001a,0x31b1d8,0x00000008,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000001a,0x31b1d8,0x00000008,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000001a,0x31b1d8,0x00000008,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000001a,0x31b1d8,0x00000008,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000001a,0x31b1d8,0x00000008,(nil))
+0140:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000001a,0x31b1d8,0x00000008,(nil))
+0140:trace:process:NtTerminateProcess handle (nil), exit_code 0, process_exiting 0.
+0140:trace:process:NtTerminateProcess handle (nil), self 1, process_exiting 0.
+0140:trace:process:NtTerminateProcess handle 0xffffffffffffffff, exit_code 0, process_exiting 1.
+0140:trace:process:NtTerminateProcess handle 0xffffffffffffffff, self 1, process_exiting 1.
+002c:trace:process:CreateProcessInternalW app L"C:\\windows\\syswow64\\rundll32.exe" cmdline L"C:\\windows\\syswow64\\rundll32.exe setupapi,InstallHinfSection Wow64Install 128 \\\\?\\Z:\\home\\loganp\\.local\\share\\Steam\\steamapps\\common\\Proton Hotfix\\files\\share\\wine\\wine.inf", inherit 0, flags 0, env 0000000000000000 ((null))
+002c:trace:process:GetEnvironmentVariableW (L"PROTON_ORIG_LAUNCHER_NAME" 0000000000000000 0)
+002c:trace:process:NtCreateUserProcess L"\\??\\C:\\windows\\syswow64\\rundll32.exe" image L"C:\\windows\\syswow64\\rundll32.exe" cmdline L"C:\\windows\\syswow64\\rundll32.exe setupapi,InstallHinfSection Wow64Install 128 \\\\?\\Z:\\home\\loganp\\.local\\share\\Steam\\steamapps\\common\\Proton Hotfix\\files\\share\\wine\\wine.inf" parent (nil) machine 0
+002c:trace:process:NtCreateUserProcess L"\\??\\C:\\windows\\syswow64\\rundll32.exe" pid 0158 tid 015c handles 0x6c/0x70
+002c:trace:process:CreateProcessInternalW started process pid 0158 tid 015c
+015c:trace:process:NtQueryInformationProcess (0xffffffff,0x00000025,0x80fc90,0x00000030,(nil))
+015c:trace:loaddll:build_module Loaded L"C:\\windows\\syswow64\\rundll32.exe" at 00400000: builtin
+015c:trace:loaddll:build_ntdll_module Loaded L"C:\\windows\\system32\\ntdll.dll" at 7BF30000: builtin
+015c:trace:loaddll:build_module Loaded L"C:\\windows\\syswow64\\kernelbase.dll" at 7BBE0000: builtin
+015c:trace:loaddll:build_module Loaded L"C:\\windows\\syswow64\\kernel32.dll" at 7BEB0000: builtin
+015c:trace:loaddll:build_module Loaded L"C:\\windows\\syswow64\\ucrtbase.dll" at 7BAE0000: builtin
+015c:trace:loaddll:build_module Loaded L"C:\\windows\\syswow64\\msvcrt.dll" at 7B7D0000: builtin
+015c:trace:loaddll:build_module Loaded L"C:\\windows\\syswow64\\sechost.dll" at 7B7A0000: builtin
+015c:trace:loaddll:build_module Loaded L"C:\\windows\\syswow64\\advapi32.dll" at 7B8A0000: builtin
+015c:trace:loaddll:build_module Loaded L"C:\\windows\\syswow64\\win32u.dll" at 7B6B0000: builtin
+015c:trace:loaddll:build_module Loaded L"C:\\windows\\syswow64\\gdi32.dll" at 7B700000: builtin
+015c:trace:loaddll:build_module Loaded L"C:\\windows\\syswow64\\user32.dll" at 7B8F0000: builtin
+015c:trace:process:NtQueryInformationProcess (0xffffffff,0x0000001a,0x80fa0c,0x00000004,(nil))
+015c:trace:process:GetEnvironmentVariableW (L"WINEUNIXCP" 0080F794 85)
+015c:fixme:ntdll:find_reg_tz_info Can't find matching timezone information in the registry for bias 0, std (d/m/y): 22/03/2026, dlt (d/m/y): 15/02/2026
+015c:trace:process:set_entry_point setting FT_Thunk at 7BEF8668 to 00000000
+015c:trace:loaddll:build_module Loaded L"C:\\windows\\syswow64\\imm32.dll" at 7B680000: builtin
+015c:trace:process:NtQueryInformationProcess (0xffffffff,0x00000007,0x80fc44,0x00000004,(nil))
+015c:trace:process:GetEnvironmentVariableW (L"WINE_SHRINK_ENV" 0080FE84 80)
+015c:trace:process:GetEnvironmentVariableW (L"SteamGameId" 0080FE84 80)
+015c:trace:loaddll:build_module Loaded L"c:\\windows\\system32\\winex11.drv" at 7B660000: builtin
+015c:trace:loaddll:build_module Loaded L"C:\\windows\\syswow64\\uxtheme.dll" at 7B610000: builtin
+015c:trace:loaddll:build_module Loaded L"C:\\windows\\syswow64\\cfgmgr32.dll" at 7B540000: builtin
+015c:trace:loaddll:build_module Loaded L"C:\\windows\\syswow64\\cryptbase.dll" at 7B480000: builtin
+015c:trace:loaddll:build_module Loaded L"C:\\windows\\syswow64\\rpcrt4.dll" at 7B4A0000: builtin
+015c:trace:loaddll:build_module Loaded L"C:\\windows\\syswow64\\setupapi.dll" at 7B580000: builtin
+015c:trace:loaddll:build_module Loaded L"C:\\windows\\syswow64\\combase.dll" at 7B340000: builtin
+015c:trace:loaddll:build_module Loaded L"C:\\windows\\syswow64\\coml2.dll" at 7B310000: builtin
+015c:trace:loaddll:build_module Loaded L"C:\\windows\\syswow64\\ole32.dll" at 7B3B0000: builtin
+015c:trace:loaddll:build_module Loaded L"C:\\windows\\syswow64\\shcore.dll" at 7A920000: builtin
+015c:trace:loaddll:build_module Loaded L"C:\\windows\\syswow64\\shlwapi.dll" at 7A950000: builtin
+015c:trace:loaddll:build_module Loaded L"C:\\windows\\syswow64\\shell32.dll" at 7A9B0000: builtin
+015c:trace:process:NtQueryInformationProcess (0xffffffff,0x0000000c,0x80cc4c,0x00000004,(nil))
+015c:trace:process:NtQueryInformationProcess (0xffffffff,0x0000000c,0x80cc4c,0x00000004,(nil))
+015c:trace:process:NtQueryInformationProcess (0xffffffff,0x0000000c,0x80cc4c,0x00000004,(nil))
+015c:trace:process:NtQueryInformationProcess (0xffffffff,0x0000000c,0x80cc4c,0x00000004,(nil))
+015c:trace:process:NtQueryInformationProcess (0xffffffff,0x0000000c,0x80cc4c,0x00000004,(nil))
+015c:trace:process:NtQueryInformationProcess (0xffffffff,0x0000000c,0x80cc4c,0x00000004,(nil))
+015c:trace:loaddll:build_module Loaded L"C:\\windows\\syswow64\\oleaut32.dll" at 7A800000: builtin
+015c:trace:loaddll:build_module Loaded L"C:\\windows\\syswow64\\atl100.dll" at 7A8E0000: builtin
+015c:trace:process:GetEnvironmentVariableW (L"oanocache" 00000000 0)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CF80 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CF80 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CF80 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CF80 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CF80 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CF80 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CF80 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CF80 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CF80 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CF80 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CF80 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CF80 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CF80 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CF80 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CF80 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CF80 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CCD0 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CCD0 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CCD0 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CCD0 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CCD0 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CCD0 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CCD0 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CCD0 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CCD0 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CCD0 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CCD0 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CCD0 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CCD0 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CCD0 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CCD0 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CCD0 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CCD0 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CCD0 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CCD0 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CCD0 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CCD0 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CCD0 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CCD0 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CCD0 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CCD0 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CCD0 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CCD0 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CCD0 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CCD0 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CCD0 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CCD0 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CCD0 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CCD0 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CCD0 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CCD0 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CCD0 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CCD0 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CCD0 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CCD0 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CCD0 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CCD0 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CCD0 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CCD0 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CCD0 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CCD0 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CCD0 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CCD0 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CCD0 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CCD0 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CCD0 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CCD0 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CCD0 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CCD0 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CCD0 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CCD0 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CCD0 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CCD0 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CCD0 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CCD0 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CCD0 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CCD0 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CCD0 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CCD0 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CCD0 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CCD0 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CCD0 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CCD0 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CCD0 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CCD0 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CCD0 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CCD0 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CCD0 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CCD0 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CCD0 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CCD0 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CCD0 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CCD0 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CCD0 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CCD0 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CCD0 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CCD0 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CCD0 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CCD0 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CCD0 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CCD0 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CCD0 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CCD0 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CCD0 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CCD0 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CCD0 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CCD0 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CCD0 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CCD0 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CCD0 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CCD0 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CCD0 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CCD0 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CCD0 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CCD0 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CCD0 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CCD0 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CCD0 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CCD0 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CCD0 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CCD0 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CCD0 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CCD0 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CCD0 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CCD0 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CCD0 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CCD0 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CCD0 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CCD0 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CCD0 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CCD0 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CCD0 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CCD0 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CCD0 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CCD0 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CCD0 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CCD0 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CCD0 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CCD0 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CCD0 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CCD0 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CCD0 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CCD0 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CCD0 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CCD0 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CCD0 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CCD0 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CCD0 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CCD0 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CCD0 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CCD0 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CCD0 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CCD0 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CCD0 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CCD0 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CCD0 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CCD0 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CCD0 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CCD0 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CCD0 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CCD0 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CCD0 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CCD0 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CCD0 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CCD0 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CCD0 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CCD0 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CCD0 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CCD0 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CCD0 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CCD0 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CCD0 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CCD0 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CCD0 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CCD0 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CCD0 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CCD0 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CCD0 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CCD0 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CCD0 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CCD0 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CCD0 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CCD0 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CCD0 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CCD0 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CCD0 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CCD0 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CCD0 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CCD0 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CCD0 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CCD0 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CCD0 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CCD0 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CCD0 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CCD0 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CCD0 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CCD0 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CCD0 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CCD0 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CCD0 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CCD0 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CCD0 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CCD0 260)
+015c:warn:module:find_builtin_dll cannot find builtin library for L"\\??\\Z:\\home\\loganp\\.local\\share\\Steam\\steamapps\\common\\Proton Hotfix\\files\\share\\wine\\winmd\\windows.applicationmodel.winmd"
+015c:warn:module:find_builtin_dll cannot find builtin library for L"\\??\\C:\\windows\\syswow64\\winmetadata\\windows.applicationmodel.winmd"
+015c:warn:module:find_builtin_dll cannot find builtin library for L"\\??\\Z:\\home\\loganp\\.local\\share\\Steam\\steamapps\\common\\Proton Hotfix\\files\\share\\wine\\winmd\\windows.globalization.winmd"
+015c:warn:module:find_builtin_dll cannot find builtin library for L"\\??\\C:\\windows\\syswow64\\winmetadata\\windows.globalization.winmd"
+015c:warn:module:find_builtin_dll cannot find builtin library for L"\\??\\Z:\\home\\loganp\\.local\\share\\Steam\\steamapps\\common\\Proton Hotfix\\files\\share\\wine\\winmd\\windows.graphics.winmd"
+015c:warn:module:find_builtin_dll cannot find builtin library for L"\\??\\C:\\windows\\syswow64\\winmetadata\\windows.graphics.winmd"
+015c:warn:module:find_builtin_dll cannot find builtin library for L"\\??\\Z:\\home\\loganp\\.local\\share\\Steam\\steamapps\\common\\Proton Hotfix\\files\\share\\wine\\winmd\\windows.media.winmd"
+015c:warn:module:find_builtin_dll cannot find builtin library for L"\\??\\C:\\windows\\syswow64\\winmetadata\\windows.media.winmd"
+015c:warn:module:find_builtin_dll cannot find builtin library for L"\\??\\Z:\\home\\loganp\\.local\\share\\Steam\\steamapps\\common\\Proton Hotfix\\files\\share\\wine\\winmd\\windows.networking.winmd"
+015c:warn:module:map_image_into_view L"\\??\\Z:\\home\\loganp\\.local\\share\\Steam\\steamapps\\common\\Proton Hotfix\\files\\share\\wine\\winmd\\windows.networking.winmd" section .text too large (1000+2000/2000)
+015c:warn:module:find_builtin_dll cannot find builtin library for L"\\??\\C:\\windows\\syswow64\\winmetadata\\windows.networking.winmd"
+015c:warn:module:map_image_into_view L"\\??\\C:\\windows\\syswow64\\winmetadata\\windows.networking.winmd" section .text too large (1000+2000/2000)
+015c:warn:module:find_builtin_dll cannot find builtin library for L"\\??\\Z:\\home\\loganp\\.local\\share\\Steam\\steamapps\\common\\Proton Hotfix\\files\\share\\wine\\winmd\\windows.perception.winmd"
+015c:warn:module:find_builtin_dll cannot find builtin library for L"\\??\\C:\\windows\\syswow64\\winmetadata\\windows.perception.winmd"
+015c:warn:module:find_builtin_dll cannot find builtin library for L"\\??\\Z:\\home\\loganp\\.local\\share\\Steam\\steamapps\\common\\Proton Hotfix\\files\\share\\wine\\winmd\\windows.storage.winmd"
+015c:warn:module:find_builtin_dll cannot find builtin library for L"\\??\\C:\\windows\\syswow64\\winmetadata\\windows.storage.winmd"
+015c:warn:module:find_builtin_dll cannot find builtin library for L"\\??\\Z:\\home\\loganp\\.local\\share\\Steam\\steamapps\\common\\Proton Hotfix\\files\\share\\wine\\winmd\\windows.system.winmd"
+015c:warn:module:find_builtin_dll cannot find builtin library for L"\\??\\C:\\windows\\syswow64\\winmetadata\\windows.system.winmd"
+015c:warn:module:find_builtin_dll cannot find builtin library for L"\\??\\Z:\\home\\loganp\\.local\\share\\Steam\\steamapps\\common\\Proton Hotfix\\files\\share\\wine\\winmd\\windows.ui.winmd"
+015c:warn:module:find_builtin_dll cannot find builtin library for L"\\??\\C:\\windows\\syswow64\\winmetadata\\windows.ui.winmd"
+015c:warn:module:find_builtin_dll cannot find builtin library for L"\\??\\Z:\\home\\loganp\\.local\\share\\Steam\\steamapps\\common\\Proton Hotfix\\files\\share\\wine\\winmd\\windows.ui.xaml.winmd"
+015c:warn:module:map_image_into_view L"\\??\\Z:\\home\\loganp\\.local\\share\\Steam\\steamapps\\common\\Proton Hotfix\\files\\share\\wine\\winmd\\windows.ui.xaml.winmd" section .text too large (1000+2000/2000)
+015c:warn:module:find_builtin_dll cannot find builtin library for L"\\??\\C:\\windows\\syswow64\\winmetadata\\windows.ui.xaml.winmd"
+015c:warn:module:map_image_into_view L"\\??\\C:\\windows\\syswow64\\winmetadata\\windows.ui.xaml.winmd" section .text too large (1000+2000/2000)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CE34 260)
+015c:trace:process:NtQueryInformationProcess (0xffffffff,0x0000000c,0x80c54c,0x00000004,(nil))
+015c:trace:process:NtQueryInformationProcess (0xffffffff,0x0000000c,0x80c54c,0x00000004,(nil))
+015c:trace:process:NtQueryInformationProcess (0xffffffff,0x0000000c,0x80c54c,0x00000004,(nil))
+015c:trace:process:NtQueryInformationProcess (0xffffffff,0x0000000c,0x80c54c,0x00000004,(nil))
+015c:trace:process:NtQueryInformationProcess (0xffffffff,0x0000000c,0x80c54c,0x00000004,(nil))
+015c:trace:process:NtQueryInformationProcess (0xffffffff,0x0000000c,0x80c54c,0x00000004,(nil))
+015c:trace:process:NtQueryInformationProcess (0xffffffff,0x0000000c,0x80c54c,0x00000004,(nil))
+015c:trace:process:NtQueryInformationProcess (0xffffffff,0x0000000c,0x80c54c,0x00000004,(nil))
+015c:trace:process:NtQueryInformationProcess (0xffffffff,0x0000000c,0x80c54c,0x00000004,(nil))
+015c:trace:process:NtQueryInformationProcess (0xffffffff,0x0000000c,0x80c54c,0x00000004,(nil))
+015c:trace:process:NtQueryInformationProcess (0xffffffff,0x0000000c,0x80c54c,0x00000004,(nil))
+015c:trace:process:NtQueryInformationProcess (0xffffffff,0x0000000c,0x80c54c,0x00000004,(nil))
+015c:trace:process:NtQueryInformationProcess (0xffffffff,0x0000000c,0x80c54c,0x00000004,(nil))
+015c:trace:process:NtQueryInformationProcess (0xffffffff,0x0000000c,0x80c54c,0x00000004,(nil))
+015c:trace:process:NtQueryInformationProcess (0xffffffff,0x0000000c,0x80c54c,0x00000004,(nil))
+015c:trace:process:NtQueryInformationProcess (0xffffffff,0x0000000c,0x80c54c,0x00000004,(nil))
+015c:trace:process:NtQueryInformationProcess (0xffffffff,0x0000000c,0x80c54c,0x00000004,(nil))
+015c:trace:process:NtQueryInformationProcess (0xffffffff,0x0000000c,0x80c54c,0x00000004,(nil))
+015c:trace:process:NtQueryInformationProcess (0xffffffff,0x0000000c,0x80c54c,0x00000004,(nil))
+015c:trace:process:NtQueryInformationProcess (0xffffffff,0x0000000c,0x80c54c,0x00000004,(nil))
+015c:trace:process:NtQueryInformationProcess (0xffffffff,0x0000000c,0x80c54c,0x00000004,(nil))
+015c:trace:process:NtQueryInformationProcess (0xffffffff,0x0000000c,0x80c54c,0x00000004,(nil))
+015c:trace:process:NtQueryInformationProcess (0xffffffff,0x0000000c,0x80c54c,0x00000004,(nil))
+015c:trace:process:NtQueryInformationProcess (0xffffffff,0x0000000c,0x80c54c,0x00000004,(nil))
+015c:trace:process:NtQueryInformationProcess (0xffffffff,0x0000000c,0x80c54c,0x00000004,(nil))
+015c:trace:process:NtQueryInformationProcess (0xffffffff,0x0000000c,0x80c54c,0x00000004,(nil))
+015c:trace:process:NtQueryInformationProcess (0xffffffff,0x0000000c,0x80c54c,0x00000004,(nil))
+015c:trace:process:NtQueryInformationProcess (0xffffffff,0x0000000c,0x80c54c,0x00000004,(nil))
+015c:trace:process:NtQueryInformationProcess (0xffffffff,0x0000000c,0x80c54c,0x00000004,(nil))
+015c:trace:process:NtQueryInformationProcess (0xffffffff,0x0000000c,0x80c54c,0x00000004,(nil))
+015c:trace:process:NtQueryInformationProcess (0xffffffff,0x0000000c,0x80c54c,0x00000004,(nil))
+015c:trace:process:NtQueryInformationProcess (0xffffffff,0x0000000c,0x80c54c,0x00000004,(nil))
+015c:trace:process:NtQueryInformationProcess (0xffffffff,0x0000000c,0x80c54c,0x00000004,(nil))
+015c:trace:process:NtQueryInformationProcess (0xffffffff,0x0000000c,0x80c54c,0x00000004,(nil))
+015c:trace:process:NtQueryInformationProcess (0xffffffff,0x0000000c,0x80c54c,0x00000004,(nil))
+015c:trace:process:NtQueryInformationProcess (0xffffffff,0x0000000c,0x80c54c,0x00000004,(nil))
+015c:trace:process:NtQueryInformationProcess (0xffffffff,0x0000000c,0x80c54c,0x00000004,(nil))
+015c:trace:process:NtQueryInformationProcess (0xffffffff,0x0000000c,0x80c54c,0x00000004,(nil))
+015c:trace:process:NtQueryInformationProcess (0xffffffff,0x0000000c,0x80c54c,0x00000004,(nil))
+015c:trace:process:NtQueryInformationProcess (0xffffffff,0x0000000c,0x80c54c,0x00000004,(nil))
+015c:trace:process:NtQueryInformationProcess (0xffffffff,0x0000000c,0x80c54c,0x00000004,(nil))
+015c:trace:process:NtQueryInformationProcess (0xffffffff,0x0000000c,0x80c54c,0x00000004,(nil))
+015c:trace:process:NtQueryInformationProcess (0xffffffff,0x0000000c,0x80c54c,0x00000004,(nil))
+015c:trace:process:NtQueryInformationProcess (0xffffffff,0x0000000c,0x80c54c,0x00000004,(nil))
+015c:trace:process:NtQueryInformationProcess (0xffffffff,0x0000000c,0x80c54c,0x00000004,(nil))
+015c:trace:process:NtQueryInformationProcess (0xffffffff,0x0000000c,0x80c54c,0x00000004,(nil))
+015c:trace:process:NtQueryInformationProcess (0xffffffff,0x0000000c,0x80c54c,0x00000004,(nil))
+015c:trace:process:NtQueryInformationProcess (0xffffffff,0x0000000c,0x80c54c,0x00000004,(nil))
+015c:trace:process:NtQueryInformationProcess (0xffffffff,0x0000000c,0x80c54c,0x00000004,(nil))
+015c:trace:process:NtQueryInformationProcess (0xffffffff,0x0000000c,0x80c54c,0x00000004,(nil))
+015c:trace:process:NtQueryInformationProcess (0xffffffff,0x0000000c,0x80c54c,0x00000004,(nil))
+015c:trace:process:NtQueryInformationProcess (0xffffffff,0x0000000c,0x80c54c,0x00000004,(nil))
+015c:trace:process:NtQueryInformationProcess (0xffffffff,0x0000000c,0x80c54c,0x00000004,(nil))
+015c:trace:process:NtQueryInformationProcess (0xffffffff,0x0000000c,0x80c54c,0x00000004,(nil))
+015c:trace:process:NtQueryInformationProcess (0xffffffff,0x0000000c,0x80c54c,0x00000004,(nil))
+015c:trace:process:NtQueryInformationProcess (0xffffffff,0x0000000c,0x80c54c,0x00000004,(nil))
+015c:trace:process:NtQueryInformationProcess (0xffffffff,0x0000000c,0x80c54c,0x00000004,(nil))
+015c:trace:process:NtQueryInformationProcess (0xffffffff,0x0000000c,0x80c54c,0x00000004,(nil))
+015c:trace:process:NtQueryInformationProcess (0xffffffff,0x0000000c,0x80c54c,0x00000004,(nil))
+015c:trace:process:NtQueryInformationProcess (0xffffffff,0x0000000c,0x80c54c,0x00000004,(nil))
+015c:trace:process:NtQueryInformationProcess (0xffffffff,0x0000000c,0x80c54c,0x00000004,(nil))
+015c:trace:process:NtQueryInformationProcess (0xffffffff,0x0000000c,0x80c54c,0x00000004,(nil))
+015c:trace:process:NtQueryInformationProcess (0xffffffff,0x0000000c,0x80c54c,0x00000004,(nil))
+015c:trace:process:NtQueryInformationProcess (0xffffffff,0x0000000c,0x80c54c,0x00000004,(nil))
+015c:trace:process:NtQueryInformationProcess (0xffffffff,0x0000000c,0x80c54c,0x00000004,(nil))
+015c:trace:process:NtQueryInformationProcess (0xffffffff,0x0000000c,0x80c54c,0x00000004,(nil))
+015c:trace:process:NtQueryInformationProcess (0xffffffff,0x0000000c,0x80c54c,0x00000004,(nil))
+015c:trace:process:NtQueryInformationProcess (0xffffffff,0x0000000c,0x80c54c,0x00000004,(nil))
+015c:trace:process:NtQueryInformationProcess (0xffffffff,0x0000000c,0x80c54c,0x00000004,(nil))
+015c:trace:process:NtQueryInformationProcess (0xffffffff,0x0000000c,0x80c54c,0x00000004,(nil))
+015c:trace:process:NtQueryInformationProcess (0xffffffff,0x0000000c,0x80c54c,0x00000004,(nil))
+015c:trace:process:NtQueryInformationProcess (0xffffffff,0x0000000c,0x80c54c,0x00000004,(nil))
+015c:trace:process:NtQueryInformationProcess (0xffffffff,0x0000000c,0x80c54c,0x00000004,(nil))
+015c:trace:process:NtQueryInformationProcess (0xffffffff,0x0000000c,0x80c54c,0x00000004,(nil))
+015c:trace:process:NtQueryInformationProcess (0xffffffff,0x0000000c,0x80c54c,0x00000004,(nil))
+015c:trace:process:NtQueryInformationProcess (0xffffffff,0x0000000c,0x80c54c,0x00000004,(nil))
+015c:trace:process:NtQueryInformationProcess (0xffffffff,0x0000000c,0x80c54c,0x00000004,(nil))
+015c:trace:process:NtQueryInformationProcess (0xffffffff,0x0000000c,0x80c54c,0x00000004,(nil))
+015c:trace:process:NtQueryInformationProcess (0xffffffff,0x0000000c,0x80c54c,0x00000004,(nil))
+015c:trace:process:NtQueryInformationProcess (0xffffffff,0x0000000c,0x80c54c,0x00000004,(nil))
+015c:trace:process:NtQueryInformationProcess (0xffffffff,0x0000000c,0x80c54c,0x00000004,(nil))
+015c:trace:process:NtQueryInformationProcess (0xffffffff,0x0000000c,0x80c54c,0x00000004,(nil))
+015c:trace:process:NtQueryInformationProcess (0xffffffff,0x0000000c,0x80c54c,0x00000004,(nil))
+015c:trace:process:NtQueryInformationProcess (0xffffffff,0x0000000c,0x80c54c,0x00000004,(nil))
+015c:trace:process:NtQueryInformationProcess (0xffffffff,0x0000000c,0x80c54c,0x00000004,(nil))
+015c:trace:process:NtQueryInformationProcess (0xffffffff,0x0000000c,0x80c54c,0x00000004,(nil))
+015c:trace:process:NtQueryInformationProcess (0xffffffff,0x0000000c,0x80c54c,0x00000004,(nil))
+015c:trace:process:NtQueryInformationProcess (0xffffffff,0x0000000c,0x80c54c,0x00000004,(nil))
+015c:trace:process:NtQueryInformationProcess (0xffffffff,0x0000000c,0x80c54c,0x00000004,(nil))
+015c:trace:process:NtQueryInformationProcess (0xffffffff,0x0000000c,0x80c54c,0x00000004,(nil))
+015c:trace:process:NtQueryInformationProcess (0xffffffff,0x0000000c,0x80c54c,0x00000004,(nil))
+015c:trace:process:NtQueryInformationProcess (0xffffffff,0x0000000c,0x80c54c,0x00000004,(nil))
+015c:trace:process:NtQueryInformationProcess (0xffffffff,0x0000000c,0x80c54c,0x00000004,(nil))
+015c:trace:process:NtQueryInformationProcess (0xffffffff,0x0000000c,0x80c54c,0x00000004,(nil))
+015c:trace:process:NtQueryInformationProcess (0xffffffff,0x0000000c,0x80c54c,0x00000004,(nil))
+015c:trace:process:NtQueryInformationProcess (0xffffffff,0x0000000c,0x80c54c,0x00000004,(nil))
+015c:trace:process:NtQueryInformationProcess (0xffffffff,0x0000000c,0x80c54c,0x00000004,(nil))
+015c:trace:process:NtQueryInformationProcess (0xffffffff,0x0000000c,0x80c54c,0x00000004,(nil))
+015c:trace:process:NtQueryInformationProcess (0xffffffff,0x0000000c,0x80c54c,0x00000004,(nil))
+015c:trace:process:NtQueryInformationProcess (0xffffffff,0x0000000c,0x80c54c,0x00000004,(nil))
+015c:trace:process:NtQueryInformationProcess (0xffffffff,0x0000000c,0x80c54c,0x00000004,(nil))
+015c:trace:process:NtQueryInformationProcess (0xffffffff,0x0000000c,0x80c54c,0x00000004,(nil))
+015c:trace:process:NtQueryInformationProcess (0xffffffff,0x0000000c,0x80c54c,0x00000004,(nil))
+015c:trace:process:NtQueryInformationProcess (0xffffffff,0x0000000c,0x80c54c,0x00000004,(nil))
+015c:trace:process:NtQueryInformationProcess (0xffffffff,0x0000000c,0x80c54c,0x00000004,(nil))
+015c:trace:process:NtQueryInformationProcess (0xffffffff,0x0000000c,0x80c54c,0x00000004,(nil))
+015c:trace:process:NtQueryInformationProcess (0xffffffff,0x0000000c,0x80c54c,0x00000004,(nil))
+015c:trace:process:NtQueryInformationProcess (0xffffffff,0x0000000c,0x80c54c,0x00000004,(nil))
+015c:trace:process:NtQueryInformationProcess (0xffffffff,0x0000000c,0x80c984,0x00000004,(nil))
+015c:trace:process:NtQueryInformationProcess (0xffffffff,0x0000000c,0x80c984,0x00000004,(nil))
+015c:trace:process:NtQueryInformationProcess (0xffffffff,0x0000000c,0x80c984,0x00000004,(nil))
+015c:trace:process:NtQueryInformationProcess (0xffffffff,0x0000000c,0x80c984,0x00000004,(nil))
+015c:trace:process:NtQueryInformationProcess (0xffffffff,0x0000000c,0x80c984,0x00000004,(nil))
+015c:trace:process:NtQueryInformationProcess (0xffffffff,0x0000000c,0x80c984,0x00000004,(nil))
+015c:trace:process:NtQueryInformationProcess (0xffffffff,0x0000000c,0x80c984,0x00000004,(nil))
+015c:trace:process:NtQueryInformationProcess (0xffffffff,0x0000000c,0x80c984,0x00000004,(nil))
+015c:trace:process:NtQueryInformationProcess (0xffffffff,0x0000000c,0x80c984,0x00000004,(nil))
+015c:trace:process:NtQueryInformationProcess (0xffffffff,0x0000000c,0x80c984,0x00000004,(nil))
+015c:trace:process:NtQueryInformationProcess (0xffffffff,0x0000000c,0x80c984,0x00000004,(nil))
+015c:trace:process:NtQueryInformationProcess (0xffffffff,0x0000000c,0x80c984,0x00000004,(nil))
+015c:trace:process:NtQueryInformationProcess (0xffffffff,0x0000000c,0x80c984,0x00000004,(nil))
+015c:trace:process:NtQueryInformationProcess (0xffffffff,0x0000000c,0x80c984,0x00000004,(nil))
+015c:trace:process:NtQueryInformationProcess (0xffffffff,0x0000000c,0x80c984,0x00000004,(nil))
+015c:trace:process:NtQueryInformationProcess (0xffffffff,0x0000000c,0x80c984,0x00000004,(nil))
+015c:trace:process:NtQueryInformationProcess (0xffffffff,0x0000000c,0x80c984,0x00000004,(nil))
+015c:trace:process:NtQueryInformationProcess (0xffffffff,0x0000000c,0x80c984,0x00000004,(nil))
+015c:trace:process:NtQueryInformationProcess (0xffffffff,0x0000000c,0x80c984,0x00000004,(nil))
+015c:trace:process:NtQueryInformationProcess (0xffffffff,0x0000000c,0x80c984,0x00000004,(nil))
+015c:trace:process:NtQueryInformationProcess (0xffffffff,0x0000000c,0x80c984,0x00000004,(nil))
+015c:trace:process:NtQueryInformationProcess (0xffffffff,0x0000000c,0x80c984,0x00000004,(nil))
+015c:trace:process:NtQueryInformationProcess (0xffffffff,0x0000000c,0x80c984,0x00000004,(nil))
+015c:trace:process:NtQueryInformationProcess (0xffffffff,0x0000000c,0x80c984,0x00000004,(nil))
+015c:trace:process:NtQueryInformationProcess (0xffffffff,0x0000000c,0x80c9f0,0x00000004,(nil))
+015c:trace:process:NtQueryInformationProcess (0xffffffff,0x0000000c,0x80c9f0,0x00000004,(nil))
+015c:trace:process:NtQueryInformationProcess (0xffffffff,0x0000000c,0x80c9f0,0x00000004,(nil))
+015c:trace:process:NtQueryInformationProcess (0xffffffff,0x0000000c,0x80c9f0,0x00000004,(nil))
+015c:trace:process:NtQueryInformationProcess (0xffffffff,0x0000000c,0x80c9f0,0x00000004,(nil))
+015c:trace:process:NtQueryInformationProcess (0xffffffff,0x0000000c,0x80c9f0,0x00000004,(nil))
+015c:trace:process:NtQueryInformationProcess (0xffffffff,0x0000000c,0x80c9f0,0x00000004,(nil))
+015c:trace:process:NtQueryInformationProcess (0xffffffff,0x0000000c,0x80c9f0,0x00000004,(nil))
+015c:trace:process:NtQueryInformationProcess (0xffffffff,0x0000000c,0x80c9f0,0x00000004,(nil))
+015c:trace:process:NtQueryInformationProcess (0xffffffff,0x0000000c,0x80c9f0,0x00000004,(nil))
+015c:trace:process:NtQueryInformationProcess (0xffffffff,0x0000000c,0x80c9f0,0x00000004,(nil))
+015c:trace:process:NtQueryInformationProcess (0xffffffff,0x0000000c,0x80c9f0,0x00000004,(nil))
+015c:trace:process:NtQueryInformationProcess (0xffffffff,0x0000000c,0x80c9f0,0x00000004,(nil))
+015c:trace:process:NtQueryInformationProcess (0xffffffff,0x0000000c,0x80c9f0,0x00000004,(nil))
+015c:trace:process:NtQueryInformationProcess (0xffffffff,0x0000000c,0x80c9f0,0x00000004,(nil))
+015c:trace:process:NtQueryInformationProcess (0xffffffff,0x0000000c,0x80c9f0,0x00000004,(nil))
+015c:trace:process:NtQueryInformationProcess (0xffffffff,0x0000000c,0x80c9f0,0x00000004,(nil))
+015c:trace:process:NtQueryInformationProcess (0xffffffff,0x0000000c,0x80c9f0,0x00000004,(nil))
+015c:trace:process:NtQueryInformationProcess (0xffffffff,0x0000000c,0x80c9f0,0x00000004,(nil))
+015c:trace:process:NtQueryInformationProcess (0xffffffff,0x0000000c,0x80c9f0,0x00000004,(nil))
+015c:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\dsound.dll" at 7A6F0000: builtin
+015c:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\winmm.dll" at 7A5D0000: builtin
+015c:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\msacm32.dll" at 7A6B0000: builtin
+015c:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\comctl32.dll" at 7A450000: builtin
+015c:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\msvfw32.dll" at 7A590000: builtin
+015c:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\quartz.dll" at 7A750000: builtin
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CE14 260)
+015c:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\avicap32.dll" at 7A3F0000: builtin
+015c:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\msdmo.dll" at 7A3C0000: builtin
+015c:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\devenum.dll" at 7A410000: builtin
+015c:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\propsys.dll" at 7A2D0000: builtin
+015c:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\rtworkq.dll" at 7A2B0000: builtin
+015c:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\mfplat.dll" at 7A310000: builtin
+015c:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\colorcnv.dll" at 7A390000: builtin
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080C4F4 260)
+015c:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\bcrypt.dll" at 7A160000: builtin
+015c:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\crypt32.dll" at 7A190000: builtin
+015c:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\comdlg32.dll" at 79F20000: builtin
+015c:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\cryptui.dll" at 7A040000: builtin
+015c:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\wintrust.dll" at 79EE0000: builtin
+015c:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\cryptdlg.dll" at 7A280000: builtin
+015c:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\cryptnet.dll" at 79EB0000: builtin
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CE14 260)
+015c:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\l3codecx.ax" at 79E80000: builtin
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CE14 260)
+015c:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\winedmo.dll" at 79E20000: builtin
+015c:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\mfasfsrcsnk.dll" at 79E40000: builtin
+015c:warn:module:load_builtin_unixlib failed to load "~/.local/share/Steam/steamapps/common/Proton Hotfix/files/lib/wine/i386-unix/winedmo.so": libavutil.so.56: cannot open shared object file: No such file or directory
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CE3C 260)
+015c:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\mfh264enc.dll" at 79DF0000: builtin
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CD54 260)
+015c:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\mfmp4srcsnk.dll" at 79DB0000: builtin
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CE3C 260)
+015c:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\mp3dmod.dll" at 79D40000: builtin
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CD74 260)
+015c:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\msauddecmft.dll" at 79D10000: builtin
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CCD4 260)
+015c:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\dbghelp.dll" at 79C20000: builtin
+015c:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\mscoree.dll" at 79CC0000: builtin
+015c:trace:process:NtQueryInformationProcess (0xffffffff,0x0000001a,0x80ccec,0x00000004,(nil))
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CE3C 260)
+015c:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\mpr.dll" at 79880000: builtin
+015c:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\ws2_32.dll" at 79840000: builtin
+015c:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\wininet.dll" at 798B0000: builtin
+015c:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\urlmon.dll" at 79950000: builtin
+015c:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\mshtml.dll" at 799F0000: builtin
+015c:trace:process:NtQueryInformationProcess (0xffffffff,0x0000000c,0x80c398,0x00000004,(nil))
+015c:trace:process:NtQueryInformationProcess (0xffffffff,0x0000000c,0x80c398,0x00000004,(nil))
+015c:trace:process:NtQueryInformationProcess (0xffffffff,0x0000000c,0x80c398,0x00000004,(nil))
+015c:trace:process:NtQueryInformationProcess (0xffffffff,0x0000000c,0x80c398,0x00000004,(nil))
+015c:trace:process:NtQueryInformationProcess (0xffffffff,0x0000000c,0x80c398,0x00000004,(nil))
+015c:trace:process:NtQueryInformationProcess (0xffffffff,0x0000000c,0x80c398,0x00000004,(nil))
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CE34 260)
+015c:trace:loaddll:build_module Loaded L"C:\\windows\\syswow64\\version.dll" at 797F0000: builtin
+015c:trace:loaddll:build_module Loaded L"C:\\windows\\syswow64\\advpack.dll" at 79810000: builtin
+015c:trace:process:GetEnvironmentVariableW (L"TMP" 0080C4D4 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080C91C 260)
+015c:trace:loaddll:free_modref Unloaded module L"C:\\windows\\syswow64\\advpack.dll" : builtin
+015c:trace:loaddll:free_modref Unloaded module L"C:\\windows\\syswow64\\version.dll" : builtin
+015c:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\msisip.dll" at 79820000: builtin
+015c:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\msmpeg2vdec.dll" at 797F0000: builtin
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CD14 260)
+015c:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\msvdsp.dll" at 797D0000: builtin
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080C4EC 260)
+015c:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\msvproc.dll" at 797A0000: builtin
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080C894 260)
+015c:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\qcap.dll" at 79750000: builtin
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CE14 260)
+015c:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\qedit.dll" at 79700000: builtin
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CE14 260)
+015c:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\resampledmo.dll" at 796D0000: builtin
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CD74 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CE24 260)
+015c:trace:loaddll:build_module Loaded L"C:\\windows\\syswow64\\version.dll" at 79680000: builtin
+015c:trace:loaddll:build_module Loaded L"C:\\windows\\syswow64\\advpack.dll" at 796A0000: builtin
+015c:trace:process:GetEnvironmentVariableW (L"TMP" 0080C6C8 260)
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CB10 260)
+015c:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\vidreszr.dll" at 79660000: builtin
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080C4F4 260)
+015c:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\windowscodecs.dll" at 794D0000: builtin
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CD6C 260)
+015c:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\winegstreamer.dll" at 79440000: builtin
+015c:warn:module:load_builtin_unixlib failed to load "~/.local/share/Steam/steamapps/common/Proton Hotfix/files/lib/wine/i386-unix/winegstreamer.so": libgstaudio-1.0.so.0: cannot open shared object file: No such file or directory
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CE14 260)
+015c:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\spool\\prtprocs\\w32x86\\wineps.drv" at 793C0000: builtin
+015c:trace:loaddll:build_module Loaded L"C:\\windows\\syswow64\\compstui.dll" at 79340000: builtin
+015c:trace:loaddll:build_module Loaded L"C:\\windows\\syswow64\\winspool.drv" at 79370000: builtin
+015c:trace:loaddll:build_module Loaded L"C:\\windows\\syswow64\\spoolss.dll" at 792C0000: builtin
+015c:trace:loaddll:build_module Loaded L"C:\\windows\\syswow64\\localspl.dll" at 792F0000: builtin
+015c:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\winevulkan.dll" at 79260000: builtin
+015c:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\spool\\prtprocs\\w32x86\\winprint.dll" at 79240000: builtin
+015c:trace:process:ExpandEnvironmentStringsW (L"C:\\windows\\system32\\rsaenh.dll" 00000000 0)
+015c:trace:process:ExpandEnvironmentStringsW (L"C:\\windows\\system32\\rsaenh.dll" 00FF6A50 31)
+015c:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\rsaenh.dll" at 791E0000: builtin
+015c:trace:loaddll:free_modref Unloaded module L"C:\\windows\\system32\\rsaenh.dll" : builtin
+015c:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\wmadmod.dll" at 79210000: builtin
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080CC74 260)
+015c:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\wmvdecod.dll" at 791E0000: builtin
+015c:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0080C854 260)
+015c:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\iexplore.exe" at 01890000: builtin
+015c:trace:loaddll:free_modref Unloaded module L"C:\\windows\\system32\\iexplore.exe" : builtin
+015c:trace:process:CreateProcessInternalW app L"C:\\windows\\system32\\iexplore.exe" cmdline L"\"C:\\windows\\system32\\iexplore.exe\" /RegServer", inherit 0, flags 0, env 00000000 ((null))
+015c:trace:process:GetEnvironmentVariableW (L"PROTON_ORIG_LAUNCHER_NAME" 00000000 0)
+015c:trace:process:NtCreateUserProcess L"\\??\\C:\\windows\\system32\\iexplore.exe" image L"C:\\windows\\system32\\iexplore.exe" cmdline L"\"C:\\windows\\system32\\iexplore.exe\" /RegServer" parent (nil) machine 0
+015c:trace:process:NtCreateUserProcess L"\\??\\C:\\windows\\system32\\iexplore.exe" pid 0160 tid 0164 handles 0xc4/0xc8
+015c:trace:process:CreateProcessInternalW started process pid 0160 tid 0164
+0164:trace:process:NtQueryInformationProcess (0xffffffff,0x00000025,0x81fc90,0x00000030,(nil))
+0164:trace:loaddll:build_module Loaded L"C:\\windows\\syswow64\\iexplore.exe" at 00400000: builtin
+0164:trace:loaddll:build_ntdll_module Loaded L"C:\\windows\\system32\\ntdll.dll" at 7BF30000: builtin
+0164:trace:loaddll:build_module Loaded L"C:\\windows\\syswow64\\kernelbase.dll" at 7BBE0000: builtin
+0164:trace:loaddll:build_module Loaded L"C:\\windows\\syswow64\\kernel32.dll" at 7BEB0000: builtin
+0164:trace:loaddll:build_module Loaded L"C:\\windows\\syswow64\\msvcrt.dll" at 7B7D0000: builtin
+0164:trace:loaddll:build_module Loaded L"C:\\windows\\syswow64\\ucrtbase.dll" at 7BAE0000: builtin
+0164:trace:loaddll:build_module Loaded L"C:\\windows\\syswow64\\sechost.dll" at 7B7A0000: builtin
+0164:trace:loaddll:build_module Loaded L"C:\\windows\\syswow64\\advapi32.dll" at 7B8A0000: builtin
+0164:trace:loaddll:build_module Loaded L"C:\\windows\\syswow64\\win32u.dll" at 7B6B0000: builtin
+0164:trace:loaddll:build_module Loaded L"C:\\windows\\syswow64\\user32.dll" at 7B8F0000: builtin
+0164:trace:loaddll:build_module Loaded L"C:\\windows\\syswow64\\gdi32.dll" at 7B700000: builtin
+0164:trace:loaddll:build_module Loaded L"C:\\windows\\syswow64\\comctl32.dll" at 7A450000: builtin
+0164:trace:loaddll:build_module Loaded L"C:\\windows\\syswow64\\cryptbase.dll" at 7B480000: builtin
+0164:trace:loaddll:build_module Loaded L"C:\\windows\\syswow64\\rpcrt4.dll" at 7B4A0000: builtin
+0164:trace:loaddll:build_module Loaded L"C:\\windows\\syswow64\\combase.dll" at 7B340000: builtin
+0164:trace:loaddll:build_module Loaded L"C:\\windows\\syswow64\\coml2.dll" at 7B310000: builtin
+0164:trace:loaddll:build_module Loaded L"C:\\windows\\syswow64\\ole32.dll" at 7B3B0000: builtin
+0164:trace:loaddll:build_module Loaded L"C:\\windows\\syswow64\\oleaut32.dll" at 7A800000: builtin
+0164:trace:loaddll:build_module Loaded L"C:\\windows\\syswow64\\shcore.dll" at 7A920000: builtin
+0164:trace:loaddll:build_module Loaded L"C:\\windows\\syswow64\\shlwapi.dll" at 7A950000: builtin
+0164:trace:loaddll:build_module Loaded L"C:\\windows\\syswow64\\shell32.dll" at 7A9B0000: builtin
+0164:trace:loaddll:build_module Loaded L"C:\\windows\\syswow64\\mpr.dll" at 79880000: builtin
+0164:trace:loaddll:build_module Loaded L"C:\\windows\\syswow64\\ws2_32.dll" at 79840000: builtin
+0164:trace:loaddll:build_module Loaded L"C:\\windows\\syswow64\\wininet.dll" at 798B0000: builtin
+0164:trace:loaddll:build_module Loaded L"C:\\windows\\syswow64\\urlmon.dll" at 79950000: builtin
+0164:trace:loaddll:build_module Loaded L"C:\\windows\\syswow64\\ieframe.dll" at 79150000: builtin
+0164:trace:process:NtQueryInformationProcess (0xffffffff,0x0000001a,0x81fa0c,0x00000004,(nil))
+0164:trace:process:GetEnvironmentVariableW (L"WINEUNIXCP" 0081F794 85)
+0164:fixme:ntdll:find_reg_tz_info Can't find matching timezone information in the registry for bias 0, std (d/m/y): 22/03/2026, dlt (d/m/y): 15/02/2026
+0164:trace:process:set_entry_point setting FT_Thunk at 7BEF8668 to 00000000
+0164:trace:loaddll:build_module Loaded L"C:\\windows\\syswow64\\imm32.dll" at 7B680000: builtin
+0164:trace:process:GetEnvironmentVariableW (L"oanocache" 00000000 0)
+0164:trace:process:NtQueryInformationProcess (0xffffffff,0x0000000c,0x81ee80,0x00000004,(nil))
+0164:trace:process:NtQueryInformationProcess (0xffffffff,0x0000000c,0x81ee80,0x00000004,(nil))
+0164:trace:process:NtQueryInformationProcess (0xffffffff,0x0000000c,0x81ee80,0x00000004,(nil))
+0164:trace:process:NtQueryInformationProcess (0xffffffff,0x0000000c,0x81ee80,0x00000004,(nil))
+0164:trace:process:NtQueryInformationProcess (0xffffffff,0x0000000c,0x81ee80,0x00000004,(nil))
+0164:trace:process:NtQueryInformationProcess (0xffffffff,0x0000000c,0x81ee80,0x00000004,(nil))
+0164:trace:loaddll:build_module Loaded L"c:\\windows\\system32\\winex11.drv" at 7B660000: builtin
+0164:trace:loaddll:build_module Loaded L"C:\\windows\\syswow64\\uxtheme.dll" at 7B610000: builtin
+0164:trace:process:NtQueryInformationProcess (0xffffffff,0x00000007,0x81fc44,0x00000004,(nil))
+0164:trace:process:GetEnvironmentVariableW (L"WINE_SHRINK_ENV" 0081FE84 80)
+0164:trace:process:GetEnvironmentVariableW (L"SteamGameId" 0081FE84 80)
+0164:trace:loaddll:build_module Loaded L"C:\\windows\\syswow64\\version.dll" at 79680000: builtin
+0164:trace:loaddll:build_module Loaded L"C:\\windows\\syswow64\\cfgmgr32.dll" at 7B540000: builtin
+0164:trace:loaddll:build_module Loaded L"C:\\windows\\syswow64\\setupapi.dll" at 7B580000: builtin
+0164:trace:loaddll:build_module Loaded L"C:\\windows\\syswow64\\advpack.dll" at 796A0000: builtin
+0164:trace:process:GetEnvironmentVariableW (L"TMP" 0081F334 260)
+0164:trace:process:GetEnvironmentVariableW (L"SystemRoot" 0081F77C 260)
+0164:trace:process:NtQueryInformationProcess (0xffffffff,0x0000000c,0x81ca40,0x00000004,(nil))
+0164:trace:process:NtQueryInformationProcess (0xffffffff,0x0000000c,0x81ca40,0x00000004,(nil))
+0164:trace:process:NtTerminateProcess handle (nil), exit_code 0, process_exiting 0.
+0164:trace:process:NtTerminateProcess handle (nil), self 1, process_exiting 0.
+0164:trace:process:NtTerminateProcess handle 0xffffffff, exit_code 0, process_exiting 1.
+0164:trace:process:NtTerminateProcess handle 0xffffffff, self 1, process_exiting 1.
+015c:trace:loaddll:free_modref Unloaded module L"C:\\windows\\system32\\colorcnv.dll" : builtin
+015c:trace:loaddll:free_modref Unloaded module L"C:\\windows\\system32\\cryptdlg.dll" : builtin
+015c:trace:loaddll:free_modref Unloaded module L"C:\\windows\\system32\\cryptui.dll" : builtin
+015c:trace:loaddll:free_modref Unloaded module L"C:\\windows\\system32\\comdlg32.dll" : builtin
+015c:trace:loaddll:free_modref Unloaded module L"C:\\windows\\system32\\cryptnet.dll" : builtin
+015c:trace:loaddll:free_modref Unloaded module L"C:\\windows\\system32\\l3codecx.ax" : builtin
+015c:trace:loaddll:free_modref Unloaded module L"C:\\windows\\system32\\mfasfsrcsnk.dll" : builtin
+015c:trace:loaddll:free_modref Unloaded module L"C:\\windows\\system32\\mfh264enc.dll" : builtin
+015c:trace:loaddll:free_modref Unloaded module L"C:\\windows\\system32\\mfmp4srcsnk.dll" : builtin
+015c:trace:loaddll:free_modref Unloaded module L"C:\\windows\\system32\\winedmo.dll" : builtin
+015c:trace:loaddll:free_modref Unloaded module L"C:\\windows\\system32\\mp3dmod.dll" : builtin
+015c:trace:loaddll:free_modref Unloaded module L"C:\\windows\\system32\\msauddecmft.dll" : builtin
+015c:trace:loaddll:free_modref Unloaded module L"C:\\windows\\system32\\mscoree.dll" : builtin
+015c:trace:loaddll:free_modref Unloaded module L"C:\\windows\\system32\\dbghelp.dll" : builtin
+015c:trace:loaddll:free_modref Unloaded module L"C:\\windows\\system32\\mshtml.dll" : builtin
+015c:trace:loaddll:free_modref Unloaded module L"C:\\windows\\system32\\msisip.dll" : builtin
+015c:trace:loaddll:free_modref Unloaded module L"C:\\windows\\system32\\msmpeg2vdec.dll" : builtin
+015c:trace:loaddll:free_modref Unloaded module L"C:\\windows\\system32\\msvdsp.dll" : builtin
+015c:trace:loaddll:free_modref Unloaded module L"C:\\windows\\system32\\msvproc.dll" : builtin
+015c:trace:loaddll:free_modref Unloaded module L"C:\\windows\\system32\\qcap.dll" : builtin
+015c:trace:loaddll:free_modref Unloaded module L"C:\\windows\\system32\\qedit.dll" : builtin
+015c:trace:loaddll:free_modref Unloaded module L"C:\\windows\\system32\\resampledmo.dll" : builtin
+015c:trace:loaddll:free_modref Unloaded module L"C:\\windows\\system32\\urlmon.dll" : builtin
+015c:trace:loaddll:free_modref Unloaded module L"C:\\windows\\system32\\wininet.dll" : builtin
+015c:trace:loaddll:free_modref Unloaded module L"C:\\windows\\system32\\ws2_32.dll" : builtin
+015c:trace:loaddll:free_modref Unloaded module L"C:\\windows\\system32\\mpr.dll" : builtin
+015c:trace:loaddll:free_modref Unloaded module L"C:\\windows\\system32\\vidreszr.dll" : builtin
+015c:trace:loaddll:free_modref Unloaded module L"C:\\windows\\system32\\windowscodecs.dll" : builtin
+015c:trace:loaddll:free_modref Unloaded module L"C:\\windows\\system32\\winegstreamer.dll" : builtin
+015c:trace:loaddll:free_modref Unloaded module L"C:\\windows\\system32\\spool\\prtprocs\\w32x86\\wineps.drv" : builtin
+015c:trace:loaddll:free_modref Unloaded module L"C:\\windows\\system32\\winevulkan.dll" : builtin
+015c:trace:loaddll:free_modref Unloaded module L"C:\\windows\\system32\\spool\\prtprocs\\w32x86\\winprint.dll" : builtin
+015c:trace:loaddll:free_modref Unloaded module L"C:\\windows\\system32\\wintrust.dll" : builtin
+015c:trace:loaddll:free_modref Unloaded module L"C:\\windows\\system32\\crypt32.dll" : builtin
+015c:trace:loaddll:free_modref Unloaded module L"C:\\windows\\system32\\bcrypt.dll" : builtin
+015c:trace:loaddll:free_modref Unloaded module L"C:\\windows\\system32\\wmadmod.dll" : builtin
+015c:trace:loaddll:free_modref Unloaded module L"C:\\windows\\system32\\wmvdecod.dll" : builtin
+015c:trace:loaddll:free_modref Unloaded module L"C:\\windows\\system32\\mfplat.dll" : builtin
+015c:trace:loaddll:free_modref Unloaded module L"C:\\windows\\system32\\rtworkq.dll" : builtin
+015c:trace:loaddll:free_modref Unloaded module L"C:\\windows\\system32\\propsys.dll" : builtin
+015c:trace:process:NtTerminateProcess handle (nil), exit_code 0, process_exiting 0.
+015c:trace:process:NtTerminateProcess handle (nil), self 1, process_exiting 0.
+015c:trace:process:NtTerminateProcess handle 0xffffffff, exit_code 0, process_exiting 1.
+015c:trace:process:NtTerminateProcess handle 0xffffffff, self 1, process_exiting 1.
+002c:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\cfgmgr32.dll" at 00006FFFFF7E0000: builtin
+002c:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\rpcrt4.dll" at 00006FFFFF8B0000: builtin
+002c:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\setupapi.dll" at 00006FFFFF820000: builtin
+002c:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\shcore.dll" at 00006FFFFE7F0000: builtin
+002c:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\shlwapi.dll" at 00006FFFFE820000: builtin
+002c:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\shell32.dll" at 00006FFFFE880000: builtin
+002c:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\combase.dll" at 00006FFFFE6B0000: builtin
+002c:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\coml2.dll" at 00006FFFFE680000: builtin
+002c:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\ole32.dll" at 00006FFFFE720000: builtin
+002c:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31e8fc,0x00000004,(nil))
+002c:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31e8fc,0x00000004,(nil))
+002c:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\bcrypt.dll" at 00006FFFFE330000: builtin
+002c:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\crypt32.dll" at 00006FFFFE360000: builtin
+002c:trace:process:ExpandEnvironmentStringsW (L"C:\\windows\\system32\\rsaenh.dll" 0000000000000000 0)
+002c:trace:process:ExpandEnvironmentStringsW (L"C:\\windows\\system32\\rsaenh.dll" 000000000080DCC0 31)
+002c:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\rsaenh.dll" at 00006FFFFE2D0000: builtin
+002c:trace:process:ExpandEnvironmentStringsW (L"C:\\windows\\system32\\rsaenh.dll" 0000000000000000 0)
+002c:trace:process:ExpandEnvironmentStringsW (L"C:\\windows\\system32\\rsaenh.dll" 000000000080DCC0 31)
+002c:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31e8fc,0x00000004,(nil))
+002c:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31e8fc,0x00000004,(nil))
+002c:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31e8fc,0x00000004,(nil))
+002c:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31e8fc,0x00000004,(nil))
+002c:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31e8fc,0x00000004,(nil))
+002c:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31e8fc,0x00000004,(nil))
+002c:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\mpr.dll" at 00006FFFFE200000: builtin
+002c:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\wininet.dll" at 00006FFFFE230000: builtin
+002c:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31dc0c,0x00000004,(nil))
+002c:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31dc0c,0x00000004,(nil))
+002c:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31dc0c,0x00000004,(nil))
+002c:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31dc0c,0x00000004,(nil))
+002c:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31dc0c,0x00000004,(nil))
+002c:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000000c,0x31dc0c,0x00000004,(nil))
+002c:trace:process:NtTerminateProcess handle (nil), exit_code 0, process_exiting 0.
+002c:trace:process:NtTerminateProcess handle (nil), self 1, process_exiting 0.
+002c:trace:process:NtTerminateProcess handle 0xffffffffffffffff, exit_code 0, process_exiting 1.
+002c:trace:process:NtTerminateProcess handle 0xffffffffffffffff, self 1, process_exiting 1.
+00f0:trace:process:NtTerminateProcess handle 0xdc, exit_code 0, process_exiting 0.
+00f0:trace:process:NtTerminateProcess handle 0xdc, self 0, process_exiting 0.
+00f0:trace:process:NtTerminateProcess handle (nil), exit_code 0, process_exiting 0.
+00f0:trace:process:NtTerminateProcess handle (nil), self 1, process_exiting 0.
+00f0:trace:process:NtTerminateProcess handle 0xffffffffffffffff, exit_code 0, process_exiting 1.
+00f0:trace:process:NtTerminateProcess handle 0xffffffffffffffff, self 1, process_exiting 1.
+0024:trace:process:NtQueryInformationProcess (0xffffffff,0x00000025,0x62fc90,0x00000030,(nil))
+0024:trace:loaddll:build_module Loaded L"C:\\windows\\syswow64\\start.exe" at 00400000: builtin
+0024:trace:loaddll:build_ntdll_module Loaded L"C:\\windows\\system32\\ntdll.dll" at 7BF30000: builtin
+0024:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\kernelbase.dll" at 7BBE0000: builtin
+0024:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\kernel32.dll" at 7BEB0000: builtin
+0024:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\msvcrt.dll" at 7B160000: builtin
+0024:trace:loaddll:build_module Loaded L"C:\\windows\\syswow64\\ucrtbase.dll" at 7B030000: builtin
+0024:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\sechost.dll" at 7B130000: builtin
+0024:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\advapi32.dll" at 7B230000: builtin
+0024:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\win32u.dll" at 7AD50000: builtin
+0024:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\user32.dll" at 7ADA0000: builtin
+0024:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\gdi32.dll" at 7AF90000: builtin
+0024:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\shcore.dll" at 7ACC0000: builtin
+0024:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\shlwapi.dll" at 7ACF0000: builtin
+0024:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\shell32.dll" at 7B280000: builtin
+0024:trace:process:NtQueryInformationProcess (0xffffffff,0x0000001a,0x62fa0c,0x00000004,(nil))
+0024:trace:process:GetEnvironmentVariableW (L"WINEUNIXCP" 0062F794 85)
+0024:fixme:ntdll:find_reg_tz_info Can't find matching timezone information in the registry for bias 0, std (d/m/y): 22/03/2026, dlt (d/m/y): 15/02/2026
+0024:trace:process:set_entry_point setting FT_Thunk at 7BEF8668 to 00000000
+0024:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\imm32.dll" at 7AC90000: builtin
+0024:trace:process:NtQueryInformationProcess (0xffffffff,0x00000007,0x62fc44,0x00000004,(nil))
+0024:trace:process:GetEnvironmentVariableW (L"WINE_SHRINK_ENV" 0062FE84 80)
+0024:trace:process:GetEnvironmentVariableW (L"SteamGameId" 0062FE84 80)
+0024:trace:process:GetEnvironmentVariableW (L"PATH" 00627E30 8190)
+0024:trace:process:GetEnvironmentVariableW (L"PATHEXT" 0062BE2C 8192)
+0024:trace:process:CreateProcessInternalW app L"C:\\Roblox\\RobloxPlayerBeta.exe" cmdline L"\"C:\\Roblox\\RobloxPlayerBeta.exe\" ", inherit 1, flags 0, env 00000000 ((null))
+0024:warn:module:find_builtin_dll cannot find builtin library for L"\\??\\C:\\Roblox\\RobloxPlayerBeta.exe"
+0024:warn:module:find_builtin_dll cannot find builtin library for L"\\??\\C:\\Roblox\\RobloxPlayerBeta.exe"
+0024:trace:process:GetEnvironmentVariableW (L"PROTON_ORIG_LAUNCHER_NAME" 00000000 0)
+0024:trace:process:NtCreateUserProcess L"\\??\\C:\\Roblox\\RobloxPlayerBeta.exe" image L"C:\\Roblox\\RobloxPlayerBeta.exe" cmdline L"\"C:\\Roblox\\RobloxPlayerBeta.exe\" " parent (nil) machine 0
+016c:trace:seh:install_bpf Installing seccomp filters.
+016c:trace:seh:check_bpf_jit_enable enabled 0x31.
+0024:trace:process:NtCreateUserProcess L"\\??\\C:\\Roblox\\RobloxPlayerBeta.exe" pid 0168 tid 016c handles 0x64/0x68
+0024:trace:process:CreateProcessInternalW started process pid 0168 tid 016c
+016c:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x00000025,0x51fa10,0x00000040,(nil))
+016c:trace:loaddll:build_module Loaded L"C:\\Roblox\\RobloxPlayerBeta.exe" at 0000000140000000: native
+016c:trace:loaddll:build_ntdll_module Loaded L"C:\\windows\\system32\\ntdll.dll" at 00006FFFFFF30000: builtin
+016c:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\kernelbase.dll" at 00006FFFFFBF0000: builtin
+016c:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\kernel32.dll" at 00006FFFFFEB0000: builtin
+016c:warn:module:find_builtin_dll cannot find builtin library for L"\\??\\C:\\Roblox\\RobloxPlayerBeta.dll"
+016c:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\msvcrt.dll" at 00006FFFFFAE0000: builtin
+016c:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\ucrtbase.dll" at 00006FFFFF9B0000: builtin
+016c:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\sechost.dll" at 00006FFFFFAA0000: builtin
+016c:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\advapi32.dll" at 00006FFFFFBA0000: builtin
+016c:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\win32u.dll" at 00006FFFFF450000: builtin
+016c:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\gdi32.dll" at 00006FFFFF4A0000: builtin
+016c:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\USER32.dll" at 00006FFFFF540000: builtin
+016c:trace:loaddll:build_module Loaded L"C:\\Roblox\\RobloxPlayerBeta.dll" at 00006FFFFDC80000: native
+016c:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000001a,0x51f548,0x00000008,(nil))
+016c:trace:process:GetEnvironmentVariableW (L"WINEUNIXCP" 000000000051F2E0 85)
+016c:fixme:ntdll:find_reg_tz_info Can't find matching timezone information in the registry for bias 0, std (d/m/y): 22/03/2026, dlt (d/m/y): 15/02/2026
+016c:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\imm32.dll" at 00006FFFFF420000: builtin
+016c:trace:process:GetEnvironmentVariableW (L"WINE_SHRINK_ENV" 000000000051F460 80)
+016c:trace:process:GetEnvironmentVariableW (L"SteamGameId" 000000000051F460 80)
+016c:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\dbghelp.dll" at 00006FFFFDBE0000: builtin
+016c:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\psapi.dll" at 00006FFFFDBC0000: builtin
+016c:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\version.dll" at 00006FFFFDBA0000: builtin
+016c:warn:module:load_dll Failed to load module L"verifier.dll"; status=c0000135
+016c:warn:module:load_dll Failed to load module L"verifier.dll"; status=c0000135
+016c:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\powrprof.dll" at 00006FFFFDB80000: builtin
+016c:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\cryptbase.dll" at 00006FFFFF990000: builtin
+016c:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\CRYPTSP.dll" at 00006FFFFDB60000: builtin
+016c:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\bcrypt.dll" at 00006FFFFDB30000: builtin
+016c:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\ncrypt.dll" at 00006FFFFDB10000: builtin
+016c:warn:module:load_dll Failed to load module L"GPAPI.dll"; status=c0000135
+016c:warn:module:load_dll Failed to load module L"GPAPI.dll"; status=c0000135
+016c:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\crypt32.dll" at 00006FFFFD9F0000: builtin
+016c:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\rpcrt4.dll" at 00006FFFFF8B0000: builtin
+016c:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\combase.dll" at 00006FFFFD8B0000: builtin
+016c:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\coml2.dll" at 00006FFFFD880000: builtin
+016c:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\ole32.dll" at 00006FFFFD920000: builtin
+016c:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\shcore.dll" at 00006FFFFCEA0000: builtin
+016c:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\shlwapi.dll" at 00006FFFFCED0000: builtin
+016c:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\shell32.dll" at 00006FFFFCF30000: builtin
+016c:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\cryptnet.dll" at 00006FFFFDAE0000: builtin
+016c:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\imagehlp.dll" at 00006FFFFCE70000: builtin
+016c:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\wtsapi32.dll" at 00006FFFFCE50000: builtin
+016c:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\winsta.dll" at 00006FFFFCE30000: builtin
+016c:trace:seh:sigsys_handler SIGSYS, rax 0xa08e8036, rip 0x6ffffe53885f.
+016c:trace:seh:sigsys_handler SIGSYS, rax 0x9b5980d0, rip 0x6ffffe570975.
+016c:fixme:ntdll:NtRaiseHardError 0x50000018 4 0x3 0x51c820 0 0x51be50: stub
+016c:trace:seh:sigsys_handler SIGSYS, rax 0xe483802c, rip 0x6ffffe571a72.
+016c:trace:process:NtTerminateProcess handle 0xffffffffffffffff, exit_code -1073741637, process_exiting 0.
+016c:trace:process:NtTerminateProcess handle 0xffffffffffffffff, self 1, process_exiting 0.
+0024:trace:process:NtQueryInformationProcess (0x64,0x00000000,0x62fe1c,0x00000018,(nil))
+0024:trace:process:NtTerminateProcess handle (nil), exit_code -1073741637, process_exiting 0.
+0024:trace:process:NtTerminateProcess handle (nil), self 1, process_exiting 0.
+0024:trace:process:NtTerminateProcess handle 0xffffffff, exit_code -1073741637, process_exiting 1.
+0024:trace:process:NtTerminateProcess handle 0xffffffff, self 1, process_exiting 1.
+# exit: 187
+0034:trace:process:NtTerminateProcess handle 0xf4, exit_code 0, process_exiting 0.
+0034:trace:process:NtTerminateProcess handle 0xf4, self 0, process_exiting 0.
+0034:trace:process:NtTerminateProcess handle 0x11c, exit_code 0, process_exiting 0.
+0034:trace:process:NtTerminateProcess handle 0x11c, self 0, process_exiting 0.
+0034:trace:process:NtTerminateProcess handle 0x138, exit_code 0, process_exiting 0.
+0034:trace:process:NtTerminateProcess handle 0x138, self 0, process_exiting 0.
+0034:trace:process:NtTerminateProcess handle 0x158, exit_code 0, process_exiting 0.
+0034:trace:process:NtTerminateProcess handle 0x158, self 0, process_exiting 0.
+0034:trace:process:NtTerminateProcess handle 0x184, exit_code 0, process_exiting 0.
+0034:trace:process:NtTerminateProcess handle 0x184, self 0, process_exiting 0.
+0034:trace:process:NtTerminateProcess handle (nil), exit_code 0, process_exiting 0.
+0034:trace:process:NtTerminateProcess handle (nil), self 1, process_exiting 0.
+0034:trace:process:NtTerminateProcess handle 0xffffffffffffffff, exit_code 0, process_exiting 1.
+0034:trace:process:NtTerminateProcess handle 0xffffffffffffffff, self 1, process_exiting 1.

@@ -5,7 +5,8 @@
 set -u
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 WINE="${1:-wine}"; shift || true
-TAG="$("$WINE" --version 2>/dev/null | tr -c "a-zA-Z0-9.\n-" _)-$(date +%Y%m%d-%H%M%S)"
+NAME="$(echo "$WINE" | sed -nE "s:.*/([^/]+)/files/bin/wine$:\1:p" | tr " " -)"
+TAG="${NAME:-system-$("$WINE" --version | cut -d" " -f1)}-$(date +%Y%m%d-%H%M%S)"
 export WINESERVER="${WINE}server"
 export WINEPREFIX="$ROOT/.work/prefix-route-a-$("$WINE" --version 2>/dev/null | tr -c "a-zA-Z0-9.\n-" _)"
 export WINEDEBUG="${WINEDEBUG:-+seh,+loaddll,+process,err+all,warn+module}"

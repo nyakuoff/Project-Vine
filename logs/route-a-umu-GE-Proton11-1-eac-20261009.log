@@ -1,0 +1,1659 @@
+======================
+Proton: 1782266460 GE-Proton11-1
+SteamGameId: 0
+Command: ['~/VSProjs/Project Vine/.work/umu-app/RobloxPlayerBeta.exe']
+Options: {'forcelgadd', 'gamedrive'}
+depot: 4.0.20260928.262390
+pressure-vessel: 0.20260925.0
+pressure-vessel-arm64: 0.20260925.0
+scripts: 0.20260925.0
+steamrt4: 4.0.20260928.262390 steamrt4 4.0.20260928.262390
+Kernel: Linux 7.2.9-1-cachyos #1 SMP PREEMPT_DYNAMIC Sat, 03 Oct 2026 18:34:55 +0000 x86_64
+Language: LC_ALL None, LC_MESSAGES None, LC_CTYPE None
+PATH: ~/.local/share/Steam/compatibilitytools.d/GE-Proton11-1/files/bin/:/usr/bin:/bin
+Effective WINEDEBUG: +timestamp,+pid,+tid,+seh,+unwind,+threadname,+debugstr,+loaddll,+mscoree
+======================
+ntsync: up and running.
+5134.840:0028:002c:trace:seh:install_bpf Installing seccomp filters.
+5134.840:0028:002c:trace:seh:check_bpf_jit_enable enabled 0x31.
+5134.840:0028:002c:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\wineboot.exe" at 00006FFFFFFC0000: builtin
+5134.840:0028:002c:trace:loaddll:build_ntdll_module Loaded L"C:\\windows\\system32\\ntdll.dll" at 00006FFFFFEF0000: builtin
+5134.842:0028:002c:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\kernelbase.dll" at 00006FFFFFBB0000: builtin
+5134.842:0028:002c:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\kernel32.dll" at 00006FFFFFE70000: builtin
+5134.844:0028:002c:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\msvcrt.dll" at 00006FFFFFAA0000: builtin
+5134.846:0028:002c:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\ucrtbase.dll" at 00006FFFFF8F0000: builtin
+5134.847:0028:002c:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\cryptbase.dll" at 00006FFFFF9E0000: builtin
+5134.847:0028:002c:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\rpcrt4.dll" at 00006FFFFFA00000: builtin
+5134.847:0028:002c:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\sechost.dll" at 00006FFFFF8B0000: builtin
+5134.847:0028:002c:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\advapi32.dll" at 00006FFFFFB60000: builtin
+5134.848:0028:002c:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\ws2_32.dll" at 00006FFFFF870000: builtin
+5134.848:0028:002c:fixme:winediag:loader_init wine-staging 11.0 is a testing version containing experimental patches.
+5134.848:0028:002c:fixme:winediag:loader_init Please mention your exact version when filing bug reports on winehq.org.
+5134.853:0028:002c:fixme:ntdll:find_reg_tz_info Can't find matching timezone information in the registry for bias 0, std (d/m/y): 22/03/2026, dlt (d/m/y): 15/02/2026
+5134.861:0030:0034:trace:seh:sigsys_handler SIGSYS, rax 0xffff, rip 0x600000000005.
+5134.861:0030:0034:trace:seh:install_bpf Seccomp filters already installed.
+5134.861:0030:0034:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\services.exe" at 00006FFFFF840000: builtin
+5134.861:0030:0034:trace:loaddll:build_ntdll_module Loaded L"C:\\windows\\system32\\ntdll.dll" at 00006FFFFFEF0000: builtin
+5134.862:0030:0034:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\kernelbase.dll" at 00006FFFFFBB0000: builtin
+5134.862:0030:0034:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\kernel32.dll" at 00006FFFFFE70000: builtin
+5134.863:0030:0034:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\msvcrt.dll" at 00006FFFFFAA0000: builtin
+5134.863:0030:0034:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\ucrtbase.dll" at 00006FFFFF8F0000: builtin
+5134.863:0030:0034:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\cryptbase.dll" at 00006FFFFF9E0000: builtin
+5134.863:0030:0034:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\rpcrt4.dll" at 00006FFFFFA00000: builtin
+5134.864:0030:0034:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\sechost.dll" at 00006FFFFF8B0000: builtin
+5134.864:0030:0034:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\advapi32.dll" at 00006FFFFFB60000: builtin
+5134.865:0030:0034:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\cfgmgr32.dll" at 00006FFFFF770000: builtin
+5134.865:0030:0034:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\setupapi.dll" at 00006FFFFF7B0000: builtin
+5134.865:0030:0034:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\userenv.dll" at 00006FFFFF750000: builtin
+5134.871:0030:0034:fixme:ntdll:find_reg_tz_info Can't find matching timezone information in the registry for bias 0, std (d/m/y): 22/03/2026, dlt (d/m/y): 15/02/2026
+5134.875:0030:0038:warn:threadname:NtSetInformationThread Thread renamed to L"wine_rpcrt4_server"
+5134.880:003c:0040:trace:seh:sigsys_handler SIGSYS, rax 0xffff, rip 0x600000000005.
+5134.880:003c:0040:trace:seh:install_bpf Seccomp filters already installed.
+5134.881:003c:0040:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\winedevice.exe" at 00006FFFFF730000: builtin
+5134.881:003c:0040:trace:loaddll:build_ntdll_module Loaded L"C:\\windows\\system32\\ntdll.dll" at 00006FFFFFEF0000: builtin
+5134.881:003c:0040:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\kernelbase.dll" at 00006FFFFFBB0000: builtin
+5134.881:003c:0040:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\kernel32.dll" at 00006FFFFFE70000: builtin
+5134.882:003c:0040:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\msvcrt.dll" at 00006FFFFFAA0000: builtin
+5134.883:003c:0040:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\ucrtbase.dll" at 00006FFFFF8F0000: builtin
+5134.883:003c:0040:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\cryptbase.dll" at 00006FFFFF9E0000: builtin
+5134.883:003c:0040:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\rpcrt4.dll" at 00006FFFFFA00000: builtin
+5134.883:003c:0040:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\sechost.dll" at 00006FFFFF8B0000: builtin
+5134.883:003c:0040:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\advapi32.dll" at 00006FFFFFB60000: builtin
+5134.884:003c:0040:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\ntoskrnl.exe" at 00006FFFFF6B0000: builtin
+5134.890:003c:0040:fixme:ntdll:find_reg_tz_info Can't find matching timezone information in the registry for bias 0, std (d/m/y): 22/03/2026, dlt (d/m/y): 15/02/2026
+5134.891:0030:0044:warn:threadname:NtSetInformationThread Thread renamed to L"wine_rpcrt4_io"
+5134.891:0030:0048:warn:threadname:NtSetInformationThread Thread renamed to L"wine_threadpool_worker"
+5134.892:003c:0050:warn:threadname:NtSetInformationThread Thread renamed to L"wine_sechost_service"
+5134.893:003c:0050:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\win32k.sys" at 00006FFFFF680000: builtin
+5134.893:003c:0050:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\drivers\\dxgkrnl.sys" at 00006FFFFF660000: builtin
+5134.894:003c:0050:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\drivers\\dxgmms1.sys" at 00006FFFFF640000: builtin
+5134.894:003c:0050:fixme:ntoskrnl:kernel_object_from_handle No constructor for type L"Token"
+5134.894:0030:0054:warn:threadname:NtSetInformationThread Thread renamed to L"wine_rpcrt4_io"
+5134.895:003c:004c:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\drivers\\mountmgr.sys" at 00006FFFFF610000: builtin
+5134.897:003c:004c:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\cfgmgr32.dll" at 00006FFFFF770000: builtin
+5134.897:003c:004c:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\setupapi.dll" at 00006FFFFF7B0000: builtin
+5134.902:0068:006c:trace:seh:sigsys_handler SIGSYS, rax 0xffff, rip 0x600000000005.
+5134.902:0068:006c:trace:seh:install_bpf Seccomp filters already installed.
+5134.903:0068:006c:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\plugplay.exe" at 00006FFFFF5F0000: builtin
+5134.903:0068:006c:trace:loaddll:build_ntdll_module Loaded L"C:\\windows\\system32\\ntdll.dll" at 00006FFFFFEF0000: builtin
+5134.903:0068:006c:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\kernelbase.dll" at 00006FFFFFBB0000: builtin
+5134.903:0068:006c:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\kernel32.dll" at 00006FFFFFE70000: builtin
+5134.904:0068:006c:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\msvcrt.dll" at 00006FFFFFAA0000: builtin
+5134.905:0068:006c:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\ucrtbase.dll" at 00006FFFFF8F0000: builtin
+5134.905:0068:006c:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\cryptbase.dll" at 00006FFFFF9E0000: builtin
+5134.905:0068:006c:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\rpcrt4.dll" at 00006FFFFFA00000: builtin
+5134.905:0068:006c:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\sechost.dll" at 00006FFFFF8B0000: builtin
+5134.905:0068:006c:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\advapi32.dll" at 00006FFFFFB60000: builtin
+5134.908:0068:006c:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\win32u.dll" at 00006FFFFF330000: builtin
+5134.908:0068:006c:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\gdi32.dll" at 00006FFFFF380000: builtin
+5134.908:0068:006c:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\user32.dll" at 00006FFFFF420000: builtin
+5134.915:0068:006c:fixme:ntdll:find_reg_tz_info Can't find matching timezone information in the registry for bias 0, std (d/m/y): 22/03/2026, dlt (d/m/y): 15/02/2026
+5135.240:0068:006c:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\imm32.dll" at 00006FFFFF300000: builtin
+5135.240:0030:0070:warn:threadname:NtSetInformationThread Thread renamed to L"wine_rpcrt4_io"
+5135.241:0068:0078:warn:threadname:NtSetInformationThread Thread renamed to L"wine_sechost_service"
+5135.241:0068:007c:warn:threadname:NtSetInformationThread Thread renamed to L"wine_rpcrt4_server"
+5135.245:0080:0084:trace:seh:sigsys_handler SIGSYS, rax 0xffff, rip 0x600000000005.
+5135.245:0080:0084:trace:seh:install_bpf Seccomp filters already installed.
+5135.246:0080:0084:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\svchost.exe" at 00006FFFFF2E0000: builtin
+5135.246:0080:0084:trace:loaddll:build_ntdll_module Loaded L"C:\\windows\\system32\\ntdll.dll" at 00006FFFFFEF0000: builtin
+5135.246:0080:0084:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\kernelbase.dll" at 00006FFFFFBB0000: builtin
+5135.246:0080:0084:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\kernel32.dll" at 00006FFFFFE70000: builtin
+5135.247:0080:0084:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\msvcrt.dll" at 00006FFFFFAA0000: builtin
+5135.248:0080:0084:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\ucrtbase.dll" at 00006FFFFF8F0000: builtin
+5135.248:0080:0084:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\cryptbase.dll" at 00006FFFFF9E0000: builtin
+5135.248:0080:0084:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\rpcrt4.dll" at 00006FFFFFA00000: builtin
+5135.248:0080:0084:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\sechost.dll" at 00006FFFFF8B0000: builtin
+5135.248:0080:0084:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\advapi32.dll" at 00006FFFFFB60000: builtin
+5135.252:0080:0084:fixme:ntdll:find_reg_tz_info Can't find matching timezone information in the registry for bias 0, std (d/m/y): 22/03/2026, dlt (d/m/y): 15/02/2026
+5135.253:0080:0084:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\wevtsvc.dll" at 00006FFFFF2C0000: builtin
+5135.253:0030:0088:warn:threadname:NtSetInformationThread Thread renamed to L"wine_rpcrt4_io"
+5135.254:0080:0090:warn:threadname:NtSetInformationThread Thread renamed to L"wine_sechost_service"
+5135.255:003c:004c:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\drivers\\nsiproxy.sys" at 00006FFFFF2A0000: builtin
+5135.256:003c:0094:warn:threadname:NtSetInformationThread Thread renamed to L"wine_nsi_notification"
+5135.258:003c:004c:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\dnsapi.dll" at 00006FFFFF200000: builtin
+5135.259:003c:004c:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\nsi.dll" at 00006FFFFF1E0000: builtin
+5135.259:003c:004c:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\ws2_32.dll" at 00006FFFFF870000: builtin
+5135.259:003c:004c:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\iphlpapi.dll" at 00006FFFFF230000: builtin
+5135.259:003c:004c:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\drivers\\ndis.sys" at 00006FFFFF270000: builtin
+5135.265:009c:00a0:trace:seh:sigsys_handler SIGSYS, rax 0xffff, rip 0x600000000005.
+5135.265:009c:00a0:trace:seh:install_bpf Seccomp filters already installed.
+5135.265:009c:00a0:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\winedevice.exe" at 00006FFFFF730000: builtin
+5135.265:009c:00a0:trace:loaddll:build_ntdll_module Loaded L"C:\\windows\\system32\\ntdll.dll" at 00006FFFFFEF0000: builtin
+5135.266:009c:00a0:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\kernelbase.dll" at 00006FFFFFBB0000: builtin
+5135.266:009c:00a0:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\kernel32.dll" at 00006FFFFFE70000: builtin
+5135.266:009c:00a0:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\msvcrt.dll" at 00006FFFFFAA0000: builtin
+5135.267:009c:00a0:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\ucrtbase.dll" at 00006FFFFF8F0000: builtin
+5135.267:009c:00a0:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\cryptbase.dll" at 00006FFFFF9E0000: builtin
+5135.267:009c:00a0:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\rpcrt4.dll" at 00006FFFFFA00000: builtin
+5135.267:009c:00a0:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\sechost.dll" at 00006FFFFF8B0000: builtin
+5135.267:009c:00a0:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\advapi32.dll" at 00006FFFFFB60000: builtin
+5135.267:009c:00a0:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\ntoskrnl.exe" at 00006FFFFF6B0000: builtin
+5135.271:009c:00a0:fixme:ntdll:find_reg_tz_info Can't find matching timezone information in the registry for bias 0, std (d/m/y): 22/03/2026, dlt (d/m/y): 15/02/2026
+5135.277:0030:00a4:warn:threadname:NtSetInformationThread Thread renamed to L"wine_rpcrt4_io"
+5135.278:009c:00ac:warn:threadname:NtSetInformationThread Thread renamed to L"wine_sechost_service"
+5135.278:009c:00ac:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\win32k.sys" at 00006FFFFF680000: builtin
+5135.278:009c:00ac:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\drivers\\dxgkrnl.sys" at 00006FFFFF660000: builtin
+5135.278:009c:00ac:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\drivers\\dxgmms1.sys" at 00006FFFFF640000: builtin
+5135.279:009c:00ac:fixme:ntoskrnl:kernel_object_from_handle No constructor for type L"Token"
+5135.280:009c:00a8:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\drivers\\hidparse.sys" at 00006FFFFF190000: builtin
+5135.280:009c:00a8:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\drivers\\winebus.sys" at 00006FFFFF1C0000: builtin
+5135.280:009c:00a8:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\cfgmgr32.dll" at 00006FFFFF770000: builtin
+5135.281:009c:00a8:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\setupapi.dll" at 00006FFFFF7B0000: builtin
+5135.287:009c:00b0:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\win32u.dll" at 00006FFFFF330000: builtin
+5135.287:009c:00b0:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\gdi32.dll" at 00006FFFFF380000: builtin
+5135.288:009c:00b0:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\user32.dll" at 00006FFFFF420000: builtin
+5135.288:009c:00b0:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\drivers\\hidclass.sys" at 00006FFFFF150000: builtin
+5135.288:009c:00b0:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\drivers\\winehid.sys" at 00006FFFFF170000: builtin
+5135.312:009c:00b0:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\imm32.dll" at 00006FFFFF300000: builtin
+5135.322:0068:00c4:warn:threadname:NtSetInformationThread Thread renamed to L"wine_rpcrt4_io"
+5135.322:0068:00c8:warn:threadname:NtSetInformationThread Thread renamed to L"wine_threadpool_worker"
+5135.327:009c:00a8:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\drivers\\wineusb.sys" at 00006FFFFF130000: builtin
+5135.329:009c:00b0:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\combase.dll" at 00006FFFFEFF0000: builtin
+5135.330:009c:00b0:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\coml2.dll" at 00006FFFFEFC0000: builtin
+5135.330:009c:00b0:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\ole32.dll" at 00006FFFFF060000: builtin
+5135.332:009c:00b0:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\uxtheme.dll" at 00006FFFFEF70000: builtin
+5135.337:009c:00a8:err:ntoskrnl:ZwLoadDriver failed to create driver L"\\Registry\\Machine\\System\\CurrentControlSet\\Services\\winebth": c0000142
+5135.337:0030:0034:fixme:service:scmdatabase_autostart_services Auto-start service L"winebth" failed to start: 1114
+5135.339:0028:002c:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\win32u.dll" at 00006FFFFF330000: builtin
+5135.339:0028:002c:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\user32.dll" at 00006FFFFF420000: builtin
+5135.339:0028:002c:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\gdi32.dll" at 00006FFFFF380000: builtin
+5135.340:0028:002c:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\shcore.dll" at 00006FFFFE570000: builtin
+5135.340:0028:002c:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\shlwapi.dll" at 00006FFFFE5A0000: builtin
+5135.340:0028:002c:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\shell32.dll" at 00006FFFFE610000: builtin
+5135.363:0028:002c:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\imm32.dll" at 00006FFFFF300000: builtin
+5135.363:0028:002c:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\combase.dll" at 00006FFFFEFF0000: builtin
+5135.364:0028:002c:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\coml2.dll" at 00006FFFFEFC0000: builtin
+5135.364:0028:002c:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\ole32.dll" at 00006FFFFF060000: builtin
+5135.395:0028:002c:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\mpr.dll" at 00006FFFFE4A0000: builtin
+5135.395:0028:002c:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\wininet.dll" at 00006FFFFE4D0000: builtin
+5135.396:0020:0024:trace:seh:install_bpf Installing seccomp filters.
+5135.396:0020:0024:trace:seh:check_bpf_jit_enable enabled 0x31.
+5135.397:0020:0024:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\umu.exe" at 00006FFFFFFE0000: builtin
+5135.397:0020:0024:trace:loaddll:build_ntdll_module Loaded L"C:\\windows\\system32\\ntdll.dll" at 00006FFFFFEF0000: builtin
+5135.397:0020:0024:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\kernelbase.dll" at 00006FFFFFBB0000: builtin
+5135.397:0020:0024:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\kernel32.dll" at 00006FFFFFE70000: builtin
+5135.398:0020:0024:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\msvcrt.dll" at 00006FFFFFAA0000: builtin
+5135.398:0020:0024:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\ucrtbase.dll" at 00006FFFFF8F0000: builtin
+5135.398:0020:0024:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\cryptbase.dll" at 00006FFFFF9E0000: builtin
+5135.398:0020:0024:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\rpcrt4.dll" at 00006FFFFFA00000: builtin
+5135.399:0020:0024:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\sechost.dll" at 00006FFFFF8B0000: builtin
+5135.399:0020:0024:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\advapi32.dll" at 00006FFFFFB60000: builtin
+5135.400:0020:0024:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\cabinet.dll" at 00006FFFFEE00000: builtin
+5135.401:0020:0024:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\win32u.dll" at 00006FFFFF330000: builtin
+5135.401:0020:0024:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\user32.dll" at 00006FFFFF420000: builtin
+5135.401:0020:0024:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\gdi32.dll" at 00006FFFFF380000: builtin
+5135.401:0020:0024:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\comctl32.dll" at 00006FFFFECD0000: builtin
+5135.403:0020:0024:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\bcrypt.dll" at 00006FFFFEBB0000: builtin
+5135.403:0020:0024:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\crypt32.dll" at 00006FFFFEBE0000: builtin
+5135.403:0020:0024:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\imagehlp.dll" at 00006FFFFEB80000: builtin
+5135.403:0020:0024:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\mspatcha.dll" at 00006FFFFFFC0000: builtin
+5135.404:0020:0024:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\odbccp32.dll" at 00006FFFFEB50000: builtin
+5135.404:0020:0024:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\combase.dll" at 00006FFFFEFF0000: builtin
+5135.405:0020:0024:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\coml2.dll" at 00006FFFFEFC0000: builtin
+5135.405:0020:0024:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\ole32.dll" at 00006FFFFF060000: builtin
+5135.405:0020:0024:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\oleaut32.dll" at 00006FFFFEA60000: builtin
+5135.405:0020:0024:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\shcore.dll" at 00006FFFFE060000: builtin
+5135.405:0020:0024:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\shlwapi.dll" at 00006FFFFE090000: builtin
+5135.405:0020:0024:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\shell32.dll" at 00006FFFFE100000: builtin
+5135.406:0020:0024:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\sxs.dll" at 00006FFFFE040000: builtin
+5135.407:0020:0024:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\mpr.dll" at 00006FFFFDEE0000: builtin
+5135.407:0020:0024:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\ws2_32.dll" at 00006FFFFF870000: builtin
+5135.407:0020:0024:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\wininet.dll" at 00006FFFFDF10000: builtin
+5135.407:0020:0024:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\urlmon.dll" at 00006FFFFDFB0000: builtin
+5135.407:0020:0024:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\version.dll" at 00006FFFFDEC0000: builtin
+5135.408:0020:0024:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\wintrust.dll" at 00006FFFFDE80000: builtin
+5135.408:0020:0024:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\msi.dll" at 00006FFFFEE30000: builtin
+5135.408:0020:0024:fixme:winediag:loader_init wine-staging 11.0 is a testing version containing experimental patches.
+5135.408:0020:0024:fixme:winediag:loader_init Please mention your exact version when filing bug reports on winehq.org.
+5135.414:0020:0024:fixme:ntdll:find_reg_tz_info Can't find matching timezone information in the registry for bias 0, std (d/m/y): 22/03/2026, dlt (d/m/y): 15/02/2026
+5135.438:0020:0024:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\imm32.dll" at 00006FFFFF300000: builtin
+5135.443:00dc:00e0:trace:seh:sigsys_handler SIGSYS, rax 0xffff, rip 0x600000000005.
+5135.443:00dc:00e0:trace:seh:install_bpf Seccomp filters already installed.
+5135.444:00dc:00e0:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\explorer.exe" at 00006FFFFDE40000: builtin
+5135.444:00dc:00e0:trace:loaddll:build_ntdll_module Loaded L"C:\\windows\\system32\\ntdll.dll" at 00006FFFFFEF0000: builtin
+5135.444:00dc:00e0:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\kernelbase.dll" at 00006FFFFFBB0000: builtin
+5135.444:00dc:00e0:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\kernel32.dll" at 00006FFFFFE70000: builtin
+5135.445:00dc:00e0:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\msvcrt.dll" at 00006FFFFFAA0000: builtin
+5135.446:00dc:00e0:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\ucrtbase.dll" at 00006FFFFF8F0000: builtin
+5135.446:00dc:00e0:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\cryptbase.dll" at 00006FFFFF9E0000: builtin
+5135.446:00dc:00e0:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\rpcrt4.dll" at 00006FFFFFA00000: builtin
+5135.446:00dc:00e0:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\sechost.dll" at 00006FFFFF8B0000: builtin
+5135.446:00dc:00e0:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\advapi32.dll" at 00006FFFFFB60000: builtin
+5135.446:00dc:00e0:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\win32u.dll" at 00006FFFFF330000: builtin
+5135.447:00dc:00e0:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\user32.dll" at 00006FFFFF420000: builtin
+5135.447:00dc:00e0:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\gdi32.dll" at 00006FFFFF380000: builtin
+5135.453:00dc:00e0:fixme:ntdll:find_reg_tz_info Can't find matching timezone information in the registry for bias 0, std (d/m/y): 22/03/2026, dlt (d/m/y): 15/02/2026
+5135.477:00dc:00e0:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\imm32.dll" at 00006FFFFF300000: builtin
+5135.479:00dc:00e0:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\winex11.drv" at 00006FFFFDE20000: builtin
+5135.524:00dc:00e0:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\uxtheme.dll" at 00006FFFFEF70000: builtin
+5135.528:00dc:00e8:warn:threadname:NtSetInformationThread Thread renamed to L"wine_explorer_display_settings_restorer"
+5135.530:00dc:00e0:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\shcore.dll" at 00006FFFFE060000: builtin
+5135.530:00dc:00e0:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\shlwapi.dll" at 00006FFFFE090000: builtin
+5135.530:00dc:00e0:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\shell32.dll" at 00006FFFFE100000: builtin
+5135.532:00dc:00e0:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\combase.dll" at 00006FFFFEFF0000: builtin
+5135.532:00dc:00e0:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\coml2.dll" at 00006FFFFEFC0000: builtin
+5135.532:00dc:00e0:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\ole32.dll" at 00006FFFFF060000: builtin
+5135.533:00dc:00ec:warn:threadname:NtSetInformationThread Thread renamed to L"wine_rpcrt4_server"
+5135.534:00dc:00e0:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\oleaut32.dll" at 00006FFFFEA60000: builtin
+5135.534:00dc:00e0:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\actxprxy.dll" at 00006FFFFDDC0000: builtin
+5135.534:00dc:00e0:trace:seh:dispatch_exception code=6ba (RPC_S_SERVER_UNAVAILABLE) flags=0 addr=00006FFFFFBBD917
+5135.534:00dc:00e0:trace:seh:dispatch_exception rip=00006fffffbbd917 rsp=000000000031d560 rbp=000000000031d650 eflags=00000206
+5135.534:00dc:00e0:trace:seh:dispatch_exception rax=000000000031d580 rbx=000000000031e420 rcx=000000000031d580 rdx=0000000000000000
+5135.534:00dc:00e0:trace:seh:dispatch_exception rsi=0000000000000064 rdi=0000000000835fe0  r8=0000000000000000  r9=0000000000000000
+5135.534:00dc:00e0:trace:seh:dispatch_exception r10=0000000000836710 r11=0000000000a00000 r12=000000000031d728 r13=0000000000000005
+5135.534:00dc:00e0:trace:seh:dispatch_exception r14=00006fffffa4e260 r15=00006fffff02e414 mxcsr=00001f80 cs=0033 ss=002b
+5135.534:00dc:00e0:trace:unwind:RtlVirtualUnwind2 type 1 base 6fffffbb0000 rip 6fffffbbd917 rva d917 rsp 31d560
+5135.534:00dc:00e0:trace:unwind:dump_unwind_info **** func d8a8-d91f
+5135.534:00dc:00e0:trace:unwind:dump_unwind_info unwind info at 00006FFFFFC6EE60 flags 0 prolog 0xf bytes function 00006FFFFFBBD8A8-00006FFFFFBBD91F
+5135.534:00dc:00e0:trace:unwind:dump_unwind_info     0xf: subq $0xc8,%rsp
+5135.534:00dc:00e0:trace:unwind:RtlVirtualUnwind2 inside epilog.
+5135.534:00dc:00e0:trace:unwind:RtlVirtualUnwind2 type 1 base 6fffffa00000 rip 6fffffa32496 rva 32496 rsp 31d630
+5135.534:00dc:00e0:trace:unwind:dump_unwind_info **** func 32480-324cb
+5135.534:00dc:00e0:trace:unwind:dump_unwind_info unwind info at 00006FFFFFA7EC40 flags 0 prolog 0x8 bytes function 00006FFFFFA32480-00006FFFFFA324CB
+5135.534:00dc:00e0:trace:unwind:dump_unwind_info     frame register rbp offset 0x0(%rsp)
+5135.534:00dc:00e0:trace:unwind:dump_unwind_info     0x8: subq $0x20,%rsp
+5135.534:00dc:00e0:trace:unwind:dump_unwind_info     0x4: leaq 0x0(%rsp),rbp
+5135.534:00dc:00e0:trace:unwind:dump_unwind_info     0x1: pushq %rbp
+5135.534:00dc:00e0:trace:unwind:RtlVirtualUnwind2 type 1 base 6fffffa00000 rip 6fffffa1e5d6 rva 1e5d6 rsp 31d660
+5135.534:00dc:00e0:trace:unwind:dump_unwind_info **** func 1e540-1e5d7
+5135.534:00dc:00e0:trace:unwind:dump_unwind_info unwind info at 00006FFFFFA7C2F8 flags 0 prolog 0xd bytes function 00006FFFFFA1E540-00006FFFFFA1E5D7
+5135.534:00dc:00e0:trace:unwind:dump_unwind_info     frame register rbp offset 0x40(%rsp)
+5135.534:00dc:00e0:trace:unwind:dump_unwind_info     0xd: leaq 0x40(%rsp),rbp
+5135.534:00dc:00e0:trace:unwind:dump_unwind_info     0x8: subq $0x48,%rsp
+5135.534:00dc:00e0:trace:unwind:dump_unwind_info     0x4: pushq %rbx
+5135.534:00dc:00e0:trace:unwind:dump_unwind_info     0x3: pushq %rsi
+5135.534:00dc:00e0:trace:unwind:dump_unwind_info     0x2: pushq %rdi
+5135.534:00dc:00e0:trace:unwind:dump_unwind_info     0x1: pushq %rbp
+5135.534:00dc:00e0:trace:unwind:RtlVirtualUnwind2 type 1 base 6fffffa00000 rip 6fffffa40a0f rva 40a0f rsp 31d6d0
+5135.534:00dc:00e0:trace:unwind:dump_unwind_info **** func 40730-40c65
+5135.534:00dc:00e0:trace:unwind:dump_unwind_info unwind info at 00006FFFFFA7D3B0 flags 0 prolog 0x1b bytes function 00006FFFFFA40730-00006FFFFFA40C65
+5135.534:00dc:00e0:trace:unwind:dump_unwind_info     frame register rbp offset 0x80(%rsp)
+5135.534:00dc:00e0:trace:unwind:dump_unwind_info     0x1b: leaq 0x80(%rsp),rbp
+5135.534:00dc:00e0:trace:unwind:dump_unwind_info     0x13: subq $0xa18,%rsp
+5135.534:00dc:00e0:trace:unwind:dump_unwind_info     0xc: pushq %rbx
+5135.534:00dc:00e0:trace:unwind:dump_unwind_info     0xb: pushq %rsi
+5135.534:00dc:00e0:trace:unwind:dump_unwind_info     0xa: pushq %rdi
+5135.534:00dc:00e0:trace:unwind:dump_unwind_info     0x9: pushq %r12
+5135.534:00dc:00e0:trace:unwind:dump_unwind_info     0x7: pushq %r13
+5135.534:00dc:00e0:trace:unwind:dump_unwind_info     0x5: pushq %r14
+5135.534:00dc:00e0:trace:unwind:dump_unwind_info     0x3: pushq %r15
+5135.534:00dc:00e0:trace:unwind:dump_unwind_info     0x1: pushq %rbp
+5135.534:00dc:00e0:trace:seh:call_seh_handlers calling TEB handler 00006FFFFFA38150 (rec=000000000031D580 frame=000000000031D7B0 context=000000000031D080 dispatch=000000000031C7F0) sp=31e130
+5135.534:00dc:00e0:trace:seh:call_seh_handlers TEB handler at 00006FFFFFA38150 returned 1
+5135.534:00dc:00e0:trace:unwind:RtlVirtualUnwind2 type 1 base 6fffffa00000 rip 6fffffa24e92 rva 24e92 rsp 31e130
+5135.534:00dc:00e0:trace:unwind:dump_unwind_info **** func 24820-24f7c
+5135.534:00dc:00e0:trace:unwind:dump_unwind_info unwind info at 00006FFFFFA7D3F8 flags 0 prolog 0x12 bytes function 00006FFFFFA24820-00006FFFFFA24F7C
+5135.534:00dc:00e0:trace:unwind:dump_unwind_info     frame register rbp offset 0x80(%rsp)
+5135.534:00dc:00e0:trace:unwind:dump_unwind_info     0x12: leaq 0x80(%rsp),rbp
+5135.534:00dc:00e0:trace:unwind:dump_unwind_info     0xa: subq $0xa80,%rsp
+5135.534:00dc:00e0:trace:unwind:dump_unwind_info     0x3: pushq %rbx
+5135.534:00dc:00e0:trace:unwind:dump_unwind_info     0x2: pushq %rsi
+5135.534:00dc:00e0:trace:unwind:dump_unwind_info     0x1: pushq %rbp
+5135.534:00dc:00e0:trace:unwind:RtlVirtualUnwind2 type 1 base 6fffffa00000 rip 6fffffa066ab rva 66ab rsp 31ebd0
+5135.534:00dc:00e0:trace:unwind:dump_unwind_info **** func 6690-66b0
+5135.534:00dc:00e0:trace:unwind:dump_unwind_info unwind info at 00006FFFFFA7D2BC flags 0 prolog 0x4 bytes function 00006FFFFFA06690-00006FFFFFA066B0
+5135.534:00dc:00e0:trace:unwind:dump_unwind_info     0x4: subq $0x28,%rsp
+5135.534:00dc:00e0:trace:unwind:RtlVirtualUnwind2 inside epilog.
+5135.534:00dc:00e0:trace:unwind:RtlVirtualUnwind2 type 1 base 6ffffeff0000 rip 6fffff00f594 rva 1f594 rsp 31ec00
+5135.534:00dc:00e0:trace:unwind:dump_unwind_info **** func 1f560-1f59a
+5135.534:00dc:00e0:trace:unwind:dump_unwind_info unwind info at 00006FFFFF03A950 flags 0 prolog 0x8 bytes function 00006FFFFF00F560-00006FFFFF00F59A
+5135.534:00dc:00e0:trace:unwind:dump_unwind_info     frame register rbp offset 0x0(%rsp)
+5135.534:00dc:00e0:trace:unwind:dump_unwind_info     0x8: subq $0x40,%rsp
+5135.534:00dc:00e0:trace:unwind:dump_unwind_info     0x4: leaq 0x0(%rsp),rbp
+5135.534:00dc:00e0:trace:unwind:dump_unwind_info     0x1: pushq %rbp
+5135.534:00dc:00e0:trace:unwind:RtlVirtualUnwind2 inside epilog.
+5135.534:00dc:00e0:trace:unwind:RtlVirtualUnwind2 type 1 base 6ffffeff0000 rip 6fffff0123f5 rva 223f5 rsp 31ec50
+5135.534:00dc:00e0:trace:unwind:dump_unwind_info **** func 22300-22400
+5135.534:00dc:00e0:trace:unwind:dump_unwind_info unwind info at 00006FFFFF039FA0 flags 0 prolog 0x12 bytes function 00006FFFFF012300-00006FFFFF012400
+5135.534:00dc:00e0:trace:unwind:dump_unwind_info     frame register rbp offset 0x80(%rsp)
+5135.534:00dc:00e0:trace:unwind:dump_unwind_info     0x12: leaq 0x80(%rsp),rbp
+5135.534:00dc:00e0:trace:unwind:dump_unwind_info     0xa: subq $0x180,%rsp
+5135.534:00dc:00e0:trace:unwind:dump_unwind_info     0x3: pushq %rbx
+5135.534:00dc:00e0:trace:unwind:dump_unwind_info     0x2: pushq %rsi
+5135.534:00dc:00e0:trace:unwind:dump_unwind_info     0x1: pushq %rbp
+5135.534:00dc:00e0:trace:seh:call_seh_handlers calling TEB handler 00006FFFFF0064B0 (rec=000000000031D580 frame=000000000031ECA0 context=000000000031D080 dispatch=000000000031C7F0) sp=31edf0
+5135.534:00dc:00e0:trace:seh:RtlUnwindEx code=6ba flags=2 end_frame=000000000031ECA0 target_ip=00006FFFFEFF4E3A
+5135.534:00dc:00e0:trace:seh:RtlUnwindEx rip=00006ffffff27796 rsp=000000000031bad0 rbp=000000000031bb50 eflags=00000202
+5135.534:00dc:00e0:trace:seh:RtlUnwindEx rax=000000007ffc0000 rbx=000000000031d580 rcx=000000000031c1a0 rdx=00006ffffeff4e3a
+5135.534:00dc:00e0:trace:seh:RtlUnwindEx rsi=000000000031d580 rdi=000000000031c1a0  r8=000000000031d580  r9=00006fffff016530
+5135.534:00dc:00e0:trace:seh:RtlUnwindEx r10=00007f5c4af22740 r11=0000000000000246 r12=000000000031d7b0 r13=000000000031eca0
+5135.534:00dc:00e0:trace:seh:RtlUnwindEx r14=000000007ffc0000 r15=000000000031bc40 mxcsr=00001f80 cs=0033 ss=002b
+5135.534:00dc:00e0:trace:unwind:RtlVirtualUnwind2 type 2 base 6fffffef0000 rip 6ffffff27796 rva 37796 rsp 31bad0
+5135.534:00dc:00e0:trace:unwind:dump_unwind_info **** func 37740-37ec4
+5135.534:00dc:00e0:trace:unwind:dump_unwind_info unwind info at 00006FFFFFF982D4 flags 0 prolog 0x22 bytes function 00006FFFFFF27740-00006FFFFFF27EC4
+5135.534:00dc:00e0:trace:unwind:dump_unwind_info     frame register rbp offset 0x80(%rsp)
+5135.534:00dc:00e0:trace:unwind:dump_unwind_info     0x22: movaps %xmm6,0x640(%rsp)
+5135.534:00dc:00e0:trace:unwind:dump_unwind_info     0x1b: leaq 0x80(%rsp),rbp
+5135.534:00dc:00e0:trace:unwind:dump_unwind_info     0x13: subq $0x658,%rsp
+5135.534:00dc:00e0:trace:unwind:dump_unwind_info     0xc: pushq %rbx
+5135.534:00dc:00e0:trace:unwind:dump_unwind_info     0xb: pushq %rsi
+5135.534:00dc:00e0:trace:unwind:dump_unwind_info     0xa: pushq %rdi
+5135.534:00dc:00e0:trace:unwind:dump_unwind_info     0x9: pushq %r12
+5135.534:00dc:00e0:trace:unwind:dump_unwind_info     0x7: pushq %r13
+5135.534:00dc:00e0:trace:unwind:dump_unwind_info     0x5: pushq %r14
+5135.534:00dc:00e0:trace:unwind:dump_unwind_info     0x3: pushq %r15
+5135.534:00dc:00e0:trace:unwind:dump_unwind_info     0x1: pushq %rbp
+5135.534:00dc:00e0:trace:unwind:RtlVirtualUnwind2 type 2 base 6fffffef0000 rip 6ffffff27727 rva 37727 rsp 31c170
+5135.534:00dc:00e0:trace:unwind:dump_unwind_info **** func 37700-37731
+5135.534:00dc:00e0:trace:unwind:dump_unwind_info unwind info at 00006FFFFFF99110 flags 0 prolog 0x10 bytes function 00006FFFFFF27700-00006FFFFFF27731
+5135.534:00dc:00e0:trace:unwind:dump_unwind_info     frame register rbp offset 0x80(%rsp)
+5135.534:00dc:00e0:trace:unwind:dump_unwind_info     0x10: leaq 0x80(%rsp),rbp
+5135.534:00dc:00e0:trace:unwind:dump_unwind_info     0x8: subq $0x500,%rsp
+5135.534:00dc:00e0:trace:unwind:dump_unwind_info     0x1: pushq %rbp
+5135.534:00dc:00e0:trace:unwind:RtlVirtualUnwind2 type 2 base 6ffffeff0000 rip 6ffffeff4e3a rva 4e3a rsp 31c680
+5135.534:00dc:00e0:trace:unwind:dump_unwind_info **** func 4e20-4e3c
+5135.534:00dc:00e0:trace:unwind:dump_unwind_info unwind info at 00006FFFFF03AA40 flags 0 prolog 0x8 bytes function 00006FFFFEFF4E20-00006FFFFEFF4E3C
+5135.534:00dc:00e0:trace:unwind:dump_unwind_info     frame register rbp offset 0x0(%rsp)
+5135.534:00dc:00e0:trace:unwind:dump_unwind_info     0x8: subq $0x20,%rsp
+5135.534:00dc:00e0:trace:unwind:dump_unwind_info     0x4: leaq 0x0(%rsp),rbp
+5135.534:00dc:00e0:trace:unwind:dump_unwind_info     0x1: pushq %rbp
+5135.534:00dc:00e0:trace:unwind:RtlVirtualUnwind2 type 2 base 6ffffeff0000 rip 6fffff01652c rva 2652c rsp 31c6b0
+5135.534:00dc:00e0:trace:unwind:dump_unwind_info **** func 26500-2652d
+5135.534:00dc:00e0:trace:unwind:dump_unwind_info unwind info at 00006FFFFF03AA4C flags 0 prolog 0x8 bytes function 00006FFFFF016500-00006FFFFF01652D
+5135.534:00dc:00e0:trace:unwind:dump_unwind_info     frame register rbp offset 0x0(%rsp)
+5135.534:00dc:00e0:trace:unwind:dump_unwind_info     0x8: subq $0x20,%rsp
+5135.534:00dc:00e0:trace:unwind:dump_unwind_info     0x4: leaq 0x0(%rsp),rbp
+5135.534:00dc:00e0:trace:unwind:dump_unwind_info     0x1: pushq %rbp
+5135.534:00dc:00e0:trace:unwind:RtlVirtualUnwind2 type 2 base 6ffffeff0000 rip 6fffff006507 rva 16507 rsp 31c6e0
+5135.534:00dc:00e0:trace:unwind:dump_unwind_info **** func 164b0-16508
+5135.534:00dc:00e0:trace:unwind:dump_unwind_info unwind info at 00006FFFFF03AA64 flags 0 prolog 0xd bytes function 00006FFFFF0064B0-00006FFFFF006508
+5135.534:00dc:00e0:trace:unwind:dump_unwind_info     frame register rbp offset 0x30(%rsp)
+5135.534:00dc:00e0:trace:unwind:dump_unwind_info     0xd: leaq 0x30(%rsp),rbp
+5135.534:00dc:00e0:trace:unwind:dump_unwind_info     0x8: subq $0x38,%rsp
+5135.534:00dc:00e0:trace:unwind:dump_unwind_info     0x4: pushq %rbx
+5135.534:00dc:00e0:trace:unwind:dump_unwind_info     0x3: pushq %rsi
+5135.534:00dc:00e0:trace:unwind:dump_unwind_info     0x2: pushq %rdi
+5135.534:00dc:00e0:trace:unwind:dump_unwind_info     0x1: pushq %rbp
+5135.534:00dc:00e0:trace:unwind:RtlVirtualUnwind2 type 2 base 6fffffef0000 rip 6ffffff00af9 rva 10af9 rsp 31c740
+5135.534:00dc:00e0:trace:unwind:dump_unwind_info **** func 10aec-10aff
+5135.534:00dc:00e0:trace:unwind:dump_unwind_info unwind info at 00006FFFFFF98138 flags 1 prolog 0x4 bytes function 00006FFFFFF00AEC-00006FFFFFF00AFF
+5135.534:00dc:00e0:trace:unwind:dump_unwind_info     0x4: subq $0x28,%rsp
+5135.534:00dc:00e0:trace:unwind:dump_unwind_info     handler 00006FFFFFF49620 data at 00006FFFFFF98144
+5135.534:00dc:00e0:trace:unwind:RtlVirtualUnwind2 type 2 base 6fffffef0000 rip 6ffffff37586 rva 47586 rsp 31c770
+5135.534:00dc:00e0:trace:unwind:dump_unwind_info **** func 47240-47720
+5135.534:00dc:00e0:trace:unwind:dump_unwind_info unwind info at 00006FFFFFF98294 flags 0 prolog 0x1b bytes function 00006FFFFFF37240-00006FFFFFF37720
+5135.534:00dc:00e0:trace:unwind:dump_unwind_info     frame register rbp offset 0x80(%rsp)
+5135.534:00dc:00e0:trace:unwind:dump_unwind_info     0x1b: leaq 0x80(%rsp),rbp
+5135.534:00dc:00e0:trace:unwind:dump_unwind_info     0x13: subq $0x688,%rsp
+5135.534:00dc:00e0:trace:unwind:dump_unwind_info     0xc: pushq %rbx
+5135.534:00dc:00e0:trace:unwind:dump_unwind_info     0xb: pushq %rsi
+5135.534:00dc:00e0:trace:unwind:dump_unwind_info     0xa: pushq %rdi
+5135.534:00dc:00e0:trace:unwind:dump_unwind_info     0x9: pushq %r12
+5135.534:00dc:00e0:trace:unwind:dump_unwind_info     0x7: pushq %r13
+5135.534:00dc:00e0:trace:unwind:dump_unwind_info     0x5: pushq %r14
+5135.534:00dc:00e0:trace:unwind:dump_unwind_info     0x3: pushq %r15
+5135.534:00dc:00e0:trace:unwind:dump_unwind_info     0x1: pushq %rbp
+5135.534:00dc:00e0:trace:unwind:RtlVirtualUnwind2 type 2 base 6fffffef0000 rip 6ffffff39a2d rva 49a2d rsp 31ce40
+5135.534:00dc:00e0:trace:unwind:dump_unwind_info **** func 49540-4a58e
+5135.534:00dc:00e0:trace:unwind:dump_unwind_info unwind info at 00006FFFFFF95558 flags 0 prolog 0x22 bytes function 00006FFFFFF39540-00006FFFFFF3A58E
+5135.534:00dc:00e0:trace:unwind:dump_unwind_info     frame register rbp offset 0x80(%rsp)
+5135.534:00dc:00e0:trace:unwind:dump_unwind_info     0x22: movaps %xmm6,0x1c0(%rsp)
+5135.534:00dc:00e0:trace:unwind:dump_unwind_info     0x1b: leaq 0x80(%rsp),rbp
+5135.534:00dc:00e0:trace:unwind:dump_unwind_info     0x13: subq $0x1d8,%rsp
+5135.534:00dc:00e0:trace:unwind:dump_unwind_info     0xc: pushq %rbx
+5135.534:00dc:00e0:trace:unwind:dump_unwind_info     0xb: pushq %rsi
+5135.534:00dc:00e0:trace:unwind:dump_unwind_info     0xa: pushq %rdi
+5135.534:00dc:00e0:trace:unwind:dump_unwind_info     0x9: pushq %r12
+5135.534:00dc:00e0:trace:unwind:dump_unwind_info     0x7: pushq %r13
+5135.534:00dc:00e0:trace:unwind:dump_unwind_info     0x5: pushq %r14
+5135.534:00dc:00e0:trace:unwind:dump_unwind_info     0x3: pushq %r15
+5135.534:00dc:00e0:trace:unwind:dump_unwind_info     0x1: pushq %rbp
+5135.534:00dc:00e0:trace:unwind:RtlVirtualUnwind2 type 2 base 6fffffef0000 rip 6ffffff00ccf rva 10ccf rsp 31d060
+5135.534:00dc:00e0:trace:unwind:dump_unwind_info **** func 10c54-10cdc
+5135.534:00dc:00e0:trace:unwind:dump_unwind_info unwind info at 00006FFFFFF98208 flags 0 prolog 0x7 bytes function 00006FFFFFF00C54-00006FFFFFF00CDC
+5135.534:00dc:00e0:trace:unwind:dump_unwind_info     0x7: subq $0x4f8,%rsp
+5135.534:00dc:00e0:trace:unwind:RtlVirtualUnwind2 type 2 base 6fffffbb0000 rip 6fffffbbd917 rva d917 rsp 31d560
+5135.534:00dc:00e0:trace:unwind:dump_unwind_info **** func d8a8-d91f
+5135.534:00dc:00e0:trace:unwind:dump_unwind_info unwind info at 00006FFFFFC6EE60 flags 0 prolog 0xf bytes function 00006FFFFFBBD8A8-00006FFFFFBBD91F
+5135.534:00dc:00e0:trace:unwind:dump_unwind_info     0xf: subq $0xc8,%rsp
+5135.534:00dc:00e0:trace:unwind:RtlVirtualUnwind2 inside epilog.
+5135.534:00dc:00e0:trace:unwind:RtlVirtualUnwind2 type 2 base 6fffffa00000 rip 6fffffa32496 rva 32496 rsp 31d630
+5135.534:00dc:00e0:trace:unwind:dump_unwind_info **** func 32480-324cb
+5135.534:00dc:00e0:trace:unwind:dump_unwind_info unwind info at 00006FFFFFA7EC40 flags 0 prolog 0x8 bytes function 00006FFFFFA32480-00006FFFFFA324CB
+5135.534:00dc:00e0:trace:unwind:dump_unwind_info     frame register rbp offset 0x0(%rsp)
+5135.534:00dc:00e0:trace:unwind:dump_unwind_info     0x8: subq $0x20,%rsp
+5135.534:00dc:00e0:trace:unwind:dump_unwind_info     0x4: leaq 0x0(%rsp),rbp
+5135.534:00dc:00e0:trace:unwind:dump_unwind_info     0x1: pushq %rbp
+5135.534:00dc:00e0:trace:unwind:RtlVirtualUnwind2 type 2 base 6fffffa00000 rip 6fffffa1e5d6 rva 1e5d6 rsp 31d660
+5135.534:00dc:00e0:trace:unwind:dump_unwind_info **** func 1e540-1e5d7
+5135.534:00dc:00e0:trace:unwind:dump_unwind_info unwind info at 00006FFFFFA7C2F8 flags 0 prolog 0xd bytes function 00006FFFFFA1E540-00006FFFFFA1E5D7
+5135.534:00dc:00e0:trace:unwind:dump_unwind_info     frame register rbp offset 0x40(%rsp)
+5135.534:00dc:00e0:trace:unwind:dump_unwind_info     0xd: leaq 0x40(%rsp),rbp
+5135.534:00dc:00e0:trace:unwind:dump_unwind_info     0x8: subq $0x48,%rsp
+5135.534:00dc:00e0:trace:unwind:dump_unwind_info     0x4: pushq %rbx
+5135.534:00dc:00e0:trace:unwind:dump_unwind_info     0x3: pushq %rsi
+5135.534:00dc:00e0:trace:unwind:dump_unwind_info     0x2: pushq %rdi
+5135.534:00dc:00e0:trace:unwind:dump_unwind_info     0x1: pushq %rbp
+5135.534:00dc:00e0:trace:unwind:RtlVirtualUnwind2 type 2 base 6fffffa00000 rip 6fffffa40a0f rva 40a0f rsp 31d6d0
+5135.534:00dc:00e0:trace:unwind:dump_unwind_info **** func 40730-40c65
+5135.534:00dc:00e0:trace:unwind:dump_unwind_info unwind info at 00006FFFFFA7D3B0 flags 0 prolog 0x1b bytes function 00006FFFFFA40730-00006FFFFFA40C65
+5135.534:00dc:00e0:trace:unwind:dump_unwind_info     frame register rbp offset 0x80(%rsp)
+5135.534:00dc:00e0:trace:unwind:dump_unwind_info     0x1b: leaq 0x80(%rsp),rbp
+5135.534:00dc:00e0:trace:unwind:dump_unwind_info     0x13: subq $0xa18,%rsp
+5135.534:00dc:00e0:trace:unwind:dump_unwind_info     0xc: pushq %rbx
+5135.534:00dc:00e0:trace:unwind:dump_unwind_info     0xb: pushq %rsi
+5135.534:00dc:00e0:trace:unwind:dump_unwind_info     0xa: pushq %rdi
+5135.534:00dc:00e0:trace:unwind:dump_unwind_info     0x9: pushq %r12
+5135.534:00dc:00e0:trace:unwind:dump_unwind_info     0x7: pushq %r13
+5135.534:00dc:00e0:trace:unwind:dump_unwind_info     0x5: pushq %r14
+5135.534:00dc:00e0:trace:unwind:dump_unwind_info     0x3: pushq %r15
+5135.534:00dc:00e0:trace:unwind:dump_unwind_info     0x1: pushq %rbp
+5135.534:00dc:00e0:trace:seh:RtlUnwindEx calling TEB handler 00006FFFFFA38150 (rec=000000000031D580, frame=000000000031D7B0 context=000000000031C1A0, dispatch=000000000031BB50)
+5135.534:00dc:00e0:trace:seh:RtlUnwindEx handler at 00006FFFFFA38150 returned 1
+5135.534:00dc:00e0:trace:unwind:RtlVirtualUnwind2 type 2 base 6fffffa00000 rip 6fffffa24e92 rva 24e92 rsp 31e130
+5135.534:00dc:00e0:trace:unwind:dump_unwind_info **** func 24820-24f7c
+5135.534:00dc:00e0:trace:unwind:dump_unwind_info unwind info at 00006FFFFFA7D3F8 flags 0 prolog 0x12 bytes function 00006FFFFFA24820-00006FFFFFA24F7C
+5135.534:00dc:00e0:trace:unwind:dump_unwind_info     frame register rbp offset 0x80(%rsp)
+5135.534:00dc:00e0:trace:unwind:dump_unwind_info     0x12: leaq 0x80(%rsp),rbp
+5135.534:00dc:00e0:trace:unwind:dump_unwind_info     0xa: subq $0xa80,%rsp
+5135.534:00dc:00e0:trace:unwind:dump_unwind_info     0x3: pushq %rbx
+5135.534:00dc:00e0:trace:unwind:dump_unwind_info     0x2: pushq %rsi
+5135.534:00dc:00e0:trace:unwind:dump_unwind_info     0x1: pushq %rbp
+5135.534:00dc:00e0:trace:unwind:RtlVirtualUnwind2 type 2 base 6fffffa00000 rip 6fffffa066ab rva 66ab rsp 31ebd0
+5135.534:00dc:00e0:trace:unwind:dump_unwind_info **** func 6690-66b0
+5135.534:00dc:00e0:trace:unwind:dump_unwind_info unwind info at 00006FFFFFA7D2BC flags 0 prolog 0x4 bytes function 00006FFFFFA06690-00006FFFFFA066B0
+5135.534:00dc:00e0:trace:unwind:dump_unwind_info     0x4: subq $0x28,%rsp
+5135.534:00dc:00e0:trace:unwind:RtlVirtualUnwind2 inside epilog.
+5135.534:00dc:00e0:trace:unwind:RtlVirtualUnwind2 type 2 base 6ffffeff0000 rip 6fffff00f594 rva 1f594 rsp 31ec00
+5135.534:00dc:00e0:trace:unwind:dump_unwind_info **** func 1f560-1f59a
+5135.534:00dc:00e0:trace:unwind:dump_unwind_info unwind info at 00006FFFFF03A950 flags 0 prolog 0x8 bytes function 00006FFFFF00F560-00006FFFFF00F59A
+5135.534:00dc:00e0:trace:unwind:dump_unwind_info     frame register rbp offset 0x0(%rsp)
+5135.534:00dc:00e0:trace:unwind:dump_unwind_info     0x8: subq $0x40,%rsp
+5135.534:00dc:00e0:trace:unwind:dump_unwind_info     0x4: leaq 0x0(%rsp),rbp
+5135.534:00dc:00e0:trace:unwind:dump_unwind_info     0x1: pushq %rbp
+5135.534:00dc:00e0:trace:unwind:RtlVirtualUnwind2 inside epilog.
+5135.534:00dc:00e0:trace:unwind:RtlVirtualUnwind2 type 2 base 6ffffeff0000 rip 6fffff0123f5 rva 223f5 rsp 31ec50
+5135.534:00dc:00e0:trace:unwind:dump_unwind_info **** func 22300-22400
+5135.534:00dc:00e0:trace:unwind:dump_unwind_info unwind info at 00006FFFFF039FA0 flags 0 prolog 0x12 bytes function 00006FFFFF012300-00006FFFFF012400
+5135.534:00dc:00e0:trace:unwind:dump_unwind_info     frame register rbp offset 0x80(%rsp)
+5135.534:00dc:00e0:trace:unwind:dump_unwind_info     0x12: leaq 0x80(%rsp),rbp
+5135.534:00dc:00e0:trace:unwind:dump_unwind_info     0xa: subq $0x180,%rsp
+5135.534:00dc:00e0:trace:unwind:dump_unwind_info     0x3: pushq %rbx
+5135.534:00dc:00e0:trace:unwind:dump_unwind_info     0x2: pushq %rsi
+5135.534:00dc:00e0:trace:unwind:dump_unwind_info     0x1: pushq %rbp
+5135.534:00dc:00e0:trace:seh:RtlRestoreContext returning to 00006FFFFEFF4E3A stack 000000000031EC50
+5135.535:0030:00f0:warn:threadname:NtSetInformationThread Thread renamed to L"wine_rpcrt4_io"
+5135.539:00f4:00f8:trace:seh:sigsys_handler SIGSYS, rax 0xffff, rip 0x600000000005.
+5135.539:00f4:00f8:trace:seh:install_bpf Seccomp filters already installed.
+5135.540:00f4:00f8:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\rpcss.exe" at 00006FFFFDDA0000: builtin
+5135.540:00f4:00f8:trace:loaddll:build_ntdll_module Loaded L"C:\\windows\\system32\\ntdll.dll" at 00006FFFFFEF0000: builtin
+5135.540:00f4:00f8:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\kernelbase.dll" at 00006FFFFFBB0000: builtin
+5135.540:00f4:00f8:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\kernel32.dll" at 00006FFFFFE70000: builtin
+5135.541:00f4:00f8:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\msvcrt.dll" at 00006FFFFFAA0000: builtin
+5135.541:00f4:00f8:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\ucrtbase.dll" at 00006FFFFF8F0000: builtin
+5135.541:00f4:00f8:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\cryptbase.dll" at 00006FFFFF9E0000: builtin
+5135.541:00f4:00f8:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\rpcrt4.dll" at 00006FFFFFA00000: builtin
+5135.542:00f4:00f8:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\sechost.dll" at 00006FFFFF8B0000: builtin
+5135.542:00f4:00f8:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\advapi32.dll" at 00006FFFFFB60000: builtin
+5135.547:00f4:00f8:fixme:ntdll:find_reg_tz_info Can't find matching timezone information in the registry for bias 0, std (d/m/y): 22/03/2026, dlt (d/m/y): 15/02/2026
+5135.547:0030:00fc:warn:threadname:NtSetInformationThread Thread renamed to L"wine_rpcrt4_io"
+5135.548:0030:0100:warn:threadname:NtSetInformationThread Thread renamed to L"wine_threadpool_worker"
+5135.549:00f4:0108:warn:threadname:NtSetInformationThread Thread renamed to L"wine_sechost_service"
+5135.549:00f4:010c:warn:threadname:NtSetInformationThread Thread renamed to L"wine_rpcrt4_server"
+5135.549:00f4:0110:warn:threadname:NtSetInformationThread Thread renamed to L"wine_rpcrt4_server"
+5135.550:00f4:0114:warn:threadname:NtSetInformationThread Thread renamed to L"wine_rpcrt4_io"
+5135.550:00f4:0118:warn:threadname:NtSetInformationThread Thread renamed to L"wine_threadpool_worker"
+5135.556:011c:0120:trace:seh:sigsys_handler SIGSYS, rax 0xffff, rip 0x600000000005.
+5135.556:011c:0120:trace:seh:install_bpf Seccomp filters already installed.
+5135.556:011c:0120:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\tabtip.exe" at 00006FFFFDD80000: builtin
+5135.556:011c:0120:trace:loaddll:build_ntdll_module Loaded L"C:\\windows\\system32\\ntdll.dll" at 00006FFFFFEF0000: builtin
+5135.556:011c:0120:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\kernelbase.dll" at 00006FFFFFBB0000: builtin
+5135.556:011c:0120:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\kernel32.dll" at 00006FFFFFE70000: builtin
+5135.558:011c:0120:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\msvcrt.dll" at 00006FFFFFAA0000: builtin
+5135.558:011c:0120:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\ucrtbase.dll" at 00006FFFFF8F0000: builtin
+5135.558:011c:0120:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\cryptbase.dll" at 00006FFFFF9E0000: builtin
+5135.558:011c:0120:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\rpcrt4.dll" at 00006FFFFFA00000: builtin
+5135.558:011c:0120:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\sechost.dll" at 00006FFFFF8B0000: builtin
+5135.558:011c:0120:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\advapi32.dll" at 00006FFFFFB60000: builtin
+5135.559:011c:0120:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\win32u.dll" at 00006FFFFF330000: builtin
+5135.559:011c:0120:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\user32.dll" at 00006FFFFF420000: builtin
+5135.559:011c:0120:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\gdi32.dll" at 00006FFFFF380000: builtin
+5135.559:011c:0120:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\combase.dll" at 00006FFFFEFF0000: builtin
+5135.560:011c:0120:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\coml2.dll" at 00006FFFFEFC0000: builtin
+5135.560:011c:0120:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\ole32.dll" at 00006FFFFF060000: builtin
+5135.560:011c:0120:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\oleaut32.dll" at 00006FFFFEA60000: builtin
+5135.561:011c:0120:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\shcore.dll" at 00006FFFFE060000: builtin
+5135.561:011c:0120:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\shlwapi.dll" at 00006FFFFE090000: builtin
+5135.561:011c:0120:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\shell32.dll" at 00006FFFFE100000: builtin
+5135.567:011c:0120:fixme:ntdll:find_reg_tz_info Can't find matching timezone information in the registry for bias 0, std (d/m/y): 22/03/2026, dlt (d/m/y): 15/02/2026
+5135.593:011c:0120:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\imm32.dll" at 00006FFFFF300000: builtin
+5135.593:00dc:00e0:fixme:file:GetLongPathNameW UNC pathname L"\\\\?\\X:\\.local\\share\\Steam\\compatibilitytools.d\\GE-Proton11-1\\files\\share\\wine/../xalia/xalia.exe"
+5135.595:011c:0120:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\oleacc.dll" at 00006FFFFDCA0000: builtin
+5135.595:011c:0120:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\uiautomationcore.dll" at 00006FFFFDCF0000: builtin
+5135.595:00dc:00e0:fixme:file:GetLongPathNameW UNC pathname L"\\\\?\\X:\\.local\\share\\Steam\\compatibilitytools.d\\GE-Proton11-1\\files\\share\\wine/../xalia/xalia.exe"
+5135.595:00dc:00e0:fixme:file:GetLongPathNameW UNC pathname L"\\\\?\\X:\\.local\\share\\Steam\\compatibilitytools.d\\GE-Proton11-1\\files\\share\\wine/../xalia/xalia.exe"
+5135.599:0124:0128:trace:seh:sigsys_handler SIGSYS, rax 0xffff, rip 0x600000000005.
+5135.599:0124:0128:trace:seh:install_bpf Seccomp filters already installed.
+5135.599:0124:0128:trace:loaddll:build_module Loaded L"X:\\.local\\share\\Steam\\compatibilitytools.d\\GE-Proton11-1\\files\\share\\xalia\\xalia.exe" at 0000000000400000: native
+5135.599:0124:0128:trace:loaddll:build_ntdll_module Loaded L"C:\\windows\\system32\\ntdll.dll" at 00006FFFFFEF0000: builtin
+5135.599:0124:0128:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\kernelbase.dll" at 00006FFFFFBB0000: builtin
+5135.599:0124:0128:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\kernel32.dll" at 00006FFFFFE70000: builtin
+5135.600:011c:0120:trace:loaddll:build_module Loaded L"c:\\windows\\system32\\winex11.drv" at 00006FFFFDE20000: builtin
+5135.600:0020:0024:trace:loaddll:build_module Loaded L"c:\\windows\\system32\\winex11.drv" at 00006FFFFDE20000: builtin
+5135.600:0124:0128:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\msvcrt.dll" at 00006FFFFFAA0000: builtin
+5135.601:0124:0128:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\ucrtbase.dll" at 00006FFFFF8F0000: builtin
+5135.601:0124:0128:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\cryptbase.dll" at 00006FFFFF9E0000: builtin
+5135.601:0124:0128:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\rpcrt4.dll" at 00006FFFFFA00000: builtin
+5135.601:0124:0128:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\sechost.dll" at 00006FFFFF8B0000: builtin
+5135.601:0124:0128:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\advapi32.dll" at 00006FFFFFB60000: builtin
+5135.601:0124:0128:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\dbghelp.dll" at 00006FFFFDBB0000: builtin
+5135.602:0124:0128:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\win32u.dll" at 00006FFFFF330000: builtin
+5135.602:0124:0128:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\user32.dll" at 00006FFFFF420000: builtin
+5135.602:0124:0128:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\gdi32.dll" at 00006FFFFF380000: builtin
+5135.602:0124:0128:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\combase.dll" at 00006FFFFEFF0000: builtin
+5135.602:0124:0128:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\coml2.dll" at 00006FFFFEFC0000: builtin
+5135.603:0124:0128:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\ole32.dll" at 00006FFFFF060000: builtin
+5135.604:0124:0128:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\shcore.dll" at 00006FFFFE060000: builtin
+5135.604:0124:0128:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\shlwapi.dll" at 00006FFFFE090000: builtin
+5135.604:0124:0128:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\shell32.dll" at 00006FFFFE100000: builtin
+5135.604:0124:0128:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\mscoree.dll" at 00006FFFFDC50000: builtin
+5135.608:011c:0120:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\uxtheme.dll" at 00006FFFFEF70000: builtin
+5135.609:0020:0024:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\uxtheme.dll" at 00006FFFFEF70000: builtin
+5135.610:0124:0128:fixme:ntdll:find_reg_tz_info Can't find matching timezone information in the registry for bias 0, std (d/m/y): 22/03/2026, dlt (d/m/y): 15/02/2026
+5135.612:0020:0024:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\vrclient_x64.dll" at 00006FFFFD970000: builtin
+5135.613:0020:0024:trace:loaddll:free_modref Unloaded module L"C:\\windows\\system32\\vrclient_x64.dll" : builtin
+5135.613:0030:0130:warn:threadname:NtSetInformationThread Thread renamed to L"wine_rpcrt4_io"
+5135.620:011c:0120:fixme:oleacc:find_class_data unhandled window class: L"#32769"
+5135.620:011c:0120:fixme:uiautomation:uia_get_providers_for_hwnd Override provider callback currently unimplemented.
+5135.620:011c:0120:fixme:uiautomation:default_uia_provider_callback Default ProviderType_NonClientArea provider unimplemented.
+5135.621:011c:0134:warn:threadname:NtSetInformationThread Thread renamed to L"wine_rpcrt4_server"
+5135.625:011c:0120:fixme:oleacc:find_class_data unhandled window class: L"#32769"
+5135.635:011c:0120:fixme:uiautomation:base_hwnd_fragment_get_FragmentRoot 000000000082E698, 000000000031F9A0: stub!
+5135.635:011c:0120:fixme:uiautomation:base_hwnd_fragment_GetEmbeddedFragmentRoots 000000000082E698, 000000000031F9B0: stub!
+5135.637:0124:0128:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\imm32.dll" at 00006FFFFF300000: builtin
+5135.637:0124:0128:trace:mscoree:DllMain (00006FFFFDC50000, 1, 000000000010FB00)
+5135.637:0124:0128:trace:mscoree:_CorExeMain L"X:\\.local\\share\\Steam\\compatibilitytools.d\\GE-Proton11-1\\files\\share\\xalia\\xalia.exe" argc=1
+5135.637:0124:0128:trace:mscoree:CreateConfigStream (L"X:\\.local\\share\\Steam\\compatibilitytools.d\\GE-Proton11-1\\files\\share\\xalia\\xalia.exe.config", 000000000010F9F8)
+5135.638:0124:0128:trace:loaddll:build_module Loaded L"c:\\windows\\system32\\winex11.drv" at 00006FFFFDE20000: builtin
+5135.646:0124:0128:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\uxtheme.dll" at 00006FFFFEF70000: builtin
+5135.651:0124:0128:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\oleaut32.dll" at 00006FFFFEA60000: builtin
+5135.652:0124:0128:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\rtworkq.dll" at 00006FFFF4820000: builtin
+5135.652:0124:0128:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\mpr.dll" at 00006FFFFDEE0000: builtin
+5135.653:0124:0128:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\ws2_32.dll" at 00006FFFFF870000: builtin
+5135.653:0124:0128:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\wininet.dll" at 00006FFFFDF10000: builtin
+5135.653:0124:0128:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\urlmon.dll" at 00006FFFFDFB0000: builtin
+5135.653:0124:0128:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\msxml3.dll" at 00006FFFF4850000: builtin
+5135.653:0124:0128:trace:mscoree:ConfigStream_QueryInterface (000000000014F6A0)->({2933bf81-7b36-11d2-b20e-00c04f983e60} 000000000010F870)
+5135.653:0124:0128:warn:mscoree:ConfigStream_QueryInterface Not supported iface {2933bf81-7b36-11d2-b20e-00c04f983e60}
+5135.653:0124:0128:trace:mscoree:ConfigStream_QueryInterface (000000000014F6A0)->({0c733a30-2a1c-11ce-ade5-00aa0044773d} 000000000010F868)
+5135.653:0124:0128:warn:mscoree:ConfigStream_QueryInterface Not supported iface {0c733a30-2a1c-11ce-ade5-00aa0044773d}
+5135.653:0124:0128:trace:mscoree:ConfigStream_QueryInterface (000000000014F6A0)->({0000000c-0000-0000-c000-000000000046} 000000000010F868)
+5135.653:0124:0128:trace:mscoree:ConfigStream_AddRef (000000000014F6A0) ref=2
+5135.653:0124:0128:trace:mscoree:ConfigStream_Read (000000000014F6A0)->(000000000010EFF0 2048 000000000010EFE4)
+5135.653:0124:0128:trace:mscoree:ConfigStream_Read (000000000014F6A0)->(000000000010EFF0 2048 000000000010EFE4)
+5135.653:0124:0128:trace:mscoree:ConfigFileHandler_startElement L"" L"configuration" L"configuration"
+5135.653:0124:0128:trace:mscoree:ConfigFileHandler_characters L"\n"
+5135.653:0124:0128:trace:mscoree:ConfigFileHandler_characters L"  "
+5135.653:0124:0128:trace:mscoree:ConfigFileHandler_startElement L"" L"startup" L"startup"
+5135.653:0124:0128:trace:mscoree:ConfigFileHandler_characters L"\n"
+5135.653:0124:0128:trace:mscoree:ConfigFileHandler_characters L"    "
+5135.653:0124:0128:trace:mscoree:ConfigFileHandler_startElement L"" L"supportedRuntime" L"supportedRuntime"
+5135.653:0124:0128:trace:mscoree:parse_supported_runtime L"v4.0"
+5135.653:0124:0128:fixme:mscoree:parse_supported_runtime sku=L".NETFramework,Version=v4.8" not implemented
+5135.653:0124:0128:trace:mscoree:ConfigFileHandler_endElement L"" L"supportedRuntime" L"supportedRuntime"
+5135.653:0124:0128:trace:mscoree:ConfigFileHandler_characters L"\n"
+5135.653:0124:0128:trace:mscoree:ConfigFileHandler_characters L"  "
+5135.653:0124:0128:trace:mscoree:ConfigFileHandler_endElement L"" L"startup" L"startup"
+5135.653:0124:0128:trace:mscoree:ConfigFileHandler_characters L"\n"
+5135.653:0124:0128:trace:mscoree:ConfigFileHandler_characters L"  "
+5135.653:0124:0128:trace:mscoree:ConfigFileHandler_startElement L"" L"dllmap" L"dllmap"
+5135.653:0124:0128:trace:mscoree:ConfigFileHandler_startElement Unknown element L"dllmap" in state 2
+5135.653:0124:0128:trace:mscoree:ConfigFileHandler_endElement L"" L"dllmap" L"dllmap"
+5135.653:0124:0128:trace:mscoree:ConfigFileHandler_characters L"\n"
+5135.653:0124:0128:trace:mscoree:ConfigFileHandler_characters L"  "
+5135.653:0124:0128:trace:mscoree:ConfigFileHandler_startElement L"" L"dllmap" L"dllmap"
+5135.653:0124:0128:trace:mscoree:ConfigFileHandler_startElement Unknown element L"dllmap" in state 2
+5135.653:0124:0128:trace:mscoree:ConfigFileHandler_endElement L"" L"dllmap" L"dllmap"
+5135.653:0124:0128:trace:mscoree:ConfigFileHandler_characters L"\n"
+5135.653:0124:0128:trace:mscoree:ConfigFileHandler_characters L"  "
+5135.653:0124:0128:trace:mscoree:ConfigFileHandler_startElement L"" L"dllmap" L"dllmap"
+5135.653:0124:0128:trace:mscoree:ConfigFileHandler_startElement Unknown element L"dllmap" in state 2
+5135.653:0124:0128:trace:mscoree:ConfigFileHandler_endElement L"" L"dllmap" L"dllmap"
+5135.653:0124:0128:trace:mscoree:ConfigFileHandler_characters L"\n"
+5135.653:0124:0128:trace:mscoree:ConfigFileHandler_characters L"  "
+5135.653:0124:0128:trace:mscoree:ConfigFileHandler_startElement L"" L"dllmap" L"dllmap"
+5135.653:0124:0128:trace:mscoree:ConfigFileHandler_startElement Unknown element L"dllmap" in state 2
+5135.653:0124:0128:trace:mscoree:ConfigFileHandler_endElement L"" L"dllmap" L"dllmap"
+5135.653:0124:0128:trace:mscoree:ConfigFileHandler_characters L"\n"
+5135.653:0124:0128:trace:mscoree:ConfigFileHandler_characters L"  "
+5135.653:0124:0128:trace:mscoree:ConfigFileHandler_startElement L"" L"dllmap" L"dllmap"
+5135.653:0124:0128:trace:mscoree:ConfigFileHandler_startElement Unknown element L"dllmap" in state 2
+5135.653:0124:0128:trace:mscoree:ConfigFileHandler_endElement L"" L"dllmap" L"dllmap"
+5135.653:0124:0128:trace:mscoree:ConfigFileHandler_characters L"\n"
+5135.653:0124:0128:trace:mscoree:ConfigFileHandler_characters L"  "
+5135.653:0124:0128:trace:mscoree:ConfigFileHandler_startElement L"" L"runtime" L"runtime"
+5135.653:0124:0128:trace:mscoree:ConfigFileHandler_characters L"\n"
+5135.653:0124:0128:trace:mscoree:ConfigFileHandler_characters L"    "
+5135.653:0124:0128:trace:mscoree:ConfigFileHandler_startElement L"urn:schemas-microsoft-com:asm.v1" L"assemblyBinding" L"assemblyBinding"
+5135.653:0124:0128:trace:mscoree:ConfigFileHandler_characters L"\n"
+5135.653:0124:0128:trace:mscoree:ConfigFileHandler_characters L"      "
+5135.653:0124:0128:trace:mscoree:ConfigFileHandler_startElement L"urn:schemas-microsoft-com:asm.v1" L"dependentAssembly" L"dependentAssembly"
+5135.653:0124:0128:trace:mscoree:ConfigFileHandler_startElement Unknown element L"dependentAssembly" in state 0
+5135.653:0124:0128:trace:mscoree:ConfigFileHandler_characters L"\n"
+5135.653:0124:0128:trace:mscoree:ConfigFileHandler_characters L"        "
+5135.653:0124:0128:trace:mscoree:ConfigFileHandler_startElement L"urn:schemas-microsoft-com:asm.v1" L"assemblyIdentity" L"assemblyIdentity"
+5135.653:0124:0128:trace:mscoree:ConfigFileHandler_startElement Unknown element L"assemblyIdentity" in state 6
+5135.653:0124:0128:trace:mscoree:ConfigFileHandler_endElement L"urn:schemas-microsoft-com:asm.v1" L"assemblyIdentity" L"assemblyIdentity"
+5135.653:0124:0128:trace:mscoree:ConfigFileHandler_characters L"\n"
+5135.653:0124:0128:trace:mscoree:ConfigFileHandler_characters L"        "
+5135.653:0124:0128:trace:mscoree:ConfigFileHandler_startElement L"urn:schemas-microsoft-com:asm.v1" L"bindingRedirect" L"bindingRedirect"
+5135.653:0124:0128:trace:mscoree:ConfigFileHandler_startElement Unknown element L"bindingRedirect" in state 6
+5135.653:0124:0128:trace:mscoree:ConfigFileHandler_endElement L"urn:schemas-microsoft-com:asm.v1" L"bindingRedirect" L"bindingRedirect"
+5135.653:0124:0128:trace:mscoree:ConfigFileHandler_characters L"\n"
+5135.653:0124:0128:trace:mscoree:ConfigFileHandler_characters L"      "
+5135.653:0124:0128:trace:mscoree:ConfigFileHandler_endElement L"urn:schemas-microsoft-com:asm.v1" L"dependentAssembly" L"dependentAssembly"
+5135.653:0124:0128:trace:mscoree:ConfigFileHandler_characters L"\n"
+5135.653:0124:0128:trace:mscoree:ConfigFileHandler_characters L"    "
+5135.653:0124:0128:trace:mscoree:ConfigFileHandler_endElement L"urn:schemas-microsoft-com:asm.v1" L"assemblyBinding" L"assemblyBinding"
+5135.653:0124:0128:trace:mscoree:ConfigFileHandler_characters L"\n"
+5135.653:0124:0128:trace:mscoree:ConfigFileHandler_characters L"    "
+5135.653:0124:0128:trace:mscoree:ConfigFileHandler_startElement L"urn:schemas-microsoft-com:asm.v1" L"assemblyBinding" L"assemblyBinding"
+5135.653:0124:0128:trace:mscoree:ConfigFileHandler_characters L"\n"
+5135.653:0124:0128:trace:mscoree:ConfigFileHandler_characters L"      "
+5135.653:0124:0128:trace:mscoree:ConfigFileHandler_startElement L"urn:schemas-microsoft-com:asm.v1" L"dependentAssembly" L"dependentAssembly"
+5135.653:0124:0128:trace:mscoree:ConfigFileHandler_startElement Unknown element L"dependentAssembly" in state 0
+5135.653:0124:0128:trace:mscoree:ConfigFileHandler_characters L"\n"
+5135.653:0124:0128:trace:mscoree:ConfigFileHandler_characters L"        "
+5135.653:0124:0128:trace:mscoree:ConfigFileHandler_startElement L"urn:schemas-microsoft-com:asm.v1" L"assemblyIdentity" L"assemblyIdentity"
+5135.653:0124:0128:trace:mscoree:ConfigFileHandler_startElement Unknown element L"assemblyIdentity" in state 6
+5135.653:0124:0128:trace:mscoree:ConfigFileHandler_endElement L"urn:schemas-microsoft-com:asm.v1" L"assemblyIdentity" L"assemblyIdentity"
+5135.653:0124:0128:trace:mscoree:ConfigFileHandler_characters L"\n"
+5135.653:0124:0128:trace:mscoree:ConfigFileHandler_characters L"        "
+5135.653:0124:0128:trace:mscoree:ConfigFileHandler_startElement L"urn:schemas-microsoft-com:asm.v1" L"bindingRedirect" L"bindingRedirect"
+5135.653:0124:0128:trace:mscoree:ConfigFileHandler_startElement Unknown element L"bindingRedirect" in state 6
+5135.653:0124:0128:trace:mscoree:ConfigFileHandler_endElement L"urn:schemas-microsoft-com:asm.v1" L"bindingRedirect" L"bindingRedirect"
+5135.653:0124:0128:trace:mscoree:ConfigFileHandler_characters L"\n"
+5135.653:0124:0128:trace:mscoree:ConfigFileHandler_characters L"      "
+5135.653:0124:0128:trace:mscoree:ConfigFileHandler_endElement L"urn:schemas-microsoft-com:asm.v1" L"dependentAssembly" L"dependentAssembly"
+5135.653:0124:0128:trace:mscoree:ConfigFileHandler_characters L"\n"
+5135.653:0124:0128:trace:mscoree:ConfigFileHandler_characters L"    "
+5135.653:0124:0128:trace:mscoree:ConfigFileHandler_endElement L"urn:schemas-microsoft-com:asm.v1" L"assemblyBinding" L"assemblyBinding"
+5135.653:0124:0128:trace:mscoree:ConfigFileHandler_characters L"\n"
+5135.653:0124:0128:trace:mscoree:ConfigFileHandler_characters L"    "
+5135.653:0124:0128:trace:mscoree:ConfigFileHandler_startElement L"urn:schemas-microsoft-com:asm.v1" L"assemblyBinding" L"assemblyBinding"
+5135.653:0124:0128:trace:mscoree:ConfigFileHandler_characters L"\n"
+5135.653:0124:0128:trace:mscoree:ConfigFileHandler_characters L"      "
+5135.653:0124:0128:trace:mscoree:ConfigFileHandler_startElement L"urn:schemas-microsoft-com:asm.v1" L"dependentAssembly" L"dependentAssembly"
+5135.653:0124:0128:trace:mscoree:ConfigFileHandler_startElement Unknown element L"dependentAssembly" in state 0
+5135.653:0124:0128:trace:mscoree:ConfigFileHandler_characters L"\n"
+5135.653:0124:0128:trace:mscoree:ConfigFileHandler_characters L"        "
+5135.653:0124:0128:trace:mscoree:ConfigFileHandler_startElement L"urn:schemas-microsoft-com:asm.v1" L"assemblyIdentity" L"assemblyIdentity"
+5135.653:0124:0128:trace:mscoree:ConfigFileHandler_startElement Unknown element L"assemblyIdentity" in state 6
+5135.653:0124:0128:trace:mscoree:ConfigFileHandler_endElement L"urn:schemas-microsoft-com:asm.v1" L"assemblyIdentity" L"assemblyIdentity"
+5135.653:0124:0128:trace:mscoree:ConfigFileHandler_characters L"\n"
+5135.653:0124:0128:trace:mscoree:ConfigFileHandler_characters L"        "
+5135.653:0124:0128:trace:mscoree:ConfigFileHandler_startElement L"urn:schemas-microsoft-com:asm.v1" L"bindingRedirect" L"bindingRedirect"
+5135.653:0124:0128:trace:mscoree:ConfigFileHandler_startElement Unknown element L"bindingRedirect" in state 6
+5135.653:0124:0128:trace:mscoree:ConfigFileHandler_endElement L"urn:schemas-microsoft-com:asm.v1" L"bindingRedirect" L"bindingRedirect"
+5135.653:0124:0128:trace:mscoree:ConfigFileHandler_characters L"\n"
+5135.653:0124:0128:trace:mscoree:ConfigFileHandler_characters L"      "
+5135.653:0124:0128:trace:mscoree:ConfigFileHandler_endElement L"urn:schemas-microsoft-com:asm.v1" L"dependentAssembly" L"dependentAssembly"
+5135.653:0124:0128:trace:mscoree:ConfigFileHandler_characters L"\n"
+5135.653:0124:0128:trace:mscoree:ConfigFileHandler_characters L"    "
+5135.653:0124:0128:trace:mscoree:ConfigFileHandler_endElement L"urn:schemas-microsoft-com:asm.v1" L"assemblyBinding" L"assemblyBinding"
+5135.653:0124:0128:trace:mscoree:ConfigFileHandler_characters L"\n"
+5135.653:0124:0128:trace:mscoree:ConfigFileHandler_characters L"  "
+5135.653:0124:0128:trace:mscoree:ConfigFileHandler_endElement L"" L"runtime" L"runtime"
+5135.653:0124:0128:trace:mscoree:ConfigFileHandler_characters L"\n"
+5135.653:0124:0128:trace:mscoree:ConfigFileHandler_endElement L"" L"configuration" L"configuration"
+5135.653:0124:0128:trace:mscoree:ConfigStream_Release (000000000014F6A0) ref=1
+5135.654:0124:0128:trace:mscoree:ConfigStream_Release (000000000014F6A0) ref=0
+5135.654:0124:0128:trace:mscoree:CreateConfigStream (L"X:\\.local\\share\\Steam\\compatibilitytools.d\\GE-Proton11-1\\files\\share\\xalia\\xalia.exe.config", 000000000010F528)
+5135.654:0124:0128:trace:mscoree:ConfigStream_QueryInterface (0000000000A13900)->({2933bf81-7b36-11d2-b20e-00c04f983e60} 000000000010F3A0)
+5135.654:0124:0128:warn:mscoree:ConfigStream_QueryInterface Not supported iface {2933bf81-7b36-11d2-b20e-00c04f983e60}
+5135.654:0124:0128:trace:mscoree:ConfigStream_QueryInterface (0000000000A13900)->({0c733a30-2a1c-11ce-ade5-00aa0044773d} 000000000010F398)
+5135.654:0124:0128:warn:mscoree:ConfigStream_QueryInterface Not supported iface {0c733a30-2a1c-11ce-ade5-00aa0044773d}
+5135.654:0124:0128:trace:mscoree:ConfigStream_QueryInterface (0000000000A13900)->({0000000c-0000-0000-c000-000000000046} 000000000010F398)
+5135.654:0124:0128:trace:mscoree:ConfigStream_AddRef (0000000000A13900) ref=2
+5135.654:0124:0128:trace:mscoree:ConfigStream_Read (0000000000A13900)->(000000000010EB20 2048 000000000010EB14)
+5135.654:0124:0128:trace:mscoree:ConfigStream_Read (0000000000A13900)->(000000000010EB20 2048 000000000010EB14)
+5135.654:0124:0128:trace:mscoree:ConfigFileHandler_startElement L"" L"configuration" L"configuration"
+5135.654:0124:0128:trace:mscoree:ConfigFileHandler_characters L"\n"
+5135.654:0124:0128:trace:mscoree:ConfigFileHandler_characters L"  "
+5135.654:0124:0128:trace:mscoree:ConfigFileHandler_startElement L"" L"startup" L"startup"
+5135.654:0124:0128:trace:mscoree:ConfigFileHandler_characters L"\n"
+5135.654:0124:0128:trace:mscoree:ConfigFileHandler_characters L"    "
+5135.654:0124:0128:trace:mscoree:ConfigFileHandler_startElement L"" L"supportedRuntime" L"supportedRuntime"
+5135.654:0124:0128:trace:mscoree:parse_supported_runtime L"v4.0"
+5135.654:0124:0128:fixme:mscoree:parse_supported_runtime sku=L".NETFramework,Version=v4.8" not implemented
+5135.654:0124:0128:trace:mscoree:ConfigFileHandler_endElement L"" L"supportedRuntime" L"supportedRuntime"
+5135.654:0124:0128:trace:mscoree:ConfigFileHandler_characters L"\n"
+5135.654:0124:0128:trace:mscoree:ConfigFileHandler_characters L"  "
+5135.654:0124:0128:trace:mscoree:ConfigFileHandler_endElement L"" L"startup" L"startup"
+5135.654:0124:0128:trace:mscoree:ConfigFileHandler_characters L"\n"
+5135.654:0124:0128:trace:mscoree:ConfigFileHandler_characters L"  "
+5135.654:0124:0128:trace:mscoree:ConfigFileHandler_startElement L"" L"dllmap" L"dllmap"
+5135.654:0124:0128:trace:mscoree:ConfigFileHandler_startElement Unknown element L"dllmap" in state 2
+5135.654:0124:0128:trace:mscoree:ConfigFileHandler_endElement L"" L"dllmap" L"dllmap"
+5135.654:0124:0128:trace:mscoree:ConfigFileHandler_characters L"\n"
+5135.654:0124:0128:trace:mscoree:ConfigFileHandler_characters L"  "
+5135.654:0124:0128:trace:mscoree:ConfigFileHandler_startElement L"" L"dllmap" L"dllmap"
+5135.654:0124:0128:trace:mscoree:ConfigFileHandler_startElement Unknown element L"dllmap" in state 2
+5135.654:0124:0128:trace:mscoree:ConfigFileHandler_endElement L"" L"dllmap" L"dllmap"
+5135.654:0124:0128:trace:mscoree:ConfigFileHandler_characters L"\n"
+5135.654:0124:0128:trace:mscoree:ConfigFileHandler_characters L"  "
+5135.654:0124:0128:trace:mscoree:ConfigFileHandler_startElement L"" L"dllmap" L"dllmap"
+5135.654:0124:0128:trace:mscoree:ConfigFileHandler_startElement Unknown element L"dllmap" in state 2
+5135.654:0124:0128:trace:mscoree:ConfigFileHandler_endElement L"" L"dllmap" L"dllmap"
+5135.654:0124:0128:trace:mscoree:ConfigFileHandler_characters L"\n"
+5135.654:0124:0128:trace:mscoree:ConfigFileHandler_characters L"  "
+5135.654:0124:0128:trace:mscoree:ConfigFileHandler_startElement L"" L"dllmap" L"dllmap"
+5135.654:0124:0128:trace:mscoree:ConfigFileHandler_startElement Unknown element L"dllmap" in state 2
+5135.654:0124:0128:trace:mscoree:ConfigFileHandler_endElement L"" L"dllmap" L"dllmap"
+5135.654:0124:0128:trace:mscoree:ConfigFileHandler_characters L"\n"
+5135.654:0124:0128:trace:mscoree:ConfigFileHandler_characters L"  "
+5135.654:0124:0128:trace:mscoree:ConfigFileHandler_startElement L"" L"dllmap" L"dllmap"
+5135.654:0124:0128:trace:mscoree:ConfigFileHandler_startElement Unknown element L"dllmap" in state 2
+5135.654:0124:0128:trace:mscoree:ConfigFileHandler_endElement L"" L"dllmap" L"dllmap"
+5135.654:0124:0128:trace:mscoree:ConfigFileHandler_characters L"\n"
+5135.654:0124:0128:trace:mscoree:ConfigFileHandler_characters L"  "
+5135.654:0124:0128:trace:mscoree:ConfigFileHandler_startElement L"" L"runtime" L"runtime"
+5135.654:0124:0128:trace:mscoree:ConfigFileHandler_characters L"\n"
+5135.654:0124:0128:trace:mscoree:ConfigFileHandler_characters L"    "
+5135.654:0124:0128:trace:mscoree:ConfigFileHandler_startElement L"urn:schemas-microsoft-com:asm.v1" L"assemblyBinding" L"assemblyBinding"
+5135.654:0124:0128:trace:mscoree:ConfigFileHandler_characters L"\n"
+5135.654:0124:0128:trace:mscoree:ConfigFileHandler_characters L"      "
+5135.654:0124:0128:trace:mscoree:ConfigFileHandler_startElement L"urn:schemas-microsoft-com:asm.v1" L"dependentAssembly" L"dependentAssembly"
+5135.654:0124:0128:trace:mscoree:ConfigFileHandler_startElement Unknown element L"dependentAssembly" in state 0
+5135.654:0124:0128:trace:mscoree:ConfigFileHandler_characters L"\n"
+5135.654:0124:0128:trace:mscoree:ConfigFileHandler_characters L"        "
+5135.654:0124:0128:trace:mscoree:ConfigFileHandler_startElement L"urn:schemas-microsoft-com:asm.v1" L"assemblyIdentity" L"assemblyIdentity"
+5135.654:0124:0128:trace:mscoree:ConfigFileHandler_startElement Unknown element L"assemblyIdentity" in state 6
+5135.654:0124:0128:trace:mscoree:ConfigFileHandler_endElement L"urn:schemas-microsoft-com:asm.v1" L"assemblyIdentity" L"assemblyIdentity"
+5135.654:0124:0128:trace:mscoree:ConfigFileHandler_characters L"\n"
+5135.654:0124:0128:trace:mscoree:ConfigFileHandler_characters L"        "
+5135.654:0124:0128:trace:mscoree:ConfigFileHandler_startElement L"urn:schemas-microsoft-com:asm.v1" L"bindingRedirect" L"bindingRedirect"
+5135.654:0124:0128:trace:mscoree:ConfigFileHandler_startElement Unknown element L"bindingRedirect" in state 6
+5135.654:0124:0128:trace:mscoree:ConfigFileHandler_endElement L"urn:schemas-microsoft-com:asm.v1" L"bindingRedirect" L"bindingRedirect"
+5135.654:0124:0128:trace:mscoree:ConfigFileHandler_characters L"\n"
+5135.654:0124:0128:trace:mscoree:ConfigFileHandler_characters L"      "
+5135.654:0124:0128:trace:mscoree:ConfigFileHandler_endElement L"urn:schemas-microsoft-com:asm.v1" L"dependentAssembly" L"dependentAssembly"
+5135.654:0124:0128:trace:mscoree:ConfigFileHandler_characters L"\n"
+5135.654:0124:0128:trace:mscoree:ConfigFileHandler_characters L"    "
+5135.654:0124:0128:trace:mscoree:ConfigFileHandler_endElement L"urn:schemas-microsoft-com:asm.v1" L"assemblyBinding" L"assemblyBinding"
+5135.654:0124:0128:trace:mscoree:ConfigFileHandler_characters L"\n"
+5135.654:0124:0128:trace:mscoree:ConfigFileHandler_characters L"    "
+5135.654:0124:0128:trace:mscoree:ConfigFileHandler_startElement L"urn:schemas-microsoft-com:asm.v1" L"assemblyBinding" L"assemblyBinding"
+5135.654:0124:0128:trace:mscoree:ConfigFileHandler_characters L"\n"
+5135.654:0124:0128:trace:mscoree:ConfigFileHandler_characters L"      "
+5135.654:0124:0128:trace:mscoree:ConfigFileHandler_startElement L"urn:schemas-microsoft-com:asm.v1" L"dependentAssembly" L"dependentAssembly"
+5135.654:0124:0128:trace:mscoree:ConfigFileHandler_startElement Unknown element L"dependentAssembly" in state 0
+5135.654:0124:0128:trace:mscoree:ConfigFileHandler_characters L"\n"
+5135.654:0124:0128:trace:mscoree:ConfigFileHandler_characters L"        "
+5135.654:0124:0128:trace:mscoree:ConfigFileHandler_startElement L"urn:schemas-microsoft-com:asm.v1" L"assemblyIdentity" L"assemblyIdentity"
+5135.654:0124:0128:trace:mscoree:ConfigFileHandler_startElement Unknown element L"assemblyIdentity" in state 6
+5135.654:0124:0128:trace:mscoree:ConfigFileHandler_endElement L"urn:schemas-microsoft-com:asm.v1" L"assemblyIdentity" L"assemblyIdentity"
+5135.654:0124:0128:trace:mscoree:ConfigFileHandler_characters L"\n"
+5135.654:0124:0128:trace:mscoree:ConfigFileHandler_characters L"        "
+5135.654:0124:0128:trace:mscoree:ConfigFileHandler_startElement L"urn:schemas-microsoft-com:asm.v1" L"bindingRedirect" L"bindingRedirect"
+5135.654:0124:0128:trace:mscoree:ConfigFileHandler_startElement Unknown element L"bindingRedirect" in state 6
+5135.654:0124:0128:trace:mscoree:ConfigFileHandler_endElement L"urn:schemas-microsoft-com:asm.v1" L"bindingRedirect" L"bindingRedirect"
+5135.654:0124:0128:trace:mscoree:ConfigFileHandler_characters L"\n"
+5135.654:0124:0128:trace:mscoree:ConfigFileHandler_characters L"      "
+5135.654:0124:0128:trace:mscoree:ConfigFileHandler_endElement L"urn:schemas-microsoft-com:asm.v1" L"dependentAssembly" L"dependentAssembly"
+5135.654:0124:0128:trace:mscoree:ConfigFileHandler_characters L"\n"
+5135.654:0124:0128:trace:mscoree:ConfigFileHandler_characters L"    "
+5135.654:0124:0128:trace:mscoree:ConfigFileHandler_endElement L"urn:schemas-microsoft-com:asm.v1" L"assemblyBinding" L"assemblyBinding"
+5135.654:0124:0128:trace:mscoree:ConfigFileHandler_characters L"\n"
+5135.654:0124:0128:trace:mscoree:ConfigFileHandler_characters L"    "
+5135.654:0124:0128:trace:mscoree:ConfigFileHandler_startElement L"urn:schemas-microsoft-com:asm.v1" L"assemblyBinding" L"assemblyBinding"
+5135.654:0124:0128:trace:mscoree:ConfigFileHandler_characters L"\n"
+5135.654:0124:0128:trace:mscoree:ConfigFileHandler_characters L"      "
+5135.654:0124:0128:trace:mscoree:ConfigFileHandler_startElement L"urn:schemas-microsoft-com:asm.v1" L"dependentAssembly" L"dependentAssembly"
+5135.654:0124:0128:trace:mscoree:ConfigFileHandler_startElement Unknown element L"dependentAssembly" in state 0
+5135.654:0124:0128:trace:mscoree:ConfigFileHandler_characters L"\n"
+5135.654:0124:0128:trace:mscoree:ConfigFileHandler_characters L"        "
+5135.654:0124:0128:trace:mscoree:ConfigFileHandler_startElement L"urn:schemas-microsoft-com:asm.v1" L"assemblyIdentity" L"assemblyIdentity"
+5135.654:0124:0128:trace:mscoree:ConfigFileHandler_startElement Unknown element L"assemblyIdentity" in state 6
+5135.654:0124:0128:trace:mscoree:ConfigFileHandler_endElement L"urn:schemas-microsoft-com:asm.v1" L"assemblyIdentity" L"assemblyIdentity"
+5135.654:0124:0128:trace:mscoree:ConfigFileHandler_characters L"\n"
+5135.654:0124:0128:trace:mscoree:ConfigFileHandler_characters L"        "
+5135.654:0124:0128:trace:mscoree:ConfigFileHandler_startElement L"urn:schemas-microsoft-com:asm.v1" L"bindingRedirect" L"bindingRedirect"
+5135.654:0124:0128:trace:mscoree:ConfigFileHandler_startElement Unknown element L"bindingRedirect" in state 6
+5135.654:0124:0128:trace:mscoree:ConfigFileHandler_endElement L"urn:schemas-microsoft-com:asm.v1" L"bindingRedirect" L"bindingRedirect"
+5135.654:0124:0128:trace:mscoree:ConfigFileHandler_characters L"\n"
+5135.654:0124:0128:trace:mscoree:ConfigFileHandler_characters L"      "
+5135.654:0124:0128:trace:mscoree:ConfigFileHandler_endElement L"urn:schemas-microsoft-com:asm.v1" L"dependentAssembly" L"dependentAssembly"
+5135.654:0124:0128:trace:mscoree:ConfigFileHandler_characters L"\n"
+5135.654:0124:0128:trace:mscoree:ConfigFileHandler_characters L"    "
+5135.654:0124:0128:trace:mscoree:ConfigFileHandler_endElement L"urn:schemas-microsoft-com:asm.v1" L"assemblyBinding" L"assemblyBinding"
+5135.654:0124:0128:trace:mscoree:ConfigFileHandler_characters L"\n"
+5135.654:0124:0128:trace:mscoree:ConfigFileHandler_characters L"  "
+5135.654:0124:0128:trace:mscoree:ConfigFileHandler_endElement L"" L"runtime" L"runtime"
+5135.654:0124:0128:trace:mscoree:ConfigFileHandler_characters L"\n"
+5135.654:0124:0128:trace:mscoree:ConfigFileHandler_endElement L"" L"configuration" L"configuration"
+5135.654:0124:0128:trace:mscoree:ConfigStream_Release (0000000000A13900) ref=1
+5135.654:0124:0128:trace:mscoree:ConfigStream_Release (0000000000A13900) ref=0
+5135.654:0124:0128:trace:mscoree:CLRRuntimeInfo_QueryInterface 00006FFFFDC667C0 {bd39d1d2-ba2f-486a-89b0-b4b0cb466891} 000000000010FAE0
+5135.657:0124:0128:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\bcrypt.dll" at 00006FFFFEBB0000: builtin
+5135.658:0124:0128:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\msacm32.dll" at 00006FFFF42E0000: builtin
+5135.658:0124:0128:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\WINMM.dll" at 00006FFFF4310000: builtin
+5135.659:0124:0128:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\VERSION.dll" at 00006FFFFDEC0000: builtin
+5135.659:0124:0128:trace:loaddll:build_module Loaded L"X:\\.local\\share\\Steam\\compatibilitytools.d\\GE-Proton11-1\\files\\share\\wine\\mono\\wine-mono\\bin\\libmono-2.0-x86_64.dll" at 00006FFFF43F0000: builtin
+5135.660:0124:0128:trace:unwind:RtlAddGrowableFunctionTable 0000000000A112B8, 0000000000A15690, 0, 513, 1580000, 1590000
+5135.660:0124:0128:trace:unwind:RtlGrowFunctionTable 000000000014A570, 1
+5135.660:0124:0128:trace:unwind:RtlGrowFunctionTable 000000000014A570, 2
+5135.660:0124:0128:trace:unwind:RtlGrowFunctionTable 000000000014A570, 3
+5135.660:0124:0128:trace:unwind:RtlGrowFunctionTable 000000000014A570, 4
+5135.660:0124:0128:trace:unwind:RtlGrowFunctionTable 000000000014A570, 5
+5135.660:0124:0128:trace:unwind:RtlGrowFunctionTable 000000000014A570, 6
+5135.660:0124:0128:trace:unwind:RtlGrowFunctionTable 000000000014A570, 7
+5135.660:0124:0128:trace:unwind:RtlGrowFunctionTable 000000000014A570, 8
+5135.660:0124:0128:trace:unwind:RtlGrowFunctionTable 000000000014A570, 9
+5135.661:0124:0128:fixme:ntdll:NtQuerySystemInformation info_class SYSTEM_PERFORMANCE_INFORMATION
+5135.661:0124:013c:trace:mscoree:DllMain (00006FFFFDC50000, 2, 0000000000000000)
+5135.661:0124:0128:trace:mscoree:wine_mono_assembly_preload_hook_v2_fn "mscorlib.dll, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
+5135.661:0124:013c:warn:threadname:NtSetInformationThread Thread renamed to L"SGen worker"
+5135.661:0124:0128:trace:mscoree:LoadLibraryShim (00006FFFFDC7C020 L"fusion", 0000000000000000, 0000000000000000, 000000000010E678)
+5135.661:0124:0128:trace:mscoree:GetCORVersion (000000000010E400, 260, 000000000010E1EC)!
+5135.661:0124:0128:trace:mscoree:CLRRuntimeInfo_QueryInterface 00006FFFFDC667A0 {bd39d1d2-ba2f-486a-89b0-b4b0cb466891} 000000000010E158
+5135.661:0124:0128:trace:mscoree:CLRRuntimeInfo_GetVersionString 00006FFFFDC667A0 000000000010E400 000000000010E1EC
+5135.661:0124:0128:trace:loaddll:build_module Loaded L"C:\\windows\\Microsoft.NET\\Framework64\\v2.0.50727\\fusion.dll" at 00006FFFF42B0000: builtin
+5135.664:0124:0128:trace:loaddll:build_module Loaded L"X:\\.local\\share\\Steam\\compatibilitytools.d\\GE-Proton11-1\\files\\share\\wine\\mono\\wine-mono\\lib\\mono\\4.5\\mscorlib.dll" at 0000000002F70000: native
+5135.664:0124:0128:trace:mscoree:_CorDllMain (0000000002F70000, 1, 0000000000000000)
+5135.664:0124:0128:trace:unwind:RtlGrowFunctionTable 000000000014A570, 10
+5135.664:0124:0128:trace:unwind:RtlGrowFunctionTable 000000000014A570, 11
+5135.664:0124:0128:trace:unwind:RtlGrowFunctionTable 000000000014A570, 12
+5135.664:0124:0128:trace:unwind:RtlGrowFunctionTable 000000000014A570, 13
+5135.664:0124:0128:trace:unwind:RtlGrowFunctionTable 000000000014A570, 14
+5135.664:0124:0128:trace:unwind:RtlGrowFunctionTable 000000000014A570, 15
+5135.664:0124:0128:trace:unwind:RtlDeleteGrowableFunctionTable 000000000014A570
+5135.664:0124:0128:trace:unwind:RtlAddGrowableFunctionTable 0000000000A112B8, 0000000000A682D0, 16, 513, 1580000, 1590000
+5135.664:0124:0128:trace:unwind:RtlDeleteGrowableFunctionTable 0000000000A189B0
+5135.664:0124:0128:trace:unwind:RtlAddGrowableFunctionTable 0000000000A112B8, 0000000000A15690, 17, 513, 1580000, 1590000
+5135.664:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000000A18960, 18
+5135.665:0124:0128:trace:unwind:RtlAddGrowableFunctionTable 0000000000A58CA8, 0000000000A6D8D0, 0, 513, 33f0000, 3400000
+5135.666:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000000A18910, 1
+5135.666:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000000A18910, 2
+5135.666:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000000A18910, 3
+5135.666:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000000A18910, 4
+5135.666:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000000A18910, 5
+5135.666:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000000A18910, 6
+5135.666:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000000A18910, 7
+5135.666:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000000A18910, 8
+5135.666:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000000A18910, 9
+5135.666:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000000A18910, 10
+5135.666:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000000A18910, 11
+5135.667:0124:0140:trace:mscoree:DllMain (00006FFFFDC50000, 2, 0000000000000000)
+5135.667:0124:0140:warn:threadname:NtSetInformationThread Thread renamed to L"Finalizer"
+5135.667:0124:0128:trace:mscoree:RuntimeHost_GetDefaultDomain setting base_dir: X:\.local\share\Steam\compatibilitytools.d\GE-Proton11-1\files\share\xalia\, config_path: X:\.local\share\Steam\compatibilitytools.d\GE-Proton11-1\files\share\xalia\xalia.exe.config
+5135.668:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000000A18960, 19
+5135.668:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000000A18960, 20
+5135.668:0124:0128:trace:mscoree:wine_mono_assembly_preload_hook_v2_fn "System.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+5135.669:0124:0128:trace:loaddll:build_module Loaded L"X:\\.local\\share\\Steam\\compatibilitytools.d\\GE-Proton11-1\\files\\share\\wine\\mono\\wine-mono\\lib\\mono\\gac\\System.Core\\4.0.0.0__b77a5c561934e089\\System.Core.dll" at 0000000010000000: native
+5135.669:0124:0128:trace:mscoree:_CorDllMain (0000000010000000, 1, 0000000000000000)
+5135.669:0124:0128:trace:mscoree:wine_mono_assembly_preload_hook_v2_fn found in Mono GAC
+5135.669:0124:0128:trace:mscoree:wine_mono_assembly_preload_hook_v2_fn "Superpower, Version=1.0.0.0, Culture=neutral, PublicKeyToken=aec39280ded1b3a7"
+5135.670:0124:0128:trace:loaddll:build_module Loaded L"X:\\.local\\share\\Steam\\compatibilitytools.d\\GE-Proton11-1\\files\\share\\xalia\\Superpower.dll" at 0000000003DA0000: native
+5135.670:0124:0128:trace:mscoree:_CorDllMain (0000000003DA0000, 1, 0000000000000000)
+5135.671:0124:0128:trace:mscoree:wine_mono_assembly_preload_hook_v2_fn "netstandard, Version=2.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51"
+5135.672:0124:0128:trace:loaddll:build_module Loaded L"X:\\.local\\share\\Steam\\compatibilitytools.d\\GE-Proton11-1\\files\\share\\wine\\mono\\wine-mono\\lib\\mono\\4.5\\Facades\\netstandard.dll" at 0000000003DC0000: native
+5135.672:0124:0128:trace:mscoree:_CorDllMain (0000000003DC0000, 1, 0000000000000000)
+5135.672:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000000A18910, 12
+5135.672:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000000A18910, 13
+5135.672:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000000A18910, 14
+5135.672:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000000A18910, 15
+5135.672:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000000A18910, 16
+5135.672:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000000A18910, 17
+5135.672:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000000A18910, 18
+5135.672:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000000A18910, 19
+5135.672:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000000A18910, 20
+5135.672:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000000A18910, 21
+5135.672:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000000A18910, 22
+5135.672:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000000A18910, 23
+5135.672:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000000A18910, 24
+5135.672:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000000A18910, 25
+5135.675:0124:0128:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\cfgmgr32.dll" at 00006FFFFF770000: builtin
+5135.675:0124:0128:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\SETUPAPI.dll" at 00006FFFFF7B0000: builtin
+5135.675:0124:0128:trace:loaddll:build_module Loaded L"X:\\.local\\share\\Steam\\compatibilitytools.d\\GE-Proton11-1\\files\\share\\xalia\\SDL3.dll" at 00006FFFFD8E0000: native
+5135.675:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000000A18910, 26
+5135.675:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000000A18910, 27
+5135.675:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000000A18910, 28
+5135.675:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000000A18910, 29
+5135.675:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000000A18910, 30
+5135.675:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000000A18910, 31
+5135.676:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000000A18910, 32
+5135.676:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000000A18910, 33
+5135.676:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000000A18910, 34
+5135.676:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000000A18910, 35
+5135.676:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000000A18910, 36
+5135.676:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000000A18910, 37
+5135.676:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000000A18910, 38
+5135.676:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000000A18910, 39
+5135.676:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000000A18910, 40
+5135.676:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000000A18910, 41
+5135.676:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000000A18910, 42
+5135.676:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000000A18910, 43
+5135.676:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000000A18910, 44
+5135.677:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000000A18910, 45
+5135.677:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000000A18910, 46
+5135.677:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000000A18910, 47
+5135.677:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000000A18910, 48
+5135.677:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000000A18910, 49
+5135.677:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000000A18910, 50
+5135.677:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000000A18910, 51
+5135.677:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000000A18910, 52
+5135.677:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000000A18910, 53
+5135.677:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000000A18960, 21
+5135.677:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000000A18910, 54
+5135.677:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000000A18910, 55
+5135.677:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000000A18910, 56
+5135.677:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000000A18910, 57
+5135.677:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000000A18910, 58
+5135.677:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000000A18910, 59
+5135.677:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000000A18910, 60
+5135.677:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000000A18910, 61
+5135.677:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000000A18910, 62
+5135.677:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000000A18910, 63
+5135.677:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000000A18910, 64
+5135.677:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000000A18910, 65
+5135.677:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000000A18910, 66
+5135.677:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000000A18910, 67
+5135.677:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000000A18910, 68
+5135.677:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000000A18910, 69
+5135.677:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000000A18910, 70
+5135.677:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000000A18910, 71
+5135.677:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000000A18910, 72
+5135.677:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000000A18910, 73
+5135.677:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000000A18910, 74
+5135.677:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000000A18910, 75
+5135.677:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000000A18910, 76
+5135.677:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000000A18910, 77
+5135.677:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000000A18910, 78
+5135.680:0124:0128:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\DWMAPI.DLL" at 00006FFFFD8C0000: builtin
+5135.681:0124:0128:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\DXGI.DLL" at 00006FFFFD440000: native
+info:  Game: xalia.exe
+info:  DXVK: v2.7.1-822-g8c9b4822dd40d350
+info:  Build: x86_64 gcc 14.0.0
+5135.684:0124:0128:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\winevulkan.dll" at 00006FFFFD3F0000: builtin
+info:  Vulkan: Found vkGetInstanceProcAddr in winevulkan.dll @ 0x6ffffd407550
+info:  Extension providers:
+info:    Platform WSI
+info:    OpenVR
+info:    OpenXR
+5135.685:0124:0128:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\wineopenxr.dll" at 00006FFFFD3B0000: builtin
+warn:  OpenXR: Unable to get required Vulkan instance extensions size
+info:  Enabled instance extensions:
+info:    VK_KHR_get_surface_capabilities2
+info:    VK_KHR_surface
+info:    VK_KHR_surface_maintenance1
+info:    VK_KHR_win32_surface
+5135.697:0144:0148:trace:seh:sigsys_handler SIGSYS, rax 0xffff, rip 0x600000000005.
+5135.697:0144:0148:trace:seh:install_bpf Seccomp filters already installed.
+5135.698:0144:0148:trace:loaddll:build_module Loaded L"X:\\VSProjs\\Project Vine\\.work\\umu-app\\RobloxPlayerBeta.exe" at 00006FFFEB170000: native
+5135.698:0144:0148:trace:loaddll:build_ntdll_module Loaded L"C:\\windows\\system32\\ntdll.dll" at 00006FFFFFEF0000: builtin
+5135.698:0144:0148:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\kernelbase.dll" at 00006FFFFFBB0000: builtin
+5135.698:0144:0148:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\kernel32.dll" at 00006FFFFFE70000: builtin
+info:  Found device: AMD Radeon RX 7800 XT (RADV NAVI32) (radv 26.2.4)
+info:  Found device: Intel(R) UHD Graphics 770 (ADL-S GT1) (Intel open-source Mesa driver 26.2.4)
+warn:  OpenXR: Unable to get required Vulkan Device extensions size
+5135.704:0124:0128:trace:loaddll:free_modref Unloaded module L"C:\\windows\\system32\\wineopenxr.dll" : builtin
+err:   readMonitorEdidFromKey: Failed to get EDID reg key size
+err:   DXGI: Failed to parse display metadata + colorimetry info, using blank.
+5135.704:0124:0128:warn:seh:dispatch_exception backtrace: --- Exception 0xc0000094.
+5135.704:0124:0128:trace:seh:dispatch_exception code=c0000094 (EXCEPTION_INT_DIVIDE_BY_ZERO) flags=0 addr=00006FFFFD45C88C
+5135.704:0124:0128:trace:seh:dispatch_exception rip=00006ffffd45c88c rsp=000000000010b370 rbp=000000000010b3f0 eflags=00010206
+5135.704:0124:0128:trace:seh:dispatch_exception rax=000000e8d4a51000 rbx=0000000003e30690 rcx=000004abbfdc7408 rdx=0000000000000000
+5135.704:0124:0128:trace:seh:dispatch_exception rsi=000000000010b440 rdi=00000000000003e8  r8=00000000000000aa  r9=00006ffffff67800
+5135.704:0124:0128:trace:seh:dispatch_exception r10=000000000010b33e r11=0000000000000202 r12=0000000000000000 r13=000000000000140f
+5135.704:0124:0128:trace:seh:dispatch_exception r14=000000000010b3e0 r15=00006ffffd8036e0 mxcsr=00001fa0 cs=0033 ss=002b
+5135.704:0124:0128:trace:seh:call_vectored_handlers calling handler at 00006FFFF44E05E0 code=c0000094 flags=0
+5135.704:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000000A18910, 79
+5135.704:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000000A18910, 80
+5135.704:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000000A18910, 81
+5135.705:0124:0128:trace:seh:call_vectored_handlers handler at 00006FFFF44E05E0 returned 0
+5135.705:0124:0128:warn:seh:virtual_unwind backtrace: 00006FFFFD45C88C: L"DXGI.DLL" + 000000000001C88C.
+5135.705:0124:0128:trace:unwind:RtlVirtualUnwind2 type 1 base 6ffffd440000 rip 6ffffd45c88c rva 1c88c rsp 10b370
+5135.705:0124:0128:trace:unwind:dump_unwind_info **** func 1c600-1cbb0
+5135.705:0124:0128:trace:unwind:dump_unwind_info unwind info at 00006FFFFD8772D8 flags 3 prolog 0x2f bytes function 00006FFFFD45C600-00006FFFFD45CBB0
+5135.705:0124:0128:trace:unwind:dump_unwind_info     frame register rbp offset 0x80(%rsp)
+5135.705:0124:0128:trace:unwind:dump_unwind_info     0x2f: movaps %xmm7,0x3180(%rsp)
+5135.705:0124:0128:trace:unwind:dump_unwind_info     0x28: movaps %xmm6,0x3170(%rsp)
+5135.705:0124:0128:trace:unwind:dump_unwind_info     0x21: leaq 0x80(%rsp),rbp
+5135.705:0124:0128:trace:unwind:dump_unwind_info     0x19: subq $0x3198,%rsp
+5135.705:0124:0128:trace:unwind:dump_unwind_info     0x11: pushq %rbx
+5135.705:0124:0128:trace:unwind:dump_unwind_info     0x10: pushq %rsi
+5135.705:0124:0128:trace:unwind:dump_unwind_info     0xf: pushq %rdi
+5135.705:0124:0128:trace:unwind:dump_unwind_info     0xe: pushq %r12
+5135.705:0124:0128:trace:unwind:dump_unwind_info     0xc: pushq %r13
+5135.705:0124:0128:trace:unwind:dump_unwind_info     0xa: pushq %r14
+5135.705:0124:0128:trace:unwind:dump_unwind_info     0x8: pushq %r15
+5135.705:0124:0128:trace:unwind:dump_unwind_info     0x1: pushq %rbp
+5135.705:0124:0128:trace:unwind:dump_unwind_info     handler 00006FFFFD7C9E70 data at 00006FFFFD877300
+5135.705:0124:0128:trace:seh:call_seh_handlers calling handler 00006FFFFD7C9E70 (rec=000000000010B130, frame=10b370 context=000000000010AC40, dispatch=000000000010A3D0)
+5135.705:0124:0128:trace:seh:call_seh_handlers handler at 00006FFFFD7C9E70 returned 1
+5135.705:0124:0128:warn:seh:virtual_unwind backtrace: 00006FFFFD45EB6F: L"DXGI.DLL" + 000000000001EB6F.
+5135.705:0124:0128:trace:unwind:RtlVirtualUnwind2 type 1 base 6ffffd440000 rip 6ffffd45eb6f rva 1eb6f rsp 10e550
+5135.705:0124:0128:trace:unwind:dump_unwind_info **** func 1ea90-1eca1
+5135.705:0124:0128:trace:unwind:dump_unwind_info unwind info at 00006FFFFD877324 flags 3 prolog 0x13 bytes function 00006FFFFD45EA90-00006FFFFD45ECA1
+5135.705:0124:0128:trace:unwind:dump_unwind_info     frame register rbp offset 0x20(%rsp)
+5135.705:0124:0128:trace:unwind:dump_unwind_info     0x13: movaps %xmm6,0x20(%rsp)
+5135.705:0124:0128:trace:unwind:dump_unwind_info     0xf: leaq 0x20(%rsp),rbp
+5135.705:0124:0128:trace:unwind:dump_unwind_info     0xa: subq $0x30,%rsp
+5135.705:0124:0128:trace:unwind:dump_unwind_info     0x6: pushq %rbx
+5135.705:0124:0128:trace:unwind:dump_unwind_info     0x5: pushq %rsi
+5135.705:0124:0128:trace:unwind:dump_unwind_info     0x4: pushq %rdi
+5135.705:0124:0128:trace:unwind:dump_unwind_info     0x3: pushq %r12
+5135.705:0124:0128:trace:unwind:dump_unwind_info     0x1: pushq %rbp
+5135.705:0124:0128:trace:unwind:dump_unwind_info     handler 00006FFFFD7C9E70 data at 00006FFFFD877340
+5135.705:0124:0128:trace:seh:call_seh_handlers calling handler 00006FFFFD7C9E70 (rec=000000000010B130, frame=10e550 context=000000000010AC40, dispatch=000000000010A3D0)
+5135.705:0124:0128:trace:seh:call_seh_handlers handler at 00006FFFFD7C9E70 returned 1
+5135.705:0124:0128:warn:seh:virtual_unwind backtrace: 00006FFFFD466005: L"DXGI.DLL" + 0000000000026005.
+5135.705:0124:0128:trace:unwind:RtlVirtualUnwind2 type 1 base 6ffffd440000 rip 6ffffd466005 rva 26005 rsp 10e5b0
+5135.705:0124:0128:trace:unwind:dump_unwind_info **** func 25d40-266be
+5135.705:0124:0128:trace:unwind:dump_unwind_info unwind info at 00006FFFFD876170 flags 3 prolog 0x1b bytes function 00006FFFFD465D40-00006FFFFD4666BE
+5135.705:0124:0128:trace:unwind:dump_unwind_info     frame register rbp offset 0x80(%rsp)
+5135.705:0124:0128:trace:unwind:dump_unwind_info     0x1b: leaq 0x80(%rsp),rbp
+5135.705:0124:0128:trace:unwind:dump_unwind_info     0x13: subq $0x6f8,%rsp
+5135.705:0124:0128:trace:unwind:dump_unwind_info     0xc: pushq %rbx
+5135.705:0124:0128:trace:unwind:dump_unwind_info     0xb: pushq %rsi
+5135.705:0124:0128:trace:unwind:dump_unwind_info     0xa: pushq %rdi
+5135.705:0124:0128:trace:unwind:dump_unwind_info     0x9: pushq %r12
+5135.705:0124:0128:trace:unwind:dump_unwind_info     0x7: pushq %r13
+5135.705:0124:0128:trace:unwind:dump_unwind_info     0x5: pushq %r14
+5135.705:0124:0128:trace:unwind:dump_unwind_info     0x3: pushq %r15
+5135.705:0124:0128:trace:unwind:dump_unwind_info     0x1: pushq %rbp
+5135.705:0124:0128:trace:unwind:dump_unwind_info     handler 00006FFFFD7C9E70 data at 00006FFFFD876190
+5135.705:0124:0128:trace:seh:call_seh_handlers calling handler 00006FFFFD7C9E70 (rec=000000000010B130, frame=10e5b0 context=000000000010AC40, dispatch=000000000010A3D0)
+5135.705:0124:0128:trace:seh:call_seh_handlers handler at 00006FFFFD7C9E70 returned 1
+5135.705:0124:0128:warn:seh:virtual_unwind backtrace: 00006FFFFDA77C6C: L"SDL3.dll" + 0000000000197C6C.
+5135.705:0124:0128:trace:unwind:RtlVirtualUnwind2 type 1 base 6ffffd8e0000 rip 6ffffda77c6c rva 197c6c rsp 10ecf0
+5135.705:0124:0128:trace:unwind:dump_unwind_info **** func 197be0-197cfe
+5135.705:0124:0128:trace:unwind:dump_unwind_info unwind info at 00006FFFFDB50A8C flags 0 prolog 0x41 bytes function 00006FFFFDA77BE0-00006FFFFDA77CFE
+5135.705:0124:0128:trace:unwind:dump_unwind_info     0x41: movq %rdi,0xb8(%rsp)
+5135.705:0124:0128:trace:unwind:dump_unwind_info     0x37: movq %rbp,0xa8(%rsp)
+5135.705:0124:0128:trace:unwind:dump_unwind_info     0xc: subq $0x80,%rsp
+5135.705:0124:0128:trace:unwind:dump_unwind_info     0x5: pushq %r14
+5135.705:0124:0128:trace:unwind:dump_unwind_info     0x3: pushq %rsi
+5135.705:0124:0128:trace:unwind:dump_unwind_info     0x2: pushq %rbx
+5135.705:0124:0128:warn:seh:virtual_unwind backtrace: 00006FFFFDA776C9: L"SDL3.dll" + 00000000001976C9.
+5135.705:0124:0128:trace:unwind:RtlVirtualUnwind2 type 1 base 6ffffd8e0000 rip 6ffffda776c9 rva 1976c9 rsp 10ed90
+5135.705:0124:0128:trace:unwind:dump_unwind_info **** func 197680-19771a
+5135.705:0124:0128:trace:unwind:dump_unwind_info unwind info at 00006FFFFDB50C00 flags 0 prolog 0x2c bytes function 00006FFFFDA77680-00006FFFFDA7771A
+5135.705:0124:0128:trace:unwind:dump_unwind_info     0x2c: movaps %xmm6,0x470(%rsp)
+5135.705:0124:0128:trace:unwind:dump_unwind_info     0x1e: subq $0x480,%rsp
+5135.705:0124:0128:trace:unwind:dump_unwind_info     0xf: pushq %r15
+5135.705:0124:0128:trace:unwind:dump_unwind_info     0xd: pushq %r13
+5135.705:0124:0128:trace:unwind:dump_unwind_info     0xb: pushq %r12
+5135.705:0124:0128:trace:unwind:dump_unwind_info     0x9: pushq %rdi
+5135.705:0124:0128:trace:unwind:dump_unwind_info     0x8: pushq %rsi
+5135.705:0124:0128:trace:unwind:dump_unwind_info     0x7: pushq %rbx
+5135.705:0124:0128:trace:unwind:dump_unwind_info     0x6: pushq %rbp
+5135.705:0124:0128:warn:seh:virtual_unwind backtrace: 00006FFFFDA77B34: L"SDL3.dll" + 0000000000197B34.
+5135.705:0124:0128:trace:unwind:RtlVirtualUnwind2 type 1 base 6ffffd8e0000 rip 6ffffda77b34 rva 197b34 rsp 10f250
+5135.705:0124:0128:trace:unwind:dump_unwind_info **** func 197ac0-197b4a
+5135.705:0124:0128:trace:unwind:dump_unwind_info unwind info at 00006FFFFDB3CBF4 flags 0 prolog 0xd bytes function 00006FFFFDA77AC0-00006FFFFDA77B4A
+5135.705:0124:0128:trace:unwind:dump_unwind_info     0xd: movq %rbx,0xa0(%rsp)
+5135.705:0124:0128:trace:unwind:dump_unwind_info     0xd: subq $0x90,%rsp
+5135.705:0124:0128:trace:unwind:dump_unwind_info     0x6: pushq %rdi
+5135.705:0124:0128:warn:seh:virtual_unwind backtrace: 00006FFFFF46DB3D: L"user32.dll" + 000000000004DB3D.
+5135.705:0124:0128:trace:unwind:RtlVirtualUnwind2 type 1 base 6fffff420000 rip 6fffff46db3d rva 4db3d rsp 10f2f0
+5135.705:0124:0128:trace:unwind:dump_unwind_info **** func 4db20-4db58
+5135.705:0124:0128:trace:unwind:dump_unwind_info unwind info at 00006FFFFF4ECABC flags 0 prolog 0x8 bytes function 00006FFFFF46DB20-00006FFFFF46DB58
+5135.705:0124:0128:trace:unwind:dump_unwind_info     frame register rbp offset 0x0(%rsp)
+5135.705:0124:0128:trace:unwind:dump_unwind_info     0x8: subq $0x30,%rsp
+5135.705:0124:0128:trace:unwind:dump_unwind_info     0x4: leaq 0x0(%rsp),rbp
+5135.705:0124:0128:trace:unwind:dump_unwind_info     0x1: pushq %rbp
+5135.705:0124:0128:warn:seh:virtual_unwind backtrace: 00006FFFFFF00B77: L"ntdll.dll" + 0000000000010B77.
+5135.705:0124:0128:trace:unwind:RtlVirtualUnwind2 type 1 base 6fffffef0000 rip 6ffffff00b77 rva 10b77 rsp 10f330
+5135.705:0124:0128:trace:unwind:dump_unwind_info **** func 10b58-10b8c
+5135.705:0124:0128:trace:unwind:dump_unwind_info unwind info at 00006FFFFFF9819C flags 1 prolog 0x0 bytes function 00006FFFFFF00B58-00006FFFFFF00B8C
+5135.705:0124:0128:trace:unwind:dump_unwind_info     0x0: subq $0x30,%rsp
+5135.705:0124:0128:trace:unwind:dump_unwind_info     0x0: PUSH_MACHFRAME 0
+5135.705:0124:0128:trace:unwind:dump_unwind_info     handler 00006FFFFFF5F150 data at 00006FFFFFF981A8
+5135.705:0124:0128:trace:seh:call_seh_handlers calling handler 00006FFFFFF5F150 (rec=000000000010B130, frame=10f330 context=000000000010AC40, dispatch=000000000010A3D0)
+5135.705:0124:0128:err:seh:user_callback_handler ignoring exception c0000094
+5135.705:0124:0128:trace:seh:RtlUnwindEx code=c0000094 flags=2 end_frame=000000000010F330 target_ip=00006FFFFFF00B77
+5135.705:0124:0128:trace:seh:RtlUnwindEx rip=00006ffffff27796 rsp=0000000000109720 rbp=00000000001097a0 eflags=00000202
+5135.705:0124:0128:trace:seh:RtlUnwindEx rax=00000000003e0000 rbx=000000000010b130 rcx=0000000000109df0 rdx=00006ffffff00b77
+5135.705:0124:0128:trace:seh:RtlUnwindEx rsi=000000000010f330 rdi=0000000000109df0  r8=000000000010b130  r9=00000000c0000094
+5135.705:0124:0128:trace:seh:RtlUnwindEx r10=00007f3fa8e8e740 r11=0000000000000246 r12=0000000000000000 r13=000000000010f330
+5135.705:0124:0128:trace:seh:RtlUnwindEx r14=00000000003e0000 r15=0000000000109890 mxcsr=00001fa0 cs=0033 ss=002b
+5135.705:0124:0128:trace:unwind:RtlVirtualUnwind2 type 2 base 6fffffef0000 rip 6ffffff27796 rva 37796 rsp 109720
+5135.705:0124:0128:trace:unwind:dump_unwind_info **** func 37740-37ec4
+5135.705:0124:0128:trace:unwind:dump_unwind_info unwind info at 00006FFFFFF982D4 flags 0 prolog 0x22 bytes function 00006FFFFFF27740-00006FFFFFF27EC4
+5135.705:0124:0128:trace:unwind:dump_unwind_info     frame register rbp offset 0x80(%rsp)
+5135.705:0124:0128:trace:unwind:dump_unwind_info     0x22: movaps %xmm6,0x640(%rsp)
+5135.705:0124:0128:trace:unwind:dump_unwind_info     0x1b: leaq 0x80(%rsp),rbp
+5135.705:0124:0128:trace:unwind:dump_unwind_info     0x13: subq $0x658,%rsp
+5135.705:0124:0128:trace:unwind:dump_unwind_info     0xc: pushq %rbx
+5135.705:0124:0128:trace:unwind:dump_unwind_info     0xb: pushq %rsi
+5135.705:0124:0128:trace:unwind:dump_unwind_info     0xa: pushq %rdi
+5135.705:0124:0128:trace:unwind:dump_unwind_info     0x9: pushq %r12
+5135.705:0124:0128:trace:unwind:dump_unwind_info     0x7: pushq %r13
+5135.705:0124:0128:trace:unwind:dump_unwind_info     0x5: pushq %r14
+5135.705:0124:0128:trace:unwind:dump_unwind_info     0x3: pushq %r15
+5135.705:0124:0128:trace:unwind:dump_unwind_info     0x1: pushq %rbp
+5135.705:0124:0128:trace:unwind:RtlVirtualUnwind2 type 2 base 6fffffef0000 rip 6ffffff27727 rva 37727 rsp 109dc0
+5135.705:0124:0128:trace:unwind:dump_unwind_info **** func 37700-37731
+5135.705:0124:0128:trace:unwind:dump_unwind_info unwind info at 00006FFFFFF99110 flags 0 prolog 0x10 bytes function 00006FFFFFF27700-00006FFFFFF27731
+5135.705:0124:0128:trace:unwind:dump_unwind_info     frame register rbp offset 0x80(%rsp)
+5135.705:0124:0128:trace:unwind:dump_unwind_info     0x10: leaq 0x80(%rsp),rbp
+5135.705:0124:0128:trace:unwind:dump_unwind_info     0x8: subq $0x500,%rsp
+5135.705:0124:0128:trace:unwind:dump_unwind_info     0x1: pushq %rbp
+5135.705:0124:0128:trace:unwind:RtlVirtualUnwind2 type 2 base 6fffffef0000 rip 6ffffff5f186 rva 6f186 rsp 10a2d0
+5135.705:0124:0128:trace:unwind:dump_unwind_info **** func 6f150-6f1bf
+5135.705:0124:0128:trace:unwind:dump_unwind_info unwind info at 00006FFFFFF954CC flags 0 prolog 0xc bytes function 00006FFFFFF5F150-00006FFFFFF5F1BF
+5135.705:0124:0128:trace:unwind:dump_unwind_info     frame register rbp offset 0x30(%rsp)
+5135.705:0124:0128:trace:unwind:dump_unwind_info     0xc: leaq 0x30(%rsp),rbp
+5135.705:0124:0128:trace:unwind:dump_unwind_info     0x7: subq $0x30,%rsp
+5135.705:0124:0128:trace:unwind:dump_unwind_info     0x3: pushq %rbx
+5135.705:0124:0128:trace:unwind:dump_unwind_info     0x2: pushq %rsi
+5135.705:0124:0128:trace:unwind:dump_unwind_info     0x1: pushq %rbp
+5135.705:0124:0128:trace:unwind:RtlVirtualUnwind2 type 2 base 6fffffef0000 rip 6ffffff00af9 rva 10af9 rsp 10a320
+5135.705:0124:0128:trace:unwind:dump_unwind_info **** func 10aec-10aff
+5135.705:0124:0128:trace:unwind:dump_unwind_info unwind info at 00006FFFFFF98138 flags 1 prolog 0x4 bytes function 00006FFFFFF00AEC-00006FFFFFF00AFF
+5135.705:0124:0128:trace:unwind:dump_unwind_info     0x4: subq $0x28,%rsp
+5135.705:0124:0128:trace:unwind:dump_unwind_info     handler 00006FFFFFF49620 data at 00006FFFFFF98144
+5135.705:0124:0128:trace:unwind:RtlVirtualUnwind2 type 2 base 6fffffef0000 rip 6ffffff37329 rva 47329 rsp 10a350
+5135.705:0124:0128:trace:unwind:dump_unwind_info **** func 47240-47720
+5135.705:0124:0128:trace:unwind:dump_unwind_info unwind info at 00006FFFFFF98294 flags 0 prolog 0x1b bytes function 00006FFFFFF37240-00006FFFFFF37720
+5135.705:0124:0128:trace:unwind:dump_unwind_info     frame register rbp offset 0x80(%rsp)
+5135.705:0124:0128:trace:unwind:dump_unwind_info     0x1b: leaq 0x80(%rsp),rbp
+5135.705:0124:0128:trace:unwind:dump_unwind_info     0x13: subq $0x688,%rsp
+5135.705:0124:0128:trace:unwind:dump_unwind_info     0xc: pushq %rbx
+5135.705:0124:0128:trace:unwind:dump_unwind_info     0xb: pushq %rsi
+5135.705:0124:0128:trace:unwind:dump_unwind_info     0xa: pushq %rdi
+5135.705:0124:0128:trace:unwind:dump_unwind_info     0x9: pushq %r12
+5135.705:0124:0128:trace:unwind:dump_unwind_info     0x7: pushq %r13
+5135.705:0124:0128:trace:unwind:dump_unwind_info     0x5: pushq %r14
+5135.705:0124:0128:trace:unwind:dump_unwind_info     0x3: pushq %r15
+5135.705:0124:0128:trace:unwind:dump_unwind_info     0x1: pushq %rbp
+5135.705:0124:0128:trace:unwind:RtlVirtualUnwind2 type 2 base 6fffffef0000 rip 6ffffff39a2d rva 49a2d rsp 10aa20
+5135.705:0124:0128:trace:unwind:dump_unwind_info **** func 49540-4a58e
+5135.705:0124:0128:trace:unwind:dump_unwind_info unwind info at 00006FFFFFF95558 flags 0 prolog 0x22 bytes function 00006FFFFFF39540-00006FFFFFF3A58E
+5135.705:0124:0128:trace:unwind:dump_unwind_info     frame register rbp offset 0x80(%rsp)
+5135.705:0124:0128:trace:unwind:dump_unwind_info     0x22: movaps %xmm6,0x1c0(%rsp)
+5135.705:0124:0128:trace:unwind:dump_unwind_info     0x1b: leaq 0x80(%rsp),rbp
+5135.705:0124:0128:trace:unwind:dump_unwind_info     0x13: subq $0x1d8,%rsp
+5135.705:0124:0128:trace:unwind:dump_unwind_info     0xc: pushq %rbx
+5135.705:0124:0128:trace:unwind:dump_unwind_info     0xb: pushq %rsi
+5135.705:0124:0128:trace:unwind:dump_unwind_info     0xa: pushq %rdi
+5135.705:0124:0128:trace:unwind:dump_unwind_info     0x9: pushq %r12
+5135.705:0124:0128:trace:unwind:dump_unwind_info     0x7: pushq %r13
+5135.705:0124:0128:trace:unwind:dump_unwind_info     0x5: pushq %r14
+5135.705:0124:0128:trace:unwind:dump_unwind_info     0x3: pushq %r15
+5135.705:0124:0128:trace:unwind:dump_unwind_info     0x1: pushq %rbp
+5135.705:0124:0128:trace:unwind:RtlVirtualUnwind2 type 2 base 6fffffef0000 rip 6ffffff00b2a rva 10b2a rsp 10ac40
+5135.705:0124:0128:trace:unwind:dump_unwind_info **** func 10b00-10b2b
+5135.705:0124:0128:trace:unwind:dump_unwind_info unwind info at 00006FFFFFF98144 flags 0 prolog 0x0 bytes function 00006FFFFFF00B00-00006FFFFFF00B2B
+5135.705:0124:0128:trace:unwind:dump_unwind_info     0x0: movq %r15,0xf0(%rsp)
+5135.705:0124:0128:trace:unwind:dump_unwind_info     0x0: movq %r14,0xe8(%rsp)
+5135.705:0124:0128:trace:unwind:dump_unwind_info     0x0: movq %r13,0xe0(%rsp)
+5135.705:0124:0128:trace:unwind:dump_unwind_info     0x0: movq %r12,0xd8(%rsp)
+5135.705:0124:0128:trace:unwind:dump_unwind_info     0x0: movq %rdi,0xb0(%rsp)
+5135.705:0124:0128:trace:unwind:dump_unwind_info     0x0: movq %rsi,0xa8(%rsp)
+5135.705:0124:0128:trace:unwind:dump_unwind_info     0x0: movq %rbp,0xa0(%rsp)
+5135.705:0124:0128:trace:unwind:dump_unwind_info     0x0: movq %rbx,0x90(%rsp)
+5135.705:0124:0128:trace:unwind:dump_unwind_info     0x0: subq $0x590,%rsp
+5135.705:0124:0128:trace:unwind:dump_unwind_info     0x0: PUSH_MACHFRAME 0
+5135.705:0124:0128:trace:unwind:RtlVirtualUnwind2 type 2 base 6ffffd440000 rip 6ffffd45c88c rva 1c88c rsp 10b370
+5135.705:0124:0128:trace:unwind:dump_unwind_info **** func 1c600-1cbb0
+5135.705:0124:0128:trace:unwind:dump_unwind_info unwind info at 00006FFFFD8772D8 flags 3 prolog 0x2f bytes function 00006FFFFD45C600-00006FFFFD45CBB0
+5135.705:0124:0128:trace:unwind:dump_unwind_info     frame register rbp offset 0x80(%rsp)
+5135.705:0124:0128:trace:unwind:dump_unwind_info     0x2f: movaps %xmm7,0x3180(%rsp)
+5135.705:0124:0128:trace:unwind:dump_unwind_info     0x28: movaps %xmm6,0x3170(%rsp)
+5135.705:0124:0128:trace:unwind:dump_unwind_info     0x21: leaq 0x80(%rsp),rbp
+5135.705:0124:0128:trace:unwind:dump_unwind_info     0x19: subq $0x3198,%rsp
+5135.705:0124:0128:trace:unwind:dump_unwind_info     0x11: pushq %rbx
+5135.705:0124:0128:trace:unwind:dump_unwind_info     0x10: pushq %rsi
+5135.705:0124:0128:trace:unwind:dump_unwind_info     0xf: pushq %rdi
+5135.705:0124:0128:trace:unwind:dump_unwind_info     0xe: pushq %r12
+5135.705:0124:0128:trace:unwind:dump_unwind_info     0xc: pushq %r13
+5135.705:0124:0128:trace:unwind:dump_unwind_info     0xa: pushq %r14
+5135.705:0124:0128:trace:unwind:dump_unwind_info     0x8: pushq %r15
+5135.705:0124:0128:trace:unwind:dump_unwind_info     0x1: pushq %rbp
+5135.705:0124:0128:trace:unwind:dump_unwind_info     handler 00006FFFFD7C9E70 data at 00006FFFFD877300
+5135.705:0124:0128:trace:seh:RtlUnwindEx calling handler 00006FFFFD7C9E70 (rec=000000000010B130, frame=10b370 context=0000000000109DF0, dispatch=00000000001097A0)
+5135.705:0124:0128:trace:seh:RtlUnwindEx handler 00006FFFFD7C9E70 returned 1
+5135.705:0124:0128:trace:unwind:RtlVirtualUnwind2 type 2 base 6ffffd440000 rip 6ffffd45eb6f rva 1eb6f rsp 10e550
+5135.705:0124:0128:trace:unwind:dump_unwind_info **** func 1ea90-1eca1
+5135.705:0124:0128:trace:unwind:dump_unwind_info unwind info at 00006FFFFD877324 flags 3 prolog 0x13 bytes function 00006FFFFD45EA90-00006FFFFD45ECA1
+5135.705:0124:0128:trace:unwind:dump_unwind_info     frame register rbp offset 0x20(%rsp)
+5135.705:0124:0128:trace:unwind:dump_unwind_info     0x13: movaps %xmm6,0x20(%rsp)
+5135.705:0124:0128:trace:unwind:dump_unwind_info     0xf: leaq 0x20(%rsp),rbp
+5135.705:0124:0128:trace:unwind:dump_unwind_info     0xa: subq $0x30,%rsp
+5135.705:0124:0128:trace:unwind:dump_unwind_info     0x6: pushq %rbx
+5135.705:0124:0128:trace:unwind:dump_unwind_info     0x5: pushq %rsi
+5135.705:0124:0128:trace:unwind:dump_unwind_info     0x4: pushq %rdi
+5135.705:0124:0128:trace:unwind:dump_unwind_info     0x3: pushq %r12
+5135.705:0124:0128:trace:unwind:dump_unwind_info     0x1: pushq %rbp
+5135.705:0124:0128:trace:unwind:dump_unwind_info     handler 00006FFFFD7C9E70 data at 00006FFFFD877340
+5135.705:0124:0128:trace:seh:RtlUnwindEx calling handler 00006FFFFD7C9E70 (rec=000000000010B130, frame=10e550 context=0000000000109DF0, dispatch=00000000001097A0)
+5135.705:0124:0128:trace:seh:RtlUnwindEx handler 00006FFFFD7C9E70 returned 1
+5135.705:0124:0128:trace:unwind:RtlVirtualUnwind2 type 2 base 6ffffd440000 rip 6ffffd466005 rva 26005 rsp 10e5b0
+5135.705:0124:0128:trace:unwind:dump_unwind_info **** func 25d40-266be
+5135.705:0124:0128:trace:unwind:dump_unwind_info unwind info at 00006FFFFD876170 flags 3 prolog 0x1b bytes function 00006FFFFD465D40-00006FFFFD4666BE
+5135.705:0124:0128:trace:unwind:dump_unwind_info     frame register rbp offset 0x80(%rsp)
+5135.705:0124:0128:trace:unwind:dump_unwind_info     0x1b: leaq 0x80(%rsp),rbp
+5135.705:0124:0128:trace:unwind:dump_unwind_info     0x13: subq $0x6f8,%rsp
+5135.705:0124:0128:trace:unwind:dump_unwind_info     0xc: pushq %rbx
+5135.705:0124:0128:trace:unwind:dump_unwind_info     0xb: pushq %rsi
+5135.705:0124:0128:trace:unwind:dump_unwind_info     0xa: pushq %rdi
+5135.705:0124:0128:trace:unwind:dump_unwind_info     0x9: pushq %r12
+5135.705:0124:0128:trace:unwind:dump_unwind_info     0x7: pushq %r13
+5135.705:0124:0128:trace:unwind:dump_unwind_info     0x5: pushq %r14
+5135.705:0124:0128:trace:unwind:dump_unwind_info     0x3: pushq %r15
+5135.705:0124:0128:trace:unwind:dump_unwind_info     0x1: pushq %rbp
+5135.705:0124:0128:trace:unwind:dump_unwind_info     handler 00006FFFFD7C9E70 data at 00006FFFFD876190
+5135.705:0124:0128:trace:seh:RtlUnwindEx calling handler 00006FFFFD7C9E70 (rec=000000000010B130, frame=10e5b0 context=0000000000109DF0, dispatch=00000000001097A0)
+5135.705:0124:0128:trace:seh:RtlUnwindEx handler 00006FFFFD7C9E70 returned 1
+5135.705:0124:0128:trace:unwind:RtlVirtualUnwind2 type 2 base 6ffffd8e0000 rip 6ffffda77c6c rva 197c6c rsp 10ecf0
+5135.705:0124:0128:trace:unwind:dump_unwind_info **** func 197be0-197cfe
+5135.705:0124:0128:trace:unwind:dump_unwind_info unwind info at 00006FFFFDB50A8C flags 0 prolog 0x41 bytes function 00006FFFFDA77BE0-00006FFFFDA77CFE
+5135.705:0124:0128:trace:unwind:dump_unwind_info     0x41: movq %rdi,0xb8(%rsp)
+5135.705:0124:0128:trace:unwind:dump_unwind_info     0x37: movq %rbp,0xa8(%rsp)
+5135.705:0124:0128:trace:unwind:dump_unwind_info     0xc: subq $0x80,%rsp
+5135.705:0124:0128:trace:unwind:dump_unwind_info     0x5: pushq %r14
+5135.705:0124:0128:trace:unwind:dump_unwind_info     0x3: pushq %rsi
+5135.705:0124:0128:trace:unwind:dump_unwind_info     0x2: pushq %rbx
+5135.705:0124:0128:trace:unwind:RtlVirtualUnwind2 type 2 base 6ffffd8e0000 rip 6ffffda776c9 rva 1976c9 rsp 10ed90
+5135.705:0124:0128:trace:unwind:dump_unwind_info **** func 197680-19771a
+5135.705:0124:0128:trace:unwind:dump_unwind_info unwind info at 00006FFFFDB50C00 flags 0 prolog 0x2c bytes function 00006FFFFDA77680-00006FFFFDA7771A
+5135.705:0124:0128:trace:unwind:dump_unwind_info     0x2c: movaps %xmm6,0x470(%rsp)
+5135.705:0124:0128:trace:unwind:dump_unwind_info     0x1e: subq $0x480,%rsp
+5135.705:0124:0128:trace:unwind:dump_unwind_info     0xf: pushq %r15
+5135.705:0124:0128:trace:unwind:dump_unwind_info     0xd: pushq %r13
+5135.705:0124:0128:trace:unwind:dump_unwind_info     0xb: pushq %r12
+5135.705:0124:0128:trace:unwind:dump_unwind_info     0x9: pushq %rdi
+5135.705:0124:0128:trace:unwind:dump_unwind_info     0x8: pushq %rsi
+5135.705:0124:0128:trace:unwind:dump_unwind_info     0x7: pushq %rbx
+5135.705:0124:0128:trace:unwind:dump_unwind_info     0x6: pushq %rbp
+5135.705:0124:0128:trace:unwind:RtlVirtualUnwind2 type 2 base 6ffffd8e0000 rip 6ffffda77b34 rva 197b34 rsp 10f250
+5135.705:0124:0128:trace:unwind:dump_unwind_info **** func 197ac0-197b4a
+5135.705:0124:0128:trace:unwind:dump_unwind_info unwind info at 00006FFFFDB3CBF4 flags 0 prolog 0xd bytes function 00006FFFFDA77AC0-00006FFFFDA77B4A
+5135.705:0124:0128:trace:unwind:dump_unwind_info     0xd: movq %rbx,0xa0(%rsp)
+5135.705:0124:0128:trace:unwind:dump_unwind_info     0xd: subq $0x90,%rsp
+5135.705:0124:0128:trace:unwind:dump_unwind_info     0x6: pushq %rdi
+5135.705:0124:0128:trace:unwind:RtlVirtualUnwind2 type 2 base 6fffff420000 rip 6fffff46db3d rva 4db3d rsp 10f2f0
+5135.705:0124:0128:trace:unwind:dump_unwind_info **** func 4db20-4db58
+5135.705:0124:0128:trace:unwind:dump_unwind_info unwind info at 00006FFFFF4ECABC flags 0 prolog 0x8 bytes function 00006FFFFF46DB20-00006FFFFF46DB58
+5135.705:0124:0128:trace:unwind:dump_unwind_info     frame register rbp offset 0x0(%rsp)
+5135.705:0124:0128:trace:unwind:dump_unwind_info     0x8: subq $0x30,%rsp
+5135.705:0124:0128:trace:unwind:dump_unwind_info     0x4: leaq 0x0(%rsp),rbp
+5135.705:0124:0128:trace:unwind:dump_unwind_info     0x1: pushq %rbp
+5135.705:0124:0128:trace:unwind:RtlVirtualUnwind2 type 2 base 6fffffef0000 rip 6ffffff00b77 rva 10b77 rsp 10f330
+5135.705:0124:0128:trace:unwind:dump_unwind_info **** func 10b58-10b8c
+5135.705:0124:0128:trace:unwind:dump_unwind_info unwind info at 00006FFFFFF9819C flags 1 prolog 0x0 bytes function 00006FFFFFF00B58-00006FFFFFF00B8C
+5135.705:0124:0128:trace:unwind:dump_unwind_info     0x0: subq $0x30,%rsp
+5135.705:0124:0128:trace:unwind:dump_unwind_info     0x0: PUSH_MACHFRAME 0
+5135.705:0124:0128:trace:unwind:dump_unwind_info     handler 00006FFFFFF5F150 data at 00006FFFFFF981A8
+5135.705:0124:0128:trace:seh:RtlRestoreContext returning to 00006FFFFFF00B77 stack 000000000010F330
+5135.705:0124:0128:trace:loaddll:free_modref Unloaded module L"C:\\windows\\system32\\DWMAPI.DLL" : builtin
+5135.705:0124:0128:trace:loaddll:free_modref Unloaded module L"C:\\windows\\system32\\DXGI.DLL" : native
+5135.705:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000000A18910, 82
+5135.705:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000000A18910, 83
+5135.705:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000000A18910, 84
+5135.705:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000000A18910, 85
+5135.705:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000000A18910, 86
+5135.705:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000000A18910, 87
+5135.705:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000000A18910, 88
+5135.705:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000000A18910, 89
+5135.705:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000000A18910, 90
+5135.705:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000000A18910, 91
+5135.705:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000000A18910, 92
+5135.705:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000000A18910, 93
+5135.705:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000000A18910, 94
+5135.705:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000000A18910, 95
+5135.705:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000000A18910, 96
+[0000000000000128:] EXCEPTION handling: System.ApplicationException: No displays available
+5135.705:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000000A18910, 97
+5135.705:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000000A18910, 98
+5135.705:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000000A18910, 99
+5135.705:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000000A18910, 100
+5135.705:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000000A18910, 101
+5135.705:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000000A18910, 102
+5135.705:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000000A18910, 103
+5135.705:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000000A18910, 104
+5135.705:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000000A18910, 105
+5135.705:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000000A18910, 106
+5135.708:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000000A18910, 107
+5135.708:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000000A18910, 108
+5135.708:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000000A18910, 109
+5135.708:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000000A18910, 110
+5135.708:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000000A18910, 111
+5135.708:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000000A18910, 112
+5135.708:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000000A18910, 113
+5135.708:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000000A18910, 114
+5135.708:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000000A18910, 115
+5135.708:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000000A18910, 116
+5135.708:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000000A18910, 117
+5135.708:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000000A18910, 118
+5135.708:0144:0148:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\msvcrt.dll" at 00006FFFFFAA0000: builtin
+5135.708:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000000A18910, 119
+5135.708:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000000A18910, 120
+5135.708:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000000A18910, 121
+5135.708:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000000A18910, 122
+5135.708:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000000A18910, 123
+5135.708:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000000A18910, 124
+5135.709:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000000A18910, 125
+5135.709:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000000A18910, 126
+5135.709:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000000A18910, 127
+5135.709:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000000A18910, 128
+5135.709:0144:0148:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\ucrtbase.dll" at 00006FFFFF8F0000: builtin
+5135.709:0144:0148:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\cryptbase.dll" at 00006FFFFF9E0000: builtin
+5135.709:0144:0148:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\rpcrt4.dll" at 00006FFFFFA00000: builtin
+5135.709:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000000A18910, 129
+5135.709:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000000A18910, 130
+5135.709:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000000A18910, 131
+5135.709:0144:0148:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\sechost.dll" at 00006FFFFF8B0000: builtin
+5135.709:0144:0148:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\advapi32.dll" at 00006FFFFFB60000: builtin
+5135.710:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000000A18910, 132
+5135.710:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000000A18910, 133
+5135.710:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000000A18910, 134
+5135.710:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000000A18910, 135
+5135.710:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000000A18910, 136
+5135.710:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000000A18910, 137
+5135.710:0144:0148:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\win32u.dll" at 00006FFFFF330000: builtin
+5135.710:0144:0148:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\gdi32.dll" at 00006FFFFF380000: builtin
+5135.710:0144:0148:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\USER32.dll" at 00006FFFFF420000: builtin
+5135.710:0144:0148:trace:loaddll:build_module Loaded L"X:\\VSProjs\\Project Vine\\.work\\umu-app\\RobloxPlayerBeta.dll" at 00006FFFFBDF0000: native
+5135.710:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000000A18910, 138
+5135.710:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000000A18910, 139
+5135.710:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000000A18910, 140
+5135.711:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000000A18910, 141
+5135.711:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000000A18910, 142
+5135.711:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000000A18910, 143
+5135.711:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000000A18910, 144
+5135.711:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000000A18910, 145
+5135.712:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000000A18910, 146
+5135.712:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000000A18910, 147
+5135.712:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000000A18910, 148
+5135.712:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000000A18910, 149
+5135.712:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000000A18910, 150
+5135.712:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000000A18910, 151
+Unhandled exception in Xalia:
+5135.712:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000000A18910, 152
+5135.712:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000000A18910, 153
+5135.712:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000000A18910, 154
+5135.712:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000000A18910, 155
+5135.712:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000000A18910, 156
+5135.712:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000000A18910, 157
+5135.713:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000000A18910, 158
+5135.713:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000000A18910, 159
+5135.713:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000000A18910, 160
+5135.713:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000000A18910, 161
+5135.713:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000000A18910, 162
+5135.713:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000000A18910, 163
+5135.713:0124:0128:trace:unwind:RtlAddGrowableFunctionTable 000000000373C578, 000000000372A0D0, 0, 513, 3ef0000, 3f00000
+5135.713:0124:0128:trace:unwind:RtlGrowFunctionTable 000000000362ADF0, 1
+5135.713:0124:0128:trace:unwind:RtlGrowFunctionTable 000000000362ADF0, 2
+5135.713:0124:0128:trace:unwind:RtlGrowFunctionTable 000000000362ADF0, 3
+5135.713:0124:0128:trace:unwind:RtlGrowFunctionTable 000000000362ADF0, 4
+5135.713:0124:0128:trace:unwind:RtlGrowFunctionTable 000000000362ADF0, 5
+5135.713:0124:0128:trace:unwind:RtlGrowFunctionTable 000000000362ADF0, 6
+5135.713:0124:0128:trace:unwind:RtlGrowFunctionTable 000000000362ADF0, 7
+5135.713:0124:0128:trace:unwind:RtlGrowFunctionTable 000000000362ADF0, 8
+5135.713:0124:0128:trace:unwind:RtlGrowFunctionTable 000000000362ADF0, 9
+5135.713:0124:0128:trace:unwind:RtlGrowFunctionTable 000000000362ADF0, 10
+5135.714:0124:0128:trace:unwind:RtlGrowFunctionTable 000000000362ADF0, 11
+5135.714:0124:0128:trace:unwind:RtlGrowFunctionTable 000000000362ADF0, 12
+5135.714:0124:0128:trace:unwind:RtlGrowFunctionTable 000000000362ADF0, 13
+5135.714:0124:0128:trace:unwind:RtlGrowFunctionTable 000000000362ADF0, 14
+5135.714:0124:0128:trace:unwind:RtlGrowFunctionTable 000000000362ADF0, 15
+5135.714:0124:0128:trace:unwind:RtlGrowFunctionTable 000000000362ADF0, 16
+5135.714:0124:0128:trace:unwind:RtlGrowFunctionTable 000000000362ADF0, 17
+5135.714:0124:0128:trace:unwind:RtlGrowFunctionTable 000000000362ADF0, 18
+5135.714:0124:0128:trace:unwind:RtlGrowFunctionTable 000000000362ADF0, 19
+5135.714:0124:0128:trace:unwind:RtlGrowFunctionTable 000000000362ADF0, 20
+5135.714:0124:0128:trace:unwind:RtlGrowFunctionTable 000000000362ADF0, 21
+5135.714:0124:0128:trace:unwind:RtlGrowFunctionTable 000000000362ADF0, 22
+5135.714:0124:0128:trace:unwind:RtlGrowFunctionTable 000000000362ADF0, 23
+5135.714:0124:0128:trace:unwind:RtlGrowFunctionTable 000000000362ADF0, 24
+5135.714:0124:0128:trace:unwind:RtlGrowFunctionTable 000000000362ADF0, 25
+5135.714:0124:0128:trace:unwind:RtlGrowFunctionTable 000000000362ADF0, 26
+5135.714:0124:0128:trace:unwind:RtlGrowFunctionTable 000000000362ADF0, 27
+5135.714:0124:0128:trace:unwind:RtlGrowFunctionTable 000000000362ADF0, 28
+5135.714:0124:0128:trace:unwind:RtlGrowFunctionTable 000000000362ADF0, 29
+5135.714:0124:0128:trace:unwind:RtlGrowFunctionTable 000000000362ADF0, 30
+5135.714:0124:0128:trace:unwind:RtlGrowFunctionTable 000000000362ADF0, 31
+5135.714:0124:0128:trace:unwind:RtlGrowFunctionTable 000000000362ADF0, 32
+5135.714:0124:0128:trace:unwind:RtlGrowFunctionTable 000000000362ADF0, 33
+5135.714:0124:0128:trace:unwind:RtlGrowFunctionTable 000000000362ADF0, 34
+5135.715:0124:0128:trace:unwind:RtlGrowFunctionTable 000000000362ADF0, 35
+5135.715:0124:0128:trace:unwind:RtlGrowFunctionTable 000000000362ADF0, 36
+5135.715:0124:0128:trace:unwind:RtlGrowFunctionTable 000000000362ADF0, 37
+5135.715:0124:0128:trace:unwind:RtlGrowFunctionTable 000000000362ADF0, 38
+5135.715:0124:0128:trace:unwind:RtlGrowFunctionTable 000000000362ADF0, 39
+5135.715:0124:0128:trace:unwind:RtlGrowFunctionTable 000000000362ADF0, 40
+5135.715:0124:0128:trace:unwind:RtlGrowFunctionTable 000000000362ADF0, 41
+5135.715:0124:0128:trace:unwind:RtlGrowFunctionTable 000000000362ADF0, 42
+5135.715:0124:0128:trace:unwind:RtlGrowFunctionTable 000000000362ADF0, 43
+5135.715:0124:0128:trace:unwind:RtlGrowFunctionTable 000000000362ADF0, 44
+5135.715:0124:0128:trace:unwind:RtlGrowFunctionTable 000000000362ADF0, 45
+5135.715:0124:0128:trace:unwind:RtlGrowFunctionTable 000000000362ADF0, 46
+5135.715:0124:0128:trace:unwind:RtlGrowFunctionTable 000000000362ADF0, 47
+5135.715:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000000A18960, 22
+5135.715:0124:0128:trace:unwind:RtlGrowFunctionTable 000000000362ADF0, 48
+5135.715:0124:0128:trace:unwind:RtlGrowFunctionTable 000000000362ADF0, 49
+5135.715:0124:0128:trace:unwind:RtlGrowFunctionTable 000000000362ADF0, 50
+5135.715:0124:0128:trace:unwind:RtlGrowFunctionTable 000000000362ADF0, 51
+5135.715:0124:0128:trace:unwind:RtlGrowFunctionTable 000000000362ADF0, 52
+5135.716:0124:0128:trace:unwind:RtlGrowFunctionTable 000000000362ADF0, 53
+5135.716:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000000A18960, 23
+5135.716:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000000A18960, 24
+5135.716:0124:0128:trace:unwind:RtlGrowFunctionTable 000000000362ADF0, 54
+5135.716:0124:0128:trace:unwind:RtlGrowFunctionTable 000000000362ADF0, 55
+5135.716:0124:0128:trace:unwind:RtlGrowFunctionTable 000000000362ADF0, 56
+5135.716:0124:0128:trace:unwind:RtlGrowFunctionTable 000000000362ADF0, 57
+5135.716:0124:0128:trace:unwind:RtlGrowFunctionTable 000000000362ADF0, 58
+5135.716:0124:0128:trace:unwind:RtlGrowFunctionTable 000000000362ADF0, 59
+5135.716:0124:0128:trace:unwind:RtlGrowFunctionTable 000000000362ADF0, 60
+5135.716:0124:0128:trace:unwind:RtlGrowFunctionTable 000000000362ADF0, 61
+5135.716:0124:0128:trace:unwind:RtlGrowFunctionTable 000000000362ADF0, 62
+5135.716:0124:0128:trace:unwind:RtlGrowFunctionTable 000000000362ADF0, 63
+5135.716:0124:0128:trace:unwind:RtlGrowFunctionTable 000000000362ADF0, 64
+5135.716:0124:0128:trace:unwind:RtlGrowFunctionTable 000000000362ADF0, 65
+5135.716:0124:0128:trace:unwind:RtlGrowFunctionTable 000000000362ADF0, 66
+5135.716:0124:0128:trace:unwind:RtlGrowFunctionTable 000000000362ADF0, 67
+5135.717:0124:0128:trace:unwind:RtlGrowFunctionTable 000000000362ADF0, 68
+5135.717:0124:0128:trace:unwind:RtlGrowFunctionTable 000000000362ADF0, 69
+5135.717:0124:0128:trace:unwind:RtlGrowFunctionTable 000000000362ADF0, 70
+5135.717:0124:0128:trace:unwind:RtlGrowFunctionTable 000000000362ADF0, 71
+5135.717:0144:0148:fixme:ntdll:find_reg_tz_info Can't find matching timezone information in the registry for bias 0, std (d/m/y): 22/03/2026, dlt (d/m/y): 15/02/2026
+5135.717:0124:0128:trace:unwind:RtlGrowFunctionTable 000000000362ADF0, 72
+5135.717:0124:0128:trace:unwind:RtlGrowFunctionTable 000000000362ADF0, 73
+5135.717:0124:0128:trace:unwind:RtlGrowFunctionTable 000000000362ADF0, 74
+5135.717:0124:0128:trace:unwind:RtlGrowFunctionTable 000000000362ADF0, 75
+5135.717:0124:0128:trace:unwind:RtlGrowFunctionTable 000000000362ADF0, 76
+5135.717:0124:0128:trace:unwind:RtlGrowFunctionTable 000000000362ADF0, 77
+5135.717:0124:0128:trace:unwind:RtlGrowFunctionTable 000000000362ADF0, 78
+5135.718:0124:0128:trace:unwind:RtlGrowFunctionTable 000000000362ADF0, 79
+5135.718:0124:0128:trace:unwind:RtlGrowFunctionTable 000000000362ADF0, 80
+5135.718:0124:0128:trace:unwind:RtlGrowFunctionTable 000000000362ADF0, 81
+5135.718:0124:0128:trace:unwind:RtlGrowFunctionTable 000000000362ADF0, 82
+5135.718:0124:0128:trace:unwind:RtlGrowFunctionTable 000000000362ADF0, 83
+5135.718:0124:0128:trace:unwind:RtlGrowFunctionTable 000000000362ADF0, 84
+5135.718:0124:0128:trace:unwind:RtlGrowFunctionTable 000000000362ADF0, 85
+5135.718:0124:0128:trace:unwind:RtlGrowFunctionTable 000000000362ADF0, 86
+5135.718:0124:0128:trace:unwind:RtlGrowFunctionTable 000000000362ADF0, 87
+5135.718:0124:0128:trace:unwind:RtlGrowFunctionTable 000000000362ADF0, 88
+5135.718:0124:0128:trace:unwind:RtlGrowFunctionTable 000000000362ADF0, 89
+5135.718:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000000A18960, 25
+5135.718:0124:0128:trace:unwind:RtlGrowFunctionTable 000000000362ADF0, 90
+5135.718:0124:0128:trace:unwind:RtlGrowFunctionTable 000000000362ADF0, 91
+5135.718:0124:0128:trace:unwind:RtlGrowFunctionTable 000000000362ADF0, 92
+5135.718:0124:0128:trace:unwind:RtlGrowFunctionTable 000000000362ADF0, 93
+5135.718:0124:0128:trace:unwind:RtlGrowFunctionTable 000000000362ADF0, 94
+5135.718:0124:0128:trace:unwind:RtlGrowFunctionTable 000000000362ADF0, 95
+5135.718:0124:0128:trace:unwind:RtlGrowFunctionTable 000000000362ADF0, 96
+5135.718:0124:0128:trace:unwind:RtlGrowFunctionTable 000000000362ADF0, 97
+5135.718:0124:0128:trace:unwind:RtlGrowFunctionTable 000000000362ADF0, 98
+5135.718:0124:0128:trace:unwind:RtlGrowFunctionTable 000000000362ADF0, 99
+5135.718:0124:0128:trace:unwind:RtlGrowFunctionTable 000000000362ADF0, 100
+5135.718:0124:0128:trace:unwind:RtlGrowFunctionTable 000000000362ADF0, 101
+5135.718:0124:0128:trace:unwind:RtlGrowFunctionTable 000000000362ADF0, 102
+5135.718:0124:0128:trace:unwind:RtlGrowFunctionTable 000000000362ADF0, 103
+5135.718:0124:0128:trace:unwind:RtlGrowFunctionTable 000000000362ADF0, 104
+5135.718:0124:0128:trace:unwind:RtlGrowFunctionTable 000000000362ADF0, 105
+5135.718:0124:0128:trace:unwind:RtlGrowFunctionTable 000000000362ADF0, 106
+5135.718:0124:0128:trace:unwind:RtlGrowFunctionTable 000000000362ADF0, 107
+5135.718:0124:0128:trace:unwind:RtlGrowFunctionTable 000000000362ADF0, 108
+5135.718:0124:0128:trace:unwind:RtlGrowFunctionTable 000000000362ADF0, 109
+5135.718:0124:0128:trace:unwind:RtlGrowFunctionTable 000000000362ADF0, 110
+5135.718:0124:0128:trace:unwind:RtlGrowFunctionTable 000000000362ADF0, 111
+5135.718:0124:0128:trace:unwind:RtlGrowFunctionTable 000000000362ADF0, 112
+5135.718:0124:0128:trace:unwind:RtlGrowFunctionTable 000000000362ADF0, 113
+5135.718:0124:0128:trace:unwind:RtlGrowFunctionTable 000000000362ADF0, 114
+5135.718:0124:0128:trace:unwind:RtlGrowFunctionTable 000000000362ADF0, 115
+5135.718:0124:0128:trace:unwind:RtlGrowFunctionTable 000000000362ADF0, 116
+5135.718:0124:0128:trace:unwind:RtlGrowFunctionTable 000000000362ADF0, 117
+5135.718:0124:0128:trace:unwind:RtlGrowFunctionTable 000000000362ADF0, 118
+5135.718:0124:0128:trace:unwind:RtlGrowFunctionTable 000000000362ADF0, 119
+5135.718:0124:0128:trace:unwind:RtlGrowFunctionTable 000000000362ADF0, 120
+5135.718:0124:0128:trace:unwind:RtlGrowFunctionTable 000000000362ADF0, 121
+5135.718:0124:0128:trace:unwind:RtlGrowFunctionTable 000000000362ADF0, 122
+5135.718:0124:0128:trace:unwind:RtlGrowFunctionTable 000000000362ADF0, 123
+5135.718:0124:0128:trace:unwind:RtlGrowFunctionTable 000000000362ADF0, 124
+5135.718:0124:0128:trace:unwind:RtlGrowFunctionTable 000000000362ADF0, 125
+5135.718:0124:0128:trace:unwind:RtlGrowFunctionTable 000000000362ADF0, 126
+5135.718:0124:0128:trace:unwind:RtlGrowFunctionTable 000000000362ADF0, 127
+5135.718:0124:0128:trace:unwind:RtlGrowFunctionTable 000000000362ADF0, 128
+5135.718:0124:0128:trace:unwind:RtlGrowFunctionTable 000000000362ADF0, 129
+5135.718:0124:0128:trace:unwind:RtlGrowFunctionTable 000000000362ADF0, 130
+5135.718:0124:0128:trace:unwind:RtlGrowFunctionTable 000000000362ADF0, 131
+5135.718:0124:0128:trace:unwind:RtlGrowFunctionTable 000000000362ADF0, 132
+5135.718:0124:0128:trace:unwind:RtlGrowFunctionTable 000000000362ADF0, 133
+5135.718:0124:0128:trace:unwind:RtlGrowFunctionTable 000000000362ADF0, 134
+5135.718:0124:0128:trace:unwind:RtlGrowFunctionTable 000000000362ADF0, 135
+5135.718:0124:0128:trace:unwind:RtlGrowFunctionTable 000000000362ADF0, 136
+5135.718:0124:0128:trace:unwind:RtlGrowFunctionTable 000000000362ADF0, 137
+5135.718:0124:0128:trace:unwind:RtlGrowFunctionTable 000000000362ADF0, 138
+5135.718:0124:0128:trace:unwind:RtlGrowFunctionTable 000000000362ADF0, 139
+5135.718:0124:0128:trace:unwind:RtlGrowFunctionTable 000000000362ADF0, 140
+5135.718:0124:0128:trace:unwind:RtlGrowFunctionTable 000000000362ADF0, 141
+5135.718:0124:0128:trace:unwind:RtlGrowFunctionTable 000000000362ADF0, 142
+5135.718:0124:0128:trace:unwind:RtlGrowFunctionTable 000000000362ADF0, 143
+5135.722:0124:0128:trace:unwind:RtlGrowFunctionTable 000000000362ADF0, 144
+5135.722:0124:0128:trace:unwind:RtlGrowFunctionTable 000000000362ADF0, 145
+5135.722:0124:0128:trace:unwind:RtlGrowFunctionTable 000000000362ADF0, 146
+5135.722:0124:0128:trace:unwind:RtlGrowFunctionTable 000000000362ADF0, 147
+5135.722:0124:0128:trace:unwind:RtlGrowFunctionTable 000000000362ADF0, 148
+5135.722:0124:0128:trace:unwind:RtlAddGrowableFunctionTable 000000000376D388, 0000000003778A90, 0, 513, 3f00000, 3f10000
+5135.722:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000003724070, 1
+5135.722:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000003724070, 2
+5135.722:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000003724070, 3
+5135.722:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000003724070, 4
+5135.722:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000003724070, 5
+5135.722:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000003724070, 6
+5135.722:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000003724070, 7
+5135.722:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000003724070, 8
+5135.722:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000003724070, 9
+5135.722:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000003724070, 10
+5135.722:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000003724070, 11
+5135.722:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000003724070, 12
+5135.722:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000003724070, 13
+5135.722:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000003724070, 14
+5135.722:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000003724070, 15
+5135.722:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000003724070, 16
+5135.722:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000003724070, 17
+5135.723:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000003724070, 18
+5135.723:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000003724070, 19
+5135.723:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000003724070, 20
+5135.723:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000003724070, 21
+5135.723:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000003724070, 22
+5135.723:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000003724070, 23
+5135.723:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000003724070, 24
+5135.723:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000003724070, 25
+5135.723:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000003724070, 26
+5135.723:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000003724070, 27
+5135.723:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000003724070, 28
+5135.723:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000003724070, 29
+5135.723:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000003724070, 30
+5135.723:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000003724070, 31
+5135.723:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000003724070, 32
+5135.723:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000003724070, 33
+5135.723:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000003724070, 34
+5135.723:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000003724070, 35
+5135.723:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000003724070, 36
+5135.723:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000003724070, 37
+5135.723:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000003724070, 38
+5135.723:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000003724070, 39
+5135.723:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000003724070, 40
+5135.723:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000003724070, 41
+5135.723:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000003724070, 42
+5135.723:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000003724070, 43
+5135.723:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000003724070, 44
+5135.723:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000003724070, 45
+5135.723:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000003724070, 46
+5135.723:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000003724070, 47
+5135.723:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000003724070, 48
+5135.723:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000003724070, 49
+5135.723:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000003724070, 50
+5135.723:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000003724070, 51
+5135.723:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000003724070, 52
+5135.723:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000003724070, 53
+5135.723:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000003724070, 54
+5135.723:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000003724070, 55
+5135.723:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000003724070, 56
+5135.723:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000003724070, 57
+5135.723:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000003724070, 58
+5135.723:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000003724070, 59
+5135.723:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000003724070, 60
+5135.723:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000003724070, 61
+5135.723:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000003724070, 62
+5135.723:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000003724070, 63
+5135.723:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000003724070, 64
+5135.723:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000003724070, 65
+5135.723:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000003724070, 66
+5135.723:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000003724070, 67
+5135.723:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000003724070, 68
+5135.723:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000003724070, 69
+5135.723:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000003724070, 70
+5135.723:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000003724070, 71
+5135.723:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000003724070, 72
+5135.723:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000003724070, 73
+5135.723:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000003724070, 74
+5135.723:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000003724070, 75
+5135.723:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000003724070, 76
+5135.723:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000003724070, 77
+5135.723:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000003724070, 78
+5135.723:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000003724070, 79
+5135.723:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000003724070, 80
+5135.723:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000003724070, 81
+5135.723:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000003724070, 82
+5135.723:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000003724070, 83
+5135.723:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000003724070, 84
+5135.723:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000003724070, 85
+System.ApplicationException: No displays available
+  at Xalia.Sdl.SdlSynchronizationContext.Init (SDL3.SDL+SDL_InitFlags flags) [0x00046] in <295968b5ae854da3893289dcfbfe889f>:0 
+  at Xalia.MainClass.Main (System.String[] argv) [0x0002b] in <295968b5ae854da3893289dcfbfe889f>:0 
+[ERROR] FATAL UNHANDLED EXCEPTION: System.ApplicationException: No displays available
+  at Xalia.Sdl.SdlSynchronizationContext.Init (SDL3.SDL+SDL_InitFlags flags) [0x00046] in <295968b5ae854da3893289dcfbfe889f>:0 
+5135.723:0124:0128:trace:mscoree:CorExitProcess (1)
+5135.723:0124:0128:trace:mscoree:CLRMetaHost_ExitProcess 1
+5135.723:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000003724070, 86
+5135.723:0124:0128:trace:unwind:RtlGrowFunctionTable 0000000003724070, 87
+5135.726:0124:0128:trace:mscoree:_CorDllMain (0000000003DC0000, 0, 0000000000000001)
+5135.726:0124:0128:trace:mscoree:_CorDllMain (0000000003DA0000, 0, 0000000000000001)
+5135.726:0124:0128:trace:mscoree:_CorDllMain (0000000010000000, 0, 0000000000000001)
+5135.726:0124:0128:trace:mscoree:_CorDllMain (0000000002F70000, 0, 0000000000000001)
+5135.726:0124:0128:trace:mscoree:DllMain (00006FFFFDC50000, 0, 0000000000000001)
+5135.742:0144:0148:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\imm32.dll" at 00006FFFFF300000: builtin
+5135.742:0144:0148:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\dbghelp.dll" at 00006FFFFDC00000: builtin
+5135.742:0144:0148:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\psapi.dll" at 00006FFFFDBE0000: builtin
+5135.742:0144:0148:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\version.dll" at 00006FFFFDEC0000: builtin
+5135.743:0144:0148:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\powrprof.dll" at 00006FFFFDBC0000: builtin
+5135.744:0144:0148:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\CRYPTSP.dll" at 00006FFFFDBA0000: builtin
+5135.744:0144:0148:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\bcrypt.dll" at 00006FFFFEBB0000: builtin
+5135.745:0144:0148:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\ncrypt.dll" at 00006FFFFDB80000: builtin
+5135.746:0144:0148:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\crypt32.dll" at 00006FFFFEBE0000: builtin
+5135.746:0144:0148:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\combase.dll" at 00006FFFFEFF0000: builtin
+5135.747:0144:0148:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\coml2.dll" at 00006FFFFEFC0000: builtin
+5135.747:0144:0148:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\ole32.dll" at 00006FFFFF060000: builtin
+5135.747:0144:0148:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\shcore.dll" at 00006FFFFE060000: builtin
+5135.747:0144:0148:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\shlwapi.dll" at 00006FFFFE090000: builtin
+5135.747:0144:0148:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\shell32.dll" at 00006FFFFE100000: builtin
+5135.747:0144:0148:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\cryptnet.dll" at 00006FFFFDB50000: builtin
+5135.747:0144:0148:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\imagehlp.dll" at 00006FFFFEB80000: builtin
+5135.748:0144:0148:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\wtsapi32.dll" at 00006FFFFDB30000: builtin
+5135.748:0144:0148:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\winsta.dll" at 00006FFFFDB10000: builtin
+5135.748:0144:0148:trace:seh:sigsys_handler SIGSYS, rax 0xa198c036, rip 0x6ffffc6a885f.
+5135.748:0144:0148:trace:seh:sigsys_handler SIGSYS, rax 0xe79f00d0, rip 0x6ffffc6e0047.
+5135.748:0144:0148:fixme:ntdll:NtRaiseHardError 0x50000018 4 0x3 0x51c810 0 0x51be40: stub
+5135.748:0144:0148:trace:seh:sigsys_handler SIGSYS, rax 0xd345002c, rip 0x6ffffc6e1a72.
+5135.767:0030:014c:fixme:winediag:loader_init wine-staging 11.0 is a testing version containing experimental patches.
+5135.767:0030:014c:fixme:winediag:loader_init Please mention your exact version when filing bug reports on winehq.org.
+5135.768:0030:014c:warn:threadname:NtSetInformationThread Thread renamed to L"wine_threadpool_worker"
+5135.768:0030:0150:warn:threadname:NtSetInformationThread Thread renamed to L"wine_threadpool_worker"
+5135.768:0030:0154:warn:threadname:NtSetInformationThread Thread renamed to L"wine_threadpool_worker"

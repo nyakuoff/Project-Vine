@@ -9,6 +9,10 @@ tests/env.sh          host matrix → logs/env-*.txt
 tests/route-a-wine-startup.sh [wine] [args]
                       Windows player in isolated prefix under Xvfb, 90 s cap,
                       WINEDEBUG=+seh,+loaddll,+process → logs/route-a-<wine>-<ts>.log
+tests/route-a-summary.sh [logs]
+                      one line per run: build, Hyperion fault offset, hard error, exit code
+tests/hard-error-text.sh (+ .gdb)
+                      gdb breakpoint on Wine's NtRaiseHardError; prints the message text
 tests/sober-stages.sh [log]
                       maps a Sober log onto lifecycle stages 1–10 (read-only, no secrets)
 logs/                 redacted evidence ($HOME → ~)

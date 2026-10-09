@@ -5,6 +5,12 @@ Route A fails inside Roblox's anti-tamper (RESEARCH §2), deterministically, bef
 **Rejected**: DXVK/prefix/dependency tuning. They cannot affect a failure that happens before any of those components load.
 **Revisit if**: Roblox officially re-allows Wine/Proton. `tests/route-a-wine-startup.sh` will show a different exit path.
 
+**Update (2026-10-09, after the user asked to try anti-cheat-oriented Proton builds)**:
+- Tested all 7 installed Wine/Proton builds, plus the full umu-run/Proton path with the EAC runtime. All of them hit the same Hyperion check.
+- Decoded the refusal: `"Wine is not supported."` / `"Version Error"`.
+- Proton's anti-cheat support only covers EAC and BattlEye, which Roblox does not use.
+- **Declined**: Wine forks or settings whose purpose is to hide Wine (e.g. hiding Wine exports, spoofing the environment, emulating Windows syscall numbers so Hyperion's probes pass). Against an explicit "Wine is not supported" policy, these are detection evasion, not compatibility work.
+
 ## D2 — Reject Route B for implementation (2026-10-09)
 The macOS client is not Hyperion-protected and has an OpenGL backend. But it hard-links ~30 Apple frameworks, and Darling lacks CoreML, has stub WebKit and GameController, and has experimental AppKit. The only recorded Roblox-on-Darling attempt failed during crypto init (#885). The estimated effort is a multi-person-year runtime project, with no upstream to land it in.
 **Deferred**: an empirical Darling run. It would only confirm the predicted dyld failure and costs a multi-hour Darling build (TODO #3).

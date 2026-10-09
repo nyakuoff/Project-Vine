@@ -35,9 +35,39 @@ Artifact: `RobloxPlayerBeta.exe` FileVersion `0, 742, 0, 7421053`, PE32+ x86-64 
 2. Code inside the Hyperion DLL executes **raw `syscall` instructions** with non-Linux, non-ntdll numbers (e.g. `rax 0x769c8036`), trapped by Wine's SIGSYS handler.
 3. `NtRaiseHardError 0x50000018` → process terminates with `0xC00000BB` (STATUS_NOT_SUPPORTED; Wine 11.19 shows exit 187 = low byte).
 
-Identical across Wine 11.19, GE-Proton11-1 (wine-staging 11.0) and Proton Experimental (wine 11.0); fault site is the same DLL offset `+0x8B885F` every run. Failure is deterministic and precedes graphics, audio, network and auth.
+**The hard error is an explicit refusal** [V]. Wine stubs `NtRaiseHardError`, so the dialog never appears. `tests/hard-error-text.sh` sets a gdb breakpoint on Wine's unix `NtRaiseHardError` and reads the arguments (passive; nothing is modified):
 
-**Interpretation**: this is Hyperion's environment check rejecting Wine, consistent with Roblox's documented March 2024 block [C: we did not decode the hard-error text]. It is not a missing dependency, prefix configuration, or DXVK issue. The only route past it is defeating anti-tamper, which is out of scope (see DECISIONS.md D1).
+```
+status=0x50000018 count=4 mask=0x3
+param[0] = 'Wine is not supported.'
+param[1] = 'Version Error'
+param[2] = 0x10  (MB_ICONERROR)
+```
+(`logs/route-a-hard-error-text-wine-11.19-20261009.txt`)
+
+**Every installed Wine/Proton build** [V] (`logs/route-a-summary-20261009.txt`):
+
+| Build | Wine base | Hyperion first syscall | Result |
+|---|---|---|---|
+| system wine | 11.19 | +0x8B885F | "Wine is not supported." → 0xC00000BB |
+| GE-Proton11-1 | 11.0 staging | +0x8B885F | same |
+| GE-Proton10-34 | 10.0 staging | +0x8B885F | same |
+| Proton 11.0 | 11.0 | +0x8B885F | same |
+| Proton Experimental | 11.0 | +0x8B885F | same |
+| Proton Hotfix | 11.0 | +0x8B885F | same |
+| UMU-Proton-10.0-4 | 10.0 | +0x8B885F | crashes *earlier*: the raw syscall is misrouted to `NtQueryObject` with a garbage info class, and the next one faults inside Wine's syscall dispatcher (0xC0000005). Not progress. |
+| GE-Proton11-1 via **umu-run** (full Proton script + Steam Linux Runtime container) + `PROTON_EAC_RUNTIME` | 11.0 staging | +0x8B885F | same refusal, exit 187 |
+
+**Anti-cheat Proton runtimes do not apply** [V]:
+- Proton's anti-cheat support is per-vendor. Proton's `ntdll.so` redirects `easyanticheat*.dll` or BattlEye DLLs to the Linux-bridged runtime given in `PROTON_EAC_RUNTIME`/`PROTON_BATTLEYE_RUNTIME`.
+- Roblox contains **zero** EAC or BattlEye references, and the EAC runtime was loaded 0 times in the umu run.
+- No umu/GE protonfixes entry exists for Roblox.
+- Hyperion has no Linux/Proton opt-in comparable to the ones EAC and BattlEye offer developers.
+
+**Interpretation**:
+- This is a deliberate Wine-detection policy implemented inside Hyperion. It matches Roblox's March 2024 block.
+- It is not a missing dependency, prefix configuration, Proton-version or DXVK issue, and no stock Wine/Proton build can avoid it.
+- Getting past it requires hiding Wine from Hyperion or patching Hyperion. That is defeating an anti-tamper control, which is out of scope (DECISIONS.md D1).
 
 ## 3. Route B — macOS client
 

@@ -9,7 +9,7 @@
 | GPU | AMD RX 7800 XT (RADV NAVI32), Intel UHD 770 |
 | Driver | Mesa 26.2.4, Vulkan 1.4.354, OpenGL 4.6 core |
 | Session | Wayland / KDE Plasma (Xvfb used for Route A tests) |
-| Wine | wine 11.19 (Arch); GE-Proton11-1 (staging 11.0); Proton Experimental (11.0) |
+| Wine | system wine 11.19; GE-Proton11-1, GE-Proton10-34, UMU-Proton-10.0-4, Proton 11.0, Proton Experimental, Proton Hotfix; umu-launcher 1.4.3; Proton EasyAntiCheat Runtime v2 |
 | Sober / Vinegar | 1.8.0 / 1.9.4 (Flatpak) |
 
 ## Client artifacts
@@ -25,7 +25,7 @@
 | | A: Windows + Wine/Proton | B: macOS + Darling-class runtime | C: Android + Sober |
 |---|---|---|---|
 | Feasibility | **Blocked** by design | Theoretically possible, impractical | **Works** |
-| Blocker | Hyperion terminates the process under Wine (0xC00000BB) | ~1.6k symbols / 165 classes / 1.3k selectors of Apple API; CoreML/WebKit missing in Darling | Remote-attestation games (Error 318) |
+| Blocker | Hyperion detects Wine and exits: "Wine is not supported." | ~1.6k symbols / 165 classes / 1.3k selectors of Apple API; CoreML/WebKit missing in Darling | Remote-attestation games (Error 318) |
 | Complexity to progress | Requires defeating anti-tamper — out of scope | Multi-person-year runtime work | None (install) |
 | Tooling | Wine, Proton, DXVK — all mature | Darling (experimental GUI), darling-metal (early) | Sober 1.8.0 |
 | Evidence | `logs/route-a-*.log` (3 Wine builds) | Static analysis (RESEARCH §3), Darling #885 | `logs/sober-stages-*.txt`, Sober docs |
@@ -38,7 +38,7 @@
 | 2 | Launcher / args | n/a — player started directly | not run | PASS |
 | 3 | Runtime init | PASS (prefix, wineserver) | not run (no runtime installed) | PASS |
 | 4 | Executable load / process creation | PASS (exe + Hyperion DLL mapped) | predicted FAIL at dyld (CoreML) | PASS |
-| 5 | OS services | **FAIL** — Hyperion direct syscalls → `NtRaiseHardError 0x50000018` → exit 0xC00000BB, <5 s | — | PASS |
+| 5 | OS services | **FAIL** — Hyperion raises `"Wine is not supported."` (`NtRaiseHardError 0x50000018`) → exit 0xC00000BB, <5 s. Same on all 7 Wine/Proton builds and on umu-run with the EAC runtime | — | PASS |
 | 6 | Graphics / audio | not reached | — | PASS (Vulkan, RADV) |
 | 7 | Authentication | not reached | — | PASS* |
 | 8 | App init | not reached | — | PASS* |
