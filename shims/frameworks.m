@@ -346,8 +346,10 @@ static void *vine_ivar(id o, const char *name) {
     Ivar iv = class_getInstanceVariable(object_getClass(o), name);
     return iv ? *(void **)((char *)o + ivar_getOffset(iv)) : 0;
 }
+static void vine_event_trace_install(void);
 @implementation NSOpenGLContext (VineReattach)
 - (void)flushBuffer {
+    vine_event_trace_install();
     static void *(*get_surface)(int);
     static int looked;
     if (!looked) {
@@ -461,4 +463,142 @@ __attribute__((constructor)) static void vine_quartzcore_init(void) {
     if (m) orig_renderLayer = (void (*)(id, SEL, id))method_setImplementation(m, (IMP)vine_renderLayer);
     else dprintf(2, "vine: CALayerContext renderLayer: not found\n");
 }
+#endif
+
+#ifdef FW_AppKit
+// VINE_TRACE_EVENTS=1: log NSEvent dispatch (type, window location) through NSApplication, NSWindow
+// and Roblox's view, to see where input stops. Diagnostic only.
+@interface NSEvent : NSObject - (unsigned long)type; - (NSPoint)locationInWindow; - (id)window; + (NSPoint)mouseLocation;
+- (long)buttonNumber; - (long)clickCount; - (double)timestamp; - (long)windowNumber; @end
+@interface NSProcessInfo : NSObject + (id)processInfo; - (double)systemUptime; @end
+@interface NSObject (VineFrame) - (NSRect)frame; @end
+@interface NSObject (VineFocus) - (BOOL)isKeyWindow; - (BOOL)isActive; @end
+extern id NSApp;
+#define VINE_EV_TRACE(slot) \
+    static void (*orig_ev_##slot)(id, SEL, id); \
+    static void trace_ev_##slot(id self, SEL _cmd, id e) { \
+        unsigned long t = [e type]; \
+        static int moves; \
+        if ((t == 5 || t == 6) && moves++ > 20) ; else if (t != 27 && t != 22) {   /* first 20 moves, no periodic/scroll */ \
+            NSPoint p = [e locationInWindow]; \
+            dprintf(2, "vine-ev: -[%s %s] type=%lu at %.0f,%.0f key=%d active=%d\n", class_getName(object_getClass(self)), sel_getName(_cmd), t, p.x, p.y, \
+                    (int)(BOOL)(long)[[e window] isKeyWindow], (int)(BOOL)(long)[NSApp isActive]); \
+            if (t == 1 || t == 2) { NSPoint m = [NSEvent mouseLocation]; NSRect f = [[e window] frame]; \
+                dprintf(2, "vine-ev:   mouseLocation=%.0f,%.0f window.frame=%.0f,%.0f %.0fx%.0f buttonNumber=%ld clickCount=%ld timestamp=%.3f uptime=%.3f windowNumber=%ld\n", \
+                        m.x, m.y, f.origin.x, f.origin.y, f.size.width, f.size.height, [e buttonNumber], [e clickCount], [e timestamp], \
+                        [[NSProcessInfo processInfo] systemUptime], [e windowNumber]); } } \
+        orig_ev_##slot(self, _cmd, e); }
+VINE_EV_TRACE(0) VINE_EV_TRACE(1) VINE_EV_TRACE(2) VINE_EV_TRACE(3) VINE_EV_TRACE(4) VINE_EV_TRACE(5)
+extern id NSApp;
+// Installed on the first presented frame (from -flushBuffer): by then the app's own classes are
+// loaded and NSApp exists, so the real application subclass is hooked.
+static void vine_event_trace_install(void) {
+    static int done;
+    if (done || !getenv("VINE_TRACE_EVENTS")) return;
+    done = 1;
+    const char *appcls = NSApp ? class_getName(object_getClass(NSApp)) : "NSApplication";
+    dprintf(2, "vine-ev: installing (app class %s)\n", appcls);
+    struct { const char *cls, *sel; IMP repl; void **orig; } t[] = {
+        {appcls, "sendEvent:", (IMP)trace_ev_0, (void **)&orig_ev_0},
+        {"NSWindow", "sendEvent:", (IMP)trace_ev_1, (void **)&orig_ev_1},
+        {"RobloxOgreView", "mouseDown:", (IMP)trace_ev_2, (void **)&orig_ev_2},
+        {"RobloxOgreView", "mouseUp:", (IMP)trace_ev_3, (void **)&orig_ev_3},
+        {"NSView", "mouseDown:", (IMP)trace_ev_4, (void **)&orig_ev_4},
+        {"RobloxOgreView", "mouseMoved:", (IMP)trace_ev_5, (void **)&orig_ev_5},
+    };
+    for (unsigned i = 0; i < sizeof t / sizeof *t; i++) {
+        Class c = objc_getClass(t[i].cls);
+        Method m = c ? class_getInstanceMethod(c, sel_registerName(t[i].sel)) : 0;
+        if (m) *t[i].orig = (void *)method_setImplementation(m, t[i].repl);
+        else dprintf(2, "vine-ev: %s %s not found\n", t[i].cls, t[i].sel);
+    }
+}
+#endif
+
+#ifdef FW_AppKit
+// Darling (Cocotron) only turns X11 pointer motion into NSMouseMoved, and only delivers
+// NSTrackingMouseMoved tracking areas, when the window's acceptsMouseMovedEvents is set. On macOS a
+// tracking area with NSTrackingMouseMoved receives mouseMoved: regardless; Roblox relies on that, so
+// it never saw pointer motion and its UI could not hit-test clicks (buttons ignored).
+// ponytail: every window accepts moves; restrict to windows with mouse-moved tracking areas if the
+// extra events ever matter.
+@implementation NSWindow (VineMouseMoved)
+- (BOOL)acceptsMouseMovedEvents { return 1; }
+@end
+#endif
+
+#ifdef FW_CoreGraphics
+// CGAssociateMouseAndMouseCursorPosition(connected): true = normal (mouse moves the cursor),
+// false = pointer lock. Darling calls [display grabMouse:connected] -- inverted -- on every call;
+// Roblox calls it with true every frame, so the pointer was grabbed and warped to the window centre
+// ~150x/s (with XSync + a log line each time): the cursor froze on the desktop, clicks "froze".
+// Correct sense, and only act when the state changes.
+Class objc_getClass(const char *);
+@interface NSObject (VineDisplay) + (id)currentDisplay; - (void)grabMouse:(BOOL)grab; @end
+int CGAssociateMouseAndMouseCursorPosition(unsigned int connected) {
+    static int state = 1;   // associated
+    connected = connected != 0;
+    if ((int)connected == state) return 0;
+    state = connected;
+    id display = [objc_getClass("NSDisplay") currentDisplay];
+    if (!display) return 1001;   // kCGErrorInvalidConnection
+    [display grabMouse:!connected];
+    return 0;
+}
+#endif
+
+#ifdef FW_AppKit
+// NSEvent fixes (Darling/Cocotron vs macOS):
+//  - buttonNumber is the X11 button (left=1, middle=2, right=3, back/forward=8/9); macOS uses
+//    left=0, right=1, middle=2, then 3, 4...
+//  - timestamp is CFAbsoluteTime (seconds since 2001); macOS uses seconds since boot, the same
+//    clock as -[NSProcessInfo systemUptime]. Roblox drops events whose times don't line up.
+double CFAbsoluteTimeGetCurrent(void);
+uint64_t mach_absolute_time(void);
+typedef struct { uint32_t numer, denom; } vine_timebase_t;
+int mach_timebase_info(vine_timebase_t *);
+static double vine_uptime(void) {   // seconds since boot (mach_absolute_time is CLOCK_MONOTONIC on Darling)
+    static vine_timebase_t tb;
+    if (!tb.denom) mach_timebase_info(&tb);
+    return (double)mach_absolute_time() * tb.numer / tb.denom / 1e9;
+}
+static long vine_mac_button(long b) {
+    switch (b) { case 1: return 0; case 3: return 1; case 2: return 2; case 8: return 3; case 9: return 4; default: return b; }
+}
+// NSEvent and its concrete NSEvent_mouse each implement buttonNumber.
+static long (*orig_buttonNumber)(id, SEL), (*orig_mouse_buttonNumber)(id, SEL);
+static long vine_buttonNumber(id self, SEL _cmd) { return vine_mac_button(orig_buttonNumber(self, _cmd)); }
+static long vine_mouse_buttonNumber(id self, SEL _cmd) { return vine_mac_button(orig_mouse_buttonNumber(self, _cmd)); }
+static double (*orig_timestamp)(id, SEL);
+static double vine_timestamp(id self, SEL _cmd) {
+    double t = orig_timestamp(self, _cmd);
+    return t > 1e8 ? t - (CFAbsoluteTimeGetCurrent() - vine_uptime()) : t;   // only re-base absolute times
+}
+__attribute__((constructor)) static void vine_nsevent_fixes(void) {
+    Class c = objc_getClass("NSEvent");
+    Method m;
+    if ((m = class_getInstanceMethod(c, sel_registerName("buttonNumber"))))
+        orig_buttonNumber = (long (*)(id, SEL))method_setImplementation(m, (IMP)vine_buttonNumber);
+    Class cm = objc_getClass("NSEvent_mouse");
+    if (cm && (m = class_getInstanceMethod(cm, sel_registerName("buttonNumber"))) && m != class_getInstanceMethod(c, sel_registerName("buttonNumber")))
+        orig_mouse_buttonNumber = (long (*)(id, SEL))method_setImplementation(m, (IMP)vine_mouse_buttonNumber);
+    if ((m = class_getInstanceMethod(c, sel_registerName("timestamp"))))
+        orig_timestamp = (double (*)(id, SEL))method_setImplementation(m, (IMP)vine_timestamp);
+}
+#endif
+
+#ifdef FW_Foundation
+// -[NSProcessInfo systemUptime] returns wall-clock time (seconds since 1970) in Darling; macOS returns
+// seconds since boot, which event timestamps are measured against.
+uint64_t mach_absolute_time(void);
+typedef struct { uint32_t numer, denom; } vine_timebase_t;
+int mach_timebase_info(vine_timebase_t *);
+@interface NSProcessInfo : NSObject @end
+@implementation NSProcessInfo (VineUptime)
+- (double)systemUptime {
+    static vine_timebase_t tb;
+    if (!tb.denom) mach_timebase_info(&tb);
+    return (double)mach_absolute_time() * tb.numer / tb.denom / 1e9;
+}
+@end
 #endif

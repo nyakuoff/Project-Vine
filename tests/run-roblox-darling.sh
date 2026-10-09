@@ -19,11 +19,10 @@ mkdir -p /tmp/vine-mesa-cache "$ROOT/logs/screens"
 XVFB=""
 if [ -z "${VINE_DISPLAY:-}" ]; then
   for n in $(seq 90 99); do [ -e /tmp/.X11-unix/X$n ] || { DISP=:$n; break; }; done
-  # No MIT-SHM on the private test server: Darling processes have their own SysV IPC namespace, so
-  # the server could not attach Mesa's shared-memory frames (real GPU displays present via DRI3).
-  Xvfb "$DISP" -screen 0 1280x720x24 -nolisten tcp -extension MIT-SHM >/dev/null 2>&1 & XVFB=$!
+  Xvfb "$DISP" -screen 0 1280x720x24 -nolisten tcp >/dev/null 2>&1 & XVFB=$!
   sleep 1
 else DISP=$VINE_DISPLAY; fi
+echo "$DISP" > "$ROOT/.work/last-display"   # for helpers (x11-click.py, screenshots)
 
 ENV=(MESA_SHADER_CACHE_DIR=/tmp/vine-mesa-cache DISPLAY="$DISP" VINE_OBJC_LENIENT="${VINE_OBJC_LENIENT:-1}")
 [ -n "${VINE_ENV:-}" ] && ENV+=($VINE_ENV)   # extra env, e.g. VINE_ENV="GALLIUM_HUD=fps"

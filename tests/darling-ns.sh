@@ -26,9 +26,11 @@ if [ "${1:-}" = --stop ]; then
     H=$(holder); NS=$(readlink /proc/$H/ns/user)
     [ -n "$NS" ] && [ "$NS" != "$(readlink /proc/self/ns/user)" ] || { echo "refusing: bad namespace" >&2; exit 1; }
     timeout 20 nsenter --target "$H" --user --mount --preserve-credentials -- /usr/bin/darling shutdown >/dev/null 2>&1 || true
-    # anything left in our user namespace is ours (wedged container, orphaned Darwin processes)
-    for p in /proc/[0-9]*; do [ "$(readlink $p/ns/user 2>/dev/null)" = "$NS" ] && kill -9 "${p#/proc/}" 2>/dev/null; done
+    # anything left in our user namespace or one nested in it is ours (wedged container, launchd,
+    # orphaned Darwin processes); ns-procs.py never returns processes of the caller's namespace
+    for p in $(python3 "$ROOT/tests/ns-procs.py" "$NS" --prefix "$DPREFIX"); do kill -9 "$p" 2>/dev/null; done
   fi
+  for p in $(python3 "$ROOT/tests/ns-procs.py" none --prefix "$DPREFIX"); do kill -9 "$p" 2>/dev/null; done
   rm -f "$PIDF" "$DPREFIX/.init.pid" "$DPREFIX/.darlingserver.sock"; exit 0   # stale ones make darling join a dead container
 fi
 
@@ -43,6 +45,10 @@ if [ -z "$(holder)" ]; then
   sleep 0.5
   # Boot the container with null stdio: darlingserver/launchd inherit the first client's fds and
   # would otherwise hold the caller's pipe open forever.
-  enter /usr/bin/darling shell true </dev/null >/dev/null 2>&1 || true
+  # keep-ipc.so: the container keeps the host SysV IPC namespace (X11 MIT-SHM; shims/host/keep-ipc.c).
+  # (LD_PRELOAD splits on spaces and the project path may contain one: use a per-user runtime path)
+  KEEP_IPC="${XDG_RUNTIME_DIR:-/tmp}/vine-keep-ipc.so"
+  [ "$KEEP_IPC" -nt "$ROOT/shims/host/keep-ipc.c" ] || gcc -shared -fPIC -O2 -o "$KEEP_IPC" "$ROOT/shims/host/keep-ipc.c" -ldl
+  enter env LD_PRELOAD="$KEEP_IPC" /usr/bin/darling shell true </dev/null >/dev/null 2>&1 || true
 fi
 enter /usr/bin/darling "$@"
