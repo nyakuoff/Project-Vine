@@ -17,6 +17,116 @@ VINE_FUNC(uint8_t, LMGetKbdLast, 0)
 
 #ifdef FW_CoreAudio
 uint64_t AudioConvertHostTimeToNanos(uint64_t t) { return t; }  // ponytail: assumes 1:1 mach timebase, as on Darling/x86
+// Darling's AudioGetCurrentHostTime is a stub returning 0; FMOD times its mixer with it.
+uint64_t mach_absolute_time(void);
+uint64_t AudioGetCurrentHostTime(void) { return mach_absolute_time(); }
+
+// HAL properties FMOD's CoreAudio output needs before it opens a device (finding credited to
+// MacOBlox's audio notes). Darling's PulseAudio devices answer 'who?' for the device's stream list,
+// buffer frame size, latency, transport and clock, and have no stream objects at all, so FMOD
+// failed with FMOD_ERR_OUTPUT_INIT (Roblox: no sound). Each device that has channels in a scope
+// gets one stream object (id VINE_STREAM|scope bit|device) describing the device's real format;
+// Darling's own answers always win. Listener registration fails in Darling and FMOD treats that
+// as a failed init: Darling's devices never change, so listeners are accepted and never called.
+typedef uint32_t AudioObjectID;
+typedef struct { uint32_t mSelector, mScope, mElement; } VineAOPA;
+typedef struct { double rate; uint32_t formatID, flags, bytesPerPacket, framesPerPacket, bytesPerFrame, channels, bits, reserved; } VineFmt;
+#define FCC(s) ((uint32_t)(s)[0] << 24 | (uint32_t)(s)[1] << 16 | (uint32_t)(s)[2] << 8 | (uint32_t)(s)[3])
+#define VINE_WHO 0x77686f3f   /* 'who?' kAudioHardwareUnknownPropertyError */
+#define VINE_STREAM 0x56000000u
+#define VINE_STREAM_INPUT 0x10000u
+#define CA_IMG "/System/Library/Frameworks/CoreAudio.framework/Versions/A/CoreAudio.darling"
+#define CA_ORIG(type, name, ...) static type (*o)(__VA_ARGS__); if (!o) o = (type (*)(__VA_ARGS__))vine_orig(CA_IMG, name)
+void *vine_orig(const char *image, const char *sym);
+static uint32_t vine_frames[8];   // buffer frame size per device id (Darling: 8192-byte buffer)
+
+static OSStatus ca_get(AudioObjectID obj, const VineAOPA *a, uint32_t qs, const void *q, uint32_t *size, void *out) {
+    CA_ORIG(OSStatus, "AudioObjectGetPropertyData", AudioObjectID, const VineAOPA *, uint32_t, const void *, uint32_t *, void *);
+    return o ? o(obj, a, qs, q, size, out) : VINE_WHO;
+}
+static uint32_t channels(AudioObjectID dev, uint32_t scope) {   // from 'slay' (an AudioBufferList)
+    uint32_t abl[16] = {0}, size = sizeof abl, n = 0;
+    VineAOPA a = {FCC("slay"), scope, 0};
+    if (ca_get(dev, &a, 0, 0, &size, abl) || size < 4) return 0;
+    for (uint32_t i = 0; i < abl[0] && 2 + 4 * i < 16; i++) n += abl[2 + 4 * i];   // {count, pad, {channels, bytes, data}...}
+    return n;
+}
+static VineFmt device_format(AudioObjectID dev, uint32_t ch) {
+    VineFmt f = {0};
+    uint32_t size = sizeof f;
+    VineAOPA a = {FCC("sfmt"), FCC("glob"), 0};
+    ca_get(dev, &a, 0, 0, &size, &f);
+    if (!f.rate) f.rate = 44100;
+    f.formatID = FCC("lpcm"); f.flags = 1 | 8;   // float, packed (interleaved): what Darling's stream plays
+    f.bits = 32; f.channels = ch; f.framesPerPacket = 1;
+    f.bytesPerFrame = f.bytesPerPacket = ch * 4;   // Darling reports bytes per second here
+    return f;
+}
+static int put(void *out, uint32_t *size, const void *v, uint32_t n) {
+    if (out && *size < n) return 0x2173697a;   // '!siz' kAudioHardwareBadPropertySizeError
+    if (out) memcpy(out, v, n);
+    *size = n;
+    return 0;
+}
+// Answer a query Darling could not; returns VINE_WHO when there is nothing to add.
+static OSStatus vine_ca_answer(AudioObjectID obj, const VineAOPA *a, uint32_t *size, void *out) {
+    uint32_t sel = a->mSelector, u = 0;
+    if ((obj & 0xff000000u) == VINE_STREAM) {   // our stream objects
+        AudioObjectID dev = obj & 0xff;
+        int input = !!(obj & VINE_STREAM_INPUT);
+        VineFmt f = device_format(dev, channels(dev, input ? FCC("inpt") : FCC("outp")));
+        if (sel == FCC("sfmt") || sel == FCC("pft ")) return put(out, size, &f, sizeof f);
+        if (sel == FCC("sfma") || sel == FCC("pfta")) {   // AudioStreamRangedDescription
+            struct { VineFmt f; double lo, hi; } r = {f, f.rate, f.rate};
+            return put(out, size, &r, sizeof r);
+        }
+        if (sel == FCC("sdir")) u = input;
+        else if (sel == FCC("schn") || sel == FCC("sact")) u = 1;
+        else if (sel == FCC("term")) u = input ? FCC("micr") : FCC("spkr");
+        else if (sel != FCC("ltnc")) return VINE_WHO;
+        return put(out, size, &u, 4);
+    }
+    if (obj < 2 || obj >= 8) return VINE_WHO;   // devices only (Darling: 2 output, 3 input, 4 system output)
+    if (sel == FCC("stm#")) {
+        AudioObjectID ids[2]; uint32_t n = 0;
+        if (a->mScope != FCC("inpt") && channels(obj, FCC("outp"))) ids[n++] = VINE_STREAM | obj;
+        if (a->mScope != FCC("outp") && channels(obj, FCC("inpt"))) ids[n++] = VINE_STREAM | VINE_STREAM_INPUT | obj;
+        return put(out, size, ids, n * 4);
+    }
+    if (sel == FCC("fsiz")) { u = vine_frames[obj] ? vine_frames[obj] : 8192 / 8; return put(out, size, &u, 4); }
+    if (sel == FCC("fsz#")) { double r[2] = {64, 8192}; return put(out, size, r, sizeof r); }
+    if (sel == FCC("tran")) { u = FCC("bltn"); return put(out, size, &u, 4); }
+    if (sel == FCC("ltnc") || sel == FCC("saft") || sel == FCC("clck")) return put(out, size, &u, 4);
+    return VINE_WHO;
+}
+
+OSStatus AudioObjectGetPropertyData(AudioObjectID obj, const VineAOPA *a, uint32_t qs, const void *q, uint32_t *size, void *out) {
+    OSStatus st = (obj & 0xff000000u) == VINE_STREAM ? VINE_WHO : ca_get(obj, a, qs, q, size, out);
+    return st == VINE_WHO && a && size ? vine_ca_answer(obj, a, size, out) : st;
+}
+OSStatus AudioObjectGetPropertyDataSize(AudioObjectID obj, const VineAOPA *a, uint32_t qs, const void *q, uint32_t *size) {
+    CA_ORIG(OSStatus, "AudioObjectGetPropertyDataSize", AudioObjectID, const VineAOPA *, uint32_t, const void *, uint32_t *);
+    OSStatus st = (obj & 0xff000000u) == VINE_STREAM || !o ? VINE_WHO : o(obj, a, qs, q, size);
+    return st == VINE_WHO && a && size ? vine_ca_answer(obj, a, size, 0) : st;
+}
+unsigned char AudioObjectHasProperty(AudioObjectID obj, const VineAOPA *a) {
+    uint32_t size = 0;
+    return AudioObjectGetPropertyDataSize(obj, a, 0, 0, &size) == 0;
+}
+OSStatus AudioObjectSetPropertyData(AudioObjectID obj, const VineAOPA *a, uint32_t qs, const void *q, uint32_t n, const void *v) {
+    CA_ORIG(OSStatus, "AudioObjectSetPropertyData", AudioObjectID, const VineAOPA *, uint32_t, const void *, uint32_t, const void *);
+    if (a && v && n == 4 && a->mSelector == FCC("fsiz") && obj >= 2 && obj < 8) {   // frames -> Darling's byte size
+        uint32_t bytes = *(const uint32_t *)v * 8;
+        VineAOPA b = {FCC("bsiz"), a->mScope, 0};
+        OSStatus st = o ? o(obj, &b, 0, 0, 4, &bytes) : VINE_WHO;
+        if (!st) vine_frames[obj] = *(const uint32_t *)v;
+        return st;
+    }
+    return (obj & 0xff000000u) == VINE_STREAM ? 0x6e6f7065 /* 'nope' */ : o ? o(obj, a, qs, q, n, v) : VINE_WHO;
+}
+typedef OSStatus (*VineListener)(AudioObjectID, uint32_t, const VineAOPA *, void *);
+OSStatus AudioObjectAddPropertyListener(AudioObjectID obj, const VineAOPA *a, VineListener l, void *c) { return 0; }
+OSStatus AudioObjectRemovePropertyListener(AudioObjectID obj, const VineAOPA *a, VineListener l, void *c) { return 0; }
 #endif
 
 #ifdef FW_CoreGraphics
@@ -51,6 +161,21 @@ VINE_STR(kCVPixelBufferCGImageCompatibilityKey)
 VINE_STR(NSProcessInfoPowerStateDidChangeNotification)
 VINE_STR(NSProcessInfoThermalStateDidChangeNotification)
 VINE_CLASS(NSBackgroundActivityScheduler)
+
+// Thread stacks no smaller than Linux's 8 MiB default (finding credited to MacOBlox). Under Darling
+// every system call runs host RPC code built for Linux-sized stacks; FMOD's audio threads ask for
+// small stacks that are enough on macOS and overflowed in that code seconds after game sound started.
+// Only reserves address space. Darling's libpthread setter (pthread.c), with the floor applied.
+int vine_detour(const char *image, const char *sym, void *repl);
+struct vine_pthread_attr { long sig; size_t guardsize; void *stackaddr; size_t stacksize; };
+static int vine_attr_setstacksize(struct vine_pthread_attr *attr, size_t size) {
+    if (attr->sig != 0x54484441 /* 'THDA' */ || (size & 4095) || size < 16384) return 22;   // EINVAL
+    attr->stacksize = size < (8u << 20) ? (8u << 20) : size;
+    return 0;
+}
+__attribute__((constructor)) static void vine_thread_stacks(void) {
+    vine_detour("/usr/lib/system/libsystem_pthread.dylib", "pthread_attr_setstacksize", (void *)vine_attr_setstacksize);
+}
 #endif
 
 #ifdef FW_GameController
@@ -773,6 +898,30 @@ OSStatus AudioComponentInstanceNew(void *component, void **out) {
     }
     return st;
 }
+
+// A disposed AudioUnit must fail calls with badComponentInstance, as on macOS. Darling's
+// AudioComponentManager::isOurInstance only tests the handle's high bit, so every AudioUnit call on
+// a disposed unit (Roblox's voice code stops its unit after disposing it) dereferenced the NULL
+// interface it found. Now an instance is ours only while the manager still has it; other handles
+// take Darling's Component Manager path, which rejects them.
+#define AT_IMG "AudioToolbox.framework/Versions/A/AudioToolbox.darling"
+static void *(*at_manager)(void);
+static void *(*at_interface)(void *self, void *instance);
+static BOOL vine_is_our_instance(void *instance) {
+    return ((uint32_t)(uintptr_t)instance & 0x80000000u) && at_interface(at_manager(), instance);
+}
+static BOOL vine_is_our_component(void *component) {   // Darling's overload for components forwarded to
+    return ((uint32_t)(uintptr_t)component & 0x80000000u) != 0;   // the instance check: keep the bit test
+}
+__attribute__((constructor)) static void vine_audio_instances(void) {
+    void *check = vine_local_symbol(AT_IMG, "__ZN21AudioComponentManager13isOurInstanceEP23ComponentInstanceRecord");
+    at_manager = vine_local_symbol(AT_IMG, "__ZN21AudioComponentManager8instanceEv");
+    at_interface = vine_local_symbol(AT_IMG, "__ZN21AudioComponentManager17instanceInterfaceEP23ComponentInstanceRecord");
+    void *comp = vine_local_symbol(AT_IMG, "__ZN21AudioComponentManager13isOurInstanceEP20OpaqueAudioComponent");
+    if (!check || !comp || !at_manager || !at_interface) return;
+    vine_detour_addr(comp, (void *)vine_is_our_component);
+    vine_detour_addr(check, (void *)vine_is_our_instance);
+}
 #endif
 
 #ifdef FW_AppKit
@@ -944,5 +1093,119 @@ __attribute__((constructor)) static void vine_cookie_persistence(void) {
         orig_deleteCookie = (void (*)(id, SEL, id))method_setImplementation(m, (IMP)vine_deleteCookie);
     if ((m = class_getInstanceMethod(c, sel_registerName("setCookies:forURL:mainDocumentURL:"))))
         orig_setCookiesForURL = (void (*)(id, SEL, id, id, id))method_setImplementation(m, (IMP)vine_setCookiesForURL);
+}
+#endif
+
+#ifdef FW_Security
+// Keychain generic passwords that survive a restart (finding credited to MacOBlox). Roblox keeps its
+// login as a generic password item (kSecClassGenericPassword, keyed by kSecAttrAccount). Darling's
+// SecItem* wait for a security daemon that does not run here, so the login was never stored and every
+// launch started signed out. Generic password items with an account live in
+// ~/Library/Keychains/Vine-GenericPasswords.plist (directory 0700, file 0600, atomic rewrite): an
+// array of {svce, acct, v_Data}. Other item classes still go to Darling.
+// ponytail: whole-file rewrite per change; fine for the handful of items an app keeps.
+extern CFStringRef kSecClass, kSecClassGenericPassword, kSecAttrService, kSecAttrAccount, kSecValueData,
+    kSecReturnData, kSecReturnAttributes;
+int mkdir(const char *, unsigned short); int chmod(const char *, unsigned short);
+void *vine_orig(const char *image, const char *sym);
+#define SEC_IMG "/System/Library/Frameworks/Security.framework/Versions/A/Security.darling"
+@interface NSObject (VineKeychain)
++ (id)arrayWithContentsOfFile:(id)p; + (id)stringWithFormat:(id)f, ...; + (id)data; + (id)dictionary;
+- (BOOL)writeToFile:(id)p atomically:(BOOL)a; - (id)mutableCopy; - (BOOL)boolValue;
+- (void)removeObjectAtIndex:(unsigned long)i; - (void)addObject:(id)o; - (void)setObject:(id)o forKey:(id)k;
+- (void)removeObjectForKey:(id)k; - (id)retain; - (const char *)UTF8String; - (unsigned long)count;
+- (id)objectAtIndex:(unsigned long)i; - (id)objectForKey:(id)k; - (BOOL)isEqual:(id)o;
+@end
+
+static id vine_kc_file(void) {
+    const char *home = getenv("HOME");
+    if (!home) return 0;
+    id dir = [objc_getClass("NSString") stringWithFormat:@"%s/Library/Keychains", home];
+    mkdir([dir UTF8String], 0700);
+    return [objc_getClass("NSString") stringWithFormat:@"%@/Vine-GenericPasswords.plist", dir];
+}
+static BOOL vine_kc_ours(id q) {   // generic password with an account: handled here
+    return q && [[q objectForKey:(id)kSecClass] isEqual:(id)kSecClassGenericPassword] && [q objectForKey:(id)kSecAttrAccount];
+}
+static BOOL vine_kc_match(id item, id q) {
+    id keys[] = {(id)kSecAttrAccount, (id)kSecAttrService};
+    for (int i = 0; i < 2; i++) {
+        id want = [q objectForKey:keys[i]];
+        if (want && ![want isEqual:[item objectForKey:keys[i]]]) return 0;
+    }
+    return 1;
+}
+static id vine_kc_load(void) {
+    id list = [objc_getClass("NSMutableArray") arrayWithContentsOfFile:vine_kc_file()];
+    return list ? list : [objc_getClass("NSMutableArray") array];
+}
+static int vine_kc_save(id list) {
+    id path = vine_kc_file();
+    if (!path || ![list writeToFile:path atomically:1]) return -36;   // errSecIO
+    chmod([path UTF8String], 0600);
+    return 0;
+}
+
+int SecItemAdd(id attrs, id *result) {
+    static int (*orig)(id, id *);
+    if (!vine_kc_ours(attrs)) {
+        if (!orig) orig = (int (*)(id, id *))vine_orig(SEC_IMG, "SecItemAdd");
+        return orig ? orig(attrs, result) : -4;   // errSecUnimplemented
+    }
+    @synchronized (objc_getClass("NSObject")) {
+        id list = vine_kc_load();
+        for (unsigned long i = 0; i < [list count]; i++)
+            if (vine_kc_match([list objectAtIndex:i], attrs)) return -25299;   // errSecDuplicateItem
+        id item = [objc_getClass("NSMutableDictionary") dictionary], v;
+        [item setObject:[attrs objectForKey:(id)kSecAttrAccount] forKey:(id)kSecAttrAccount];
+        if ((v = [attrs objectForKey:(id)kSecAttrService])) [item setObject:v forKey:(id)kSecAttrService];
+        v = [attrs objectForKey:(id)kSecValueData];
+        [item setObject:v ? v : [objc_getClass("NSData") data] forKey:(id)kSecValueData];
+        [list addObject:item];
+        if (result) *result = 0;
+        return vine_kc_save(list);
+    }
+}
+
+int SecItemCopyMatching(id q, id *result) {
+    static int (*orig)(id, id *);
+    if (!vine_kc_ours(q)) {
+        if (!orig) orig = (int (*)(id, id *))vine_orig(SEC_IMG, "SecItemCopyMatching");
+        return orig ? orig(q, result) : -4;
+    }
+    @synchronized (objc_getClass("NSObject")) {
+        id list = vine_kc_load();
+        for (unsigned long i = 0; i < [list count]; i++) {
+            id item = [list objectAtIndex:i];
+            if (!vine_kc_match(item, q)) continue;
+            if (result) {
+                BOOL data = [[q objectForKey:(id)kSecReturnData] boolValue], attrs = [[q objectForKey:(id)kSecReturnAttributes] boolValue];
+                id out = 0;
+                if (attrs) {
+                    out = [item mutableCopy];   // +1, as SecItemCopyMatching returns
+                    [out setObject:(id)kSecClassGenericPassword forKey:(id)kSecClass];
+                    if (!data) [out removeObjectForKey:(id)kSecValueData];
+                } else if (data) out = [[item objectForKey:(id)kSecValueData] retain];
+                *result = out;
+            }
+            return 0;
+        }
+        return -25300;   // errSecItemNotFound
+    }
+}
+
+int SecItemDelete(id q) {
+    static int (*orig)(id);
+    if (!vine_kc_ours(q)) {
+        if (!orig) orig = (int (*)(id))vine_orig(SEC_IMG, "SecItemDelete");
+        return orig ? orig(q) : -4;
+    }
+    @synchronized (objc_getClass("NSObject")) {
+        id list = vine_kc_load();
+        unsigned long before = [list count];
+        for (unsigned long i = before; i-- > 0; )
+            if (vine_kc_match([list objectAtIndex:i], q)) [list removeObjectAtIndex:i];
+        return [list count] == before ? -25300 : vine_kc_save(list);
+    }
 }
 #endif

@@ -6,8 +6,9 @@ The goal is the **desktop** client (Windows or macOS). Sober/Android does not co
    choose Sign In → Quick Login, enter the shown code on a device already signed in. Then record whether the
    home screen loads. Password sign-in needs a captcha web view (MacOBlox opens one via WebKitGTK).
 2. **Real GPU display**: same run on Xwayland/radeonsi — confirm DRI3 presentation, frame rate, terrain shaders.
-3. **Join an experience** → input (mouse capture/camera lock), audio, UDP game traffic (MacOBlox notes cover
-   these: net_trace.c, raw_mouse.c, audio_hal.c; review before implementing).
+3. **Join an experience (user test)** — crash after join fixed (workqueue stack), FMOD's HAL queries answered,
+   login kept in the Keychain. Verify: picture after join (was black for ~4 s before the crash), sound,
+   WASD + mouse look (MacOBlox notes: raw_mouse.c), sustained UDP play, still signed in after a restart.
 4. Find the ~10 s thread join in Roblox's teardown (matters for leaving games too).
 5. Upstream Vine's Darling fixes (xattr, fork-exit, cookies, NSDisplay, NSURL, IOKit, resolver, CALayerContext).
 5. **Regression watch for Route A.** After each Roblox Windows release, run `tests/route-a-wine-startup.sh` and `tests/hard-error-text.sh`. If the "Wine is not supported." string or the `+0x8B885F` site disappears, Roblox has changed its policy, so revisit D1.

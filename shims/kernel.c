@@ -187,3 +187,36 @@ static void vine_exit(int status) {
 void _exit(int status) { vine_exit(status); }
 void __exit(int status) __asm__("___exit");
 void __exit(int status) { vine_exit(status); }
+
+// ---- workqueue thread reuse ---------------------------------------------------------------
+// Darling's sys_workq_kernreturn parks a GCD worker on THREAD_RETURN and, when the worker is
+// reused, jumps back into _start_wqthread without resetting the stack pointer (its comment says
+// "reset stack"; XNU does). Each reuse leaves ~580 B of dead frames on the 512 KiB stack, so a busy
+// worker hits its guard page after ~900 jobs (Roblox: SIGSEGV seconds after joining a game).
+// Fix: run those two ops from the top of the worker's stack, as XNU starts it. Nothing above is
+// live: a workqueue pthread sits exactly at its stack top, Darling keeps its own thread-start
+// frames on a separate host stack (threads.c, setjmp/longjmp), and neither op returns.
+// Entered through Darwin's generic syscall() so the original handler runs unchanged.
+int syscall(int, ...);
+static long (*volatile p_bsd_syscall)(int, ...) = (long (*)(int, ...))syscall;
+enum { SYS_workq_kernreturn = 368, WQOPS_THREAD_RETURN = 4, WQOPS_THREAD_KEVENT_RETURN = 0x40 };
+
+int __workq_kernreturn(int options, void *item, int affinity, int prio) __asm__("___workq_kernreturn");
+int __workq_kernreturn(int options, void *item, int affinity, int prio) {
+    uintptr_t top, sp = (uintptr_t)__builtin_frame_address(0);
+    __asm__("movq %%gs:0, %0" : "=r"(top));   // TSD slot 0: pthread_self
+    int parks = options == WQOPS_THREAD_RETURN || options == WQOPS_THREAD_KEVENT_RETURN;
+    // Only on a real workqueue stack, and never when the kevent list lives in the dropped frames.
+    if (parks && top > sp && top - sp < (8u << 20) && !((uintptr_t)item >= sp && (uintptr_t)item < top)) {
+        register long a0 __asm__("rdi") = SYS_workq_kernreturn;
+        register long a1 __asm__("rsi") = options;
+        register void *a2 __asm__("rdx") = item;
+        register long a3 __asm__("rcx") = affinity;
+        register long a4 __asm__("r8") = prio;
+        __asm__ volatile("movq %[top], %%rsp\n\txorl %%ebp, %%ebp\n\txorl %%eax, %%eax\n\tcallq *%[fn]\n\tud2"
+                         :: [top] "r"((top & ~(uintptr_t)15) - 128), [fn] "r"(p_bsd_syscall),
+                            "r"(a0), "r"(a1), "r"(a2), "r"(a3), "r"(a4) : "rax", "memory");
+        __builtin_unreachable();
+    }
+    return (int)p_bsd_syscall(SYS_workq_kernreturn, options, item, affinity, prio);
+}

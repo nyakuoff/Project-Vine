@@ -15,6 +15,7 @@ typedef id (*IMP)(id, SEL, ...);
 
 int dprintf(int, const char *, ...);
 void *malloc(size_t);
+void *memcpy(void *, const void *, size_t);
 void free(void *);
 id objc_msgSend(id, SEL, ...);
 char *getenv(const char *);

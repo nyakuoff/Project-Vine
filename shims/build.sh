@@ -11,7 +11,7 @@ D="$ROOT/.work/darling-root/usr/libexec/darling"     # Darling's macOS root (rea
 LAYER="$ROOT/.work/vine-overlay"; NEWL="$LAYER.new"      # built in $NEWL, swapped in only on success
 O="$NEWL/usr/libexec/darling"                           # our layer
 NEW="CoreML"
-WRAP="AppKit AudioToolbox CFNetwork IOKit OpenGL Carbon CoreAudio CoreGraphics CoreServices CoreVideo Foundation GameController Metal QuartzCore ServiceManagement SystemConfiguration VideoToolbox"
+WRAP="AppKit AudioToolbox CFNetwork IOKit OpenGL Carbon CoreAudio CoreGraphics CoreServices CoreVideo Foundation GameController Metal QuartzCore Security ServiceManagement SystemConfiguration VideoToolbox"
 
 rm -rf "$NEWL"; mkdir -p "$O/usr/lib/vine"
 TMP=$(mktemp -d); trap 'rm -rf "$TMP"' EXIT
@@ -63,7 +63,7 @@ for fw in $NEW $WRAP; do
   fi
   # AppKit's shims use Foundation classes (NSThread, NSThreadSharedInstance)
   [ "$fw" = QuartzCore ] && extra+=("$D/System/Library/Frameworks/OpenGL.framework/Versions/A/OpenGL")
-  [ "$fw" = CFNetwork ] && extra+=("$D/System/Library/Frameworks/Foundation.framework/Versions/C/Foundation")
+  [[ $fw = CFNetwork || $fw = Security ]] && extra+=("$D/System/Library/Frameworks/Foundation.framework/Versions/C/Foundation")
   [ "$fw" = AppKit ] && extra+=("$D/System/Library/Frameworks/Foundation.framework/Versions/C/Foundation" "$D/System/Library/Frameworks/OpenGL.framework/Versions/A/OpenGL")
   cc "$O/$dir/$fw" "/$dir/$fw" -DFW_$fw "$SRC/frameworks.m" "$O$STUB" "${extra[@]}"
   # framework layout symlinks (Darling's originals already have them for wrapped ones)

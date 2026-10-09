@@ -160,6 +160,19 @@ Still open: Roblox's own teardown blocks ~10 s in `std::thread::join` (not telem
 kqueue scan — both measured); the watchdog hides it. Headless GPU testing: KWin `--virtual` + Xwayland
 renders on radeonsi, but XTest input doesn't reach clients there.
 
+**2026-10-09 (night): joining a game.** The user's test: black screen after joining, then a crash.
+
+| Symptom | Evidence | Fix |
+|---|---|---|
+| Crash ~1 s after the game-server connection | core sigframe: write to a GCD worker's guard page; its 512 KiB stack held ~900 copies of `start_wqthread → … → __workq_kernreturn`. Darling's `workq_kernreturn` re-enters `_start_wqthread` on reuse without resetting the stack pointer (its comment says it does; XNU does) | `kernel.c`: THREAD_RETURN / KEVENT_RETURN run from the worker's stack top (`tests/darwin/workq_reuse.m`: crashed at ~900 jobs, now 2000+ with no drift). MacOBlox found the same bug independently |
+| No sound (FMOD error 51 at `getNumDrivers`) | `tests/darwin/coreaudio_props.m`: Darling answers `'who?'` for the device's streams, buffer frame size, latency, transport, clock; no stream objects; listeners refused; `AudioGetCurrentHostTime` stub returns 0 | CoreAudio wrapper answers them from the device's real format (property list credited to MacOBlox) |
+| Start-up crash once audio queries succeed | sigframe: `AudioOutputUnitStop` → `dispatchCall` NULL interface: Darling treats a disposed unit as live | instance check also requires the manager to still hold it (`audiounit_misuse.m`) |
+| FMOD audio threads overflow in Darling's RPC code (MacOBlox finding) | — | `pthread_attr_setstacksize` floor 8 MiB (`thread_stack.m`) |
+| Signed out at every launch | Roblox keeps its login in the Keychain (`SecItemAdd`, generic password), not a cookie (`syncCookiesFromNativeToEngine was skipped`); Darling's SecItem calls hang waiting for a security daemon (MacOBlox: not persisted) | Security wrapper keeps generic passwords in `~/Library/Keychains/Vine-GenericPasswords.plist` (0600) (`keychain_persist.m`) |
+
+Not verified in a game yet (needs the user's account): sound, the black screen (it lasted only the ~4 s
+before the crash, so it may just be the loading phase), sustained play.
+
 Open blockers:
 - ~~Networking~~ solved for Roblox's own HTTP stack (above). Darling's `NSURLSession` remains a skeleton
   and `NSURLConnection` HTTPS fails (-9836); only two minor Roblox call sites use them.
