@@ -29,7 +29,7 @@ if [ "${1:-}" = --stop ]; then
     # anything left in our user namespace is ours (wedged container, orphaned Darwin processes)
     for p in /proc/[0-9]*; do [ "$(readlink $p/ns/user 2>/dev/null)" = "$NS" ] && kill -9 "${p#/proc/}" 2>/dev/null; done
   fi
-  rm -f "$PIDF"; exit 0
+  rm -f "$PIDF" "$DPREFIX/.init.pid" "$DPREFIX/.darlingserver.sock"; exit 0   # stale ones make darling join a dead container
 fi
 
 # Vine shim layer (shims/build.sh) sits above Darling when present.
@@ -41,5 +41,8 @@ if [ -z "$(holder)" ]; then
     </dev/null >/dev/null 2>&1 &
   echo $! > "$PIDF"
   sleep 0.5
+  # Boot the container with null stdio: darlingserver/launchd inherit the first client's fds and
+  # would otherwise hold the caller's pipe open forever.
+  enter /usr/bin/darling shell true </dev/null >/dev/null 2>&1 || true
 fi
 enter /usr/bin/darling "$@"

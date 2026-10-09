@@ -24,6 +24,18 @@ static void *worker(void *a) {
     try("thread ADDRCONFIG", "clientsettingscdn.roblox.com", 0, AI_ADDRCONFIG);
     return 0;
 }
+// Concurrent lookups (Roblox's HTTP client pattern). Before shims/resolv.c, Darling's res_query
+// shared one global socket between threads and these failed with EAI errors.
+static const char *many[] = {"www.roblox.com", "clientsettingscdn.roblox.com", "apis.roblox.com", "auth.roblox.com"};
+static int conc_bad;
+static void *conc(void *a) {
+    for (int i = 0; i < 4; i++) {
+        struct addrinfo *res = 0, h = {0};
+        h.ai_socktype = 1;
+        if (getaddrinfo(many[((long)a + i) % 4], "443", &h, &res)) __atomic_add_fetch(&conc_bad, 1, __ATOMIC_RELAXED);
+    }
+    return 0;
+}
 int main(void) {
     printf("res_9_init -> %d\n", res_9_init());
     try("unspec", "www.roblox.com", 0, 0);
@@ -31,5 +43,9 @@ int main(void) {
     try("inet6", "www.roblox.com", 30, 0);
     try("ADDRCONFIG", "www.roblox.com", 0, AI_ADDRCONFIG);
     void *t; pthread_create(&t, 0, worker, 0); pthread_join(t, 0);
-    return bad;
+    void *ts[16];
+    for (long i = 0; i < 16; i++) pthread_create(&ts[i], 0, conc, (void *)i);
+    for (int i = 0; i < 16; i++) pthread_join(ts[i], 0);
+    printf("%s concurrent: 64 lookups on 16 threads, %d failed\n", conc_bad ? "FAIL" : "PASS", conc_bad);
+    return bad + (conc_bad != 0);
 }

@@ -35,3 +35,13 @@ source (hours, not needed until a fix must go inside Darling).
 ## D7 — OpenGL backend for Route B
 Roblox's Metal pack is precompiled metallibs (Darling's Metal→Vulkan layer is early); the GLSL 3.2 pack
 compiles on Mesa natively. Selected through Roblox's own `FFlagDebugGraphicsPreferOpenGL` local setting.
+
+## D8 — Reuse MacOBlox findings selectively (2026-10-09)
+The user pointed to MacOBlox, a mature project on the same route. Vine reuses its *findings* where they
+cover open problems and keeps its own leaner mechanics (rootless user-namespace overlay instead of an
+LD_PRELOAD that fakes root and copies the macOS root; wrapper frameworks instead of one injected dylib).
+**Not adopted**: `patch_startup_throttle.py` (edits Roblox's binary; Vine never modifies the client) and
+blocking Roblox telemetry hosts (interferes with Roblox's own traffic; not a compatibility fix).
+**Blocked, pending the user**: removing CLONE_NEWIPC from Darling's container (what MacOBlox does) was
+refused by this session's safety policy as weakening isolation. Headless tests instead disable MIT-SHM on
+the private Xvfb; real GPU displays present via DRI3 and should not need either.

@@ -9,5 +9,6 @@ clang -target x86_64-apple-macos10.13 -nostdlib -fuse-ld=lld -w -fobjc-runtime=m
   -Wl,-syslibroot,"$D" -o "$OUTDIR/$1" "$ROOT/tests/darwin/$1.m" \
   "$D/usr/lib/libobjc.A.dylib" "$D/usr/lib/libSystem.B.dylib" \
   "$D/System/Library/Frameworks/Foundation.framework/Versions/C/Foundation" \
-  "$D/System/Library/Frameworks/IOKit.framework/Versions/A/IOKit" "$D/usr/lib/libresolv.9.dylib" "$D/System/Library/Frameworks/CFNetwork.framework/Versions/A/CFNetwork"
-"$ROOT/tests/darling-ns.sh" shell "/Volumes/SystemRoot$OUTDIR/$1"
+  "$D/System/Library/Frameworks/IOKit.framework/Versions/A/IOKit" "$D/usr/lib/libresolv.9.dylib" "$D/System/Library/Frameworks/CFNetwork.framework/Versions/A/CFNetwork" \
+  "$D/System/Library/Frameworks/AppKit.framework/Versions/C/AppKit" "$D/System/Library/Frameworks/OpenGL.framework/Versions/A/OpenGL"
+"$ROOT/tests/darling-ns.sh" shell "/Volumes/SystemRoot$OUTDIR/$1" "${@:2}"

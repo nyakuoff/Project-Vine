@@ -316,3 +316,149 @@ __attribute__((constructor)) static void vine_cfnetwork_config(void) {
     if (c) class_addMethod(object_getClass((id)c), @selector(defaultSessionConfiguration), (IMP)vine_default_config, "@@:");
 }
 #endif
+
+#ifdef FW_IOKit
+// Roblox's device-watch cleanup can pass NULL after a failed registration (iokitd has no HID
+// notifications); Darling dereferences it.
+void IONotificationPortDestroy(void *port) {
+    static void (*orig)(void *);
+    if (!port) { VINE_LOG_ONCE("IONotificationPortDestroy(NULL)"); return; }
+    if (!orig) orig = vine_orig("/System/Library/Frameworks/IOKit.framework/Versions/A/IOKit.darling", "IONotificationPortDestroy");
+    if (orig) orig(port);
+}
+#endif
+
+#ifdef FW_AppKit
+// -[NSOpenGLContext setView:] (Darling/Cocotron) destroys the old EGL window surface and creates a
+// new one, but the CGL context keeps drawing to the destroyed surface until the app calls
+// -makeCurrentContext again. macOS re-attaches on setView:, so Roblox doesn't: every eglSwapBuffers
+// then fails with EGL_BAD_SURFACE (60 invisible frames/s). Re-attach at flush when stale.
+typedef void *Ivar;
+Ivar class_getInstanceVariable(Class, const char *);
+long ivar_getOffset(Ivar);
+void *CGLGetCurrentContext(void);
+int CGLContextMakeCurrentAndAttachToWindow(void *ctx, void *window);
+int CGLFlushDrawable(void *ctx);
+@interface NSOpenGLContext : NSObject @end
+@interface NSObject (VineNative) - (void *)nativeWindow; @end
+char *getenv(const char *);
+static void *vine_ivar(id o, const char *name) {
+    Ivar iv = class_getInstanceVariable(object_getClass(o), name);
+    return iv ? *(void **)((char *)o + ivar_getOffset(iv)) : 0;
+}
+@implementation NSOpenGLContext (VineReattach)
+- (void)flushBuffer {
+    static void *(*get_surface)(int);
+    static int looked;
+    if (!looked) {
+        void *egl = dlopen("/usr/lib/native/libEGL.dylib", 1);
+        get_surface = egl ? (void *(*)(int))dlsym(egl, "eglGetCurrentSurface") : 0;
+        looked = 1;
+    }
+    void *ctx = vine_ivar(self, "_glContext"), *win = vine_ivar(self, "_cglWindow");
+    static int logged;
+    if (logged < 3 && getenv("VINE_GL_DEBUG")) {
+        logged++;
+        id sub = (id)vine_ivar(self, "_subwindow");
+        dprintf(2, "vine-gl: flush ctx=%p cgl-current=%p win(surface)=%p egl-draw=%p view=%p subwindow=%p xwin=0x%lx\n", ctx, CGLGetCurrentContext(),
+                win, get_surface ? get_surface(0x3059) : (void *)-1, vine_ivar(self, "_view"), sub,
+                sub ? (unsigned long)[sub nativeWindow] : 0UL);
+        void *egl = dlopen("/usr/lib/native/libEGL.dylib", 1);
+        unsigned (*query)(void *, void *, int, int *) = egl ? dlsym(egl, "eglQuerySurface") : 0;
+        void *(*getdpy)(void) = egl ? dlsym(egl, "eglGetCurrentDisplay") : 0;
+        int w = -1, h = -1, fb = -1, err = -1;
+        unsigned char px[4] = {0};
+        if (query && getdpy) { query(getdpy(), win, 0x3057 /*EGL_WIDTH*/, &w); query(getdpy(), win, 0x3056 /*EGL_HEIGHT*/, &h); }
+        void glGetIntegerv(unsigned, int *); unsigned glGetError(void); void glReadBuffer(unsigned);
+        void glReadPixels(int, int, int, int, unsigned, unsigned, void *);
+        glGetIntegerv(0x8CA6 /*GL_DRAW_FRAMEBUFFER_BINDING*/, &fb);
+        int cx = w > 0 ? w / 2 : 0, cy = h > 0 ? h / 2 : 0, prevread = 0;
+        glGetIntegerv(0x8CAA /*GL_READ_FRAMEBUFFER_BINDING*/, &prevread);
+        void glBindFramebuffer(unsigned, unsigned);
+        glBindFramebuffer(0x8CA8 /*GL_READ_FRAMEBUFFER*/, 0); glReadBuffer(0x0405 /*GL_BACK*/);
+        glReadPixels(cx, cy, 1, 1, 0x1908 /*GL_RGBA*/, 0x1401 /*UNSIGNED_BYTE*/, px);
+        glBindFramebuffer(0x8CA8, prevread);
+        err = glGetError();
+        dprintf(2, "vine-gl: surface %dx%d drawfb=%d back(center)=%u,%u,%u,%u glerr=0x%x\n", w, h, fb, px[0], px[1], px[2], px[3], err);
+    }
+    if (!getenv("VINE_NO_GLREATTACH") && win && get_surface && CGLGetCurrentContext() == ctx && get_surface(0x3059 /* EGL_DRAW */) != win) {
+        VINE_LOG_ONCE("NSOpenGLContext re-attached to its view's current surface");
+        CGLContextMakeCurrentAndAttachToWindow(ctx, win);
+    }
+    CGLFlushDrawable(ctx);
+    // Flush the shared X connection so presented frames reach the server even when the app runs
+    // its own loop instead of AppKit's (which flushes while polling for events).
+    static int (*xflush)(void *);
+    static int xlooked;
+    if (!xlooked) { void *x11 = dlopen("/usr/lib/native/libX11.dylib", 1); xflush = x11 ? (int (*)(void *))dlsym(x11, "XFlush") : 0; xlooked = 1; }
+    void *xdpy = vine_main_display ? vine_ivar(vine_main_display, "_display") : 0;
+    if (xflush && xdpy && !getenv("VINE_NO_XFLUSH")) xflush(xdpy);
+}
+@end
+#endif
+
+#ifdef FW_AppKit
+// VINE_GL_DEBUG=1: trace NSOpenGLContext / NSOpenGLView lifecycle (method swizzling, logs only).
+SEL sel_registerName(const char *);
+typedef void *Method;
+Method class_getInstanceMethod(Class, SEL);
+IMP method_setImplementation(Method, IMP);
+Class objc_getClass(const char *);
+void *pthread_self(void);
+#define VINE_TRACE(cls, sel, ret, params, args, fmt, ...) \
+    static ret (*orig_##sel)(id, SEL params); \
+    static ret trace_##sel(id self, SEL _cmd params) { \
+        dprintf(2, "vine-gl: thread=%p -[%s %s] self=%p " fmt "\n", pthread_self(), class_getName(object_getClass(self)), sel_getName(_cmd), self, ##__VA_ARGS__); \
+        return orig_##sel(self, _cmd args); }
+#define COMMA ,
+VINE_TRACE(NSOpenGLContext, initWithFormat_shareContext_, id, COMMA id f COMMA id share, COMMA f COMMA share, "share=%p", share)
+VINE_TRACE(NSOpenGLContext, setView_, void, COMMA id v, COMMA v, "view=%p", v)
+VINE_TRACE(NSOpenGLContext, makeCurrentContext, void, , , "ctx=%p", vine_ivar(self, "_glContext"))
+VINE_TRACE(NSOpenGLContext, clearDrawable, void, , , "%s", "")
+VINE_TRACE(NSOpenGLContext, update, void, , , "%s", "")
+VINE_TRACE(NSOpenGLView, setOpenGLContext_, void, COMMA id c, COMMA c, "ctx=%p", c)
+static void vine_swz(const char *cls, const char *sel, IMP repl, void **orig) {
+    Method m = class_getInstanceMethod(objc_getClass(cls), sel_registerName(sel));
+    if (m) *orig = (void *)method_setImplementation(m, repl);
+}
+__attribute__((constructor)) static void vine_gl_trace(void) {
+    if (!getenv("VINE_GL_DEBUG")) return;
+    vine_swz("NSOpenGLContext", "initWithFormat:shareContext:", (IMP)trace_initWithFormat_shareContext_, (void **)&orig_initWithFormat_shareContext_);
+    vine_swz("NSOpenGLContext", "setView:", (IMP)trace_setView_, (void **)&orig_setView_);
+    vine_swz("NSOpenGLContext", "makeCurrentContext", (IMP)trace_makeCurrentContext, (void **)&orig_makeCurrentContext);
+    vine_swz("NSOpenGLContext", "clearDrawable", (IMP)trace_clearDrawable, (void **)&orig_clearDrawable);
+    vine_swz("NSOpenGLContext", "update", (IMP)trace_update, (void **)&orig_update);
+    vine_swz("NSOpenGLView", "setOpenGLContext:", (IMP)trace_setOpenGLContext_, (void **)&orig_setOpenGLContext_);
+}
+#endif
+
+#ifdef FW_QuartzCore
+// Darling's layer compositor (-[CALayerContext renderLayer:], timer-driven on the main thread for
+// layer-backed views) makes its own GL context current and never restores the caller's. Roblox's
+// view is layer-backed and renders on the main thread with the context it made current once, so
+// after the first compositor tick all its drawing went to the compositor's surfaceless context and
+// every eglSwapBuffers failed (EGL_BAD_SURFACE). AppKit/CA must not change the app's GL context.
+typedef void *Method;
+Method class_getInstanceMethod(Class, SEL);
+IMP method_setImplementation(Method, IMP);
+Class objc_getClass(const char *);
+SEL sel_registerName(const char *);
+void *CGLGetCurrentContext(void);
+int CGLSetCurrentContext(void *);
+char *getenv(const char *);
+static void (*orig_renderLayer)(id, SEL, id);
+static void vine_renderLayer(id self, SEL _cmd, id layer) {
+    static int skip = -1;
+    if (skip < 0) skip = getenv("VINE_SKIP_LAYER_RENDER") != 0;   // diagnostic
+    if (skip) return;
+    void *prev = CGLGetCurrentContext();
+    orig_renderLayer(self, _cmd, layer);
+    CGLSetCurrentContext(prev);
+}
+__attribute__((constructor)) static void vine_quartzcore_init(void) {
+    Method m = class_getInstanceMethod(objc_getClass("CALayerContext"), sel_registerName("renderLayer:"));
+    if (getenv("VINE_NO_LAYERFIX")) return;
+    if (m) orig_renderLayer = (void (*)(id, SEL, id))method_setImplementation(m, (IMP)vine_renderLayer);
+    else dprintf(2, "vine: CALayerContext renderLayer: not found\n");
+}
+#endif

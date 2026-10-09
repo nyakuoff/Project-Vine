@@ -121,10 +121,36 @@ Reached: `applicationDidFinishLaunching`, local ClientSettings honored (OpenGL b
 DB validated, **OpenGL 4.6 renderer initialized on Mesa** (llvmpipe under Xvfb), SurfaceController
 started, `stage: LuaApp`. Process now stays alive (no crash in 120 s) but nothing is drawn yet.
 
+**2026-10-09 (later): sign-in screen renders.** Further fixes, each found from evidence (traces, gdb
+counters, EGL error codes, back-buffer reads):
+
+| Blocker | Evidence | Fix |
+|---|---|---|
+| `HttpError: DnsResolve` | xtrace: threads write DNS queries to *another thread's* socket (shared `_vcsock`); Darling's resolver calls non-reentrant `res_query` | `shims/resolv.c`: per-call `res_ninit`/`res_nquery` |
+| NULL deref at IOKit cleanup | sigframe recovery: `IONotificationPortDestroy(NULL)` | NULL-safe destroy |
+| Black window, 60 flushes/s | `eglSwapBuffers` → EGL_BAD_SURFACE; current context ≠ Roblox's: Darling's layer compositor (`-[CALayerContext renderLayer:]`) leaves its own GL context current | save/restore context around `renderLayer:` |
+| Still black, swaps succeed | back buffer has content; Mesa log: `Failed to attach to x11 shm` ×2134 (Darling's private SysV IPC namespace vs X server) | test Xvfb runs without MIT-SHM (real GPU displays use DRI3) |
+
+Result: Roblox's own HTTPS (bundled curl/OpenSSL) works (version check returns real data; logged-out
+API calls answer 401 as expected), Lua app runs, and the sign-in screen is drawn
+(`logs/route-b-first-frame-20261009.png`).
+
+Note: my DNS baseline comparison (`tests/darwin/dns.m` with/without the shim) was invalidated by a
+concurrent harness run; the evidence for the fix is the xtrace plus Roblox's errors disappearing.
+
+### MacOBlox (github.com/aubree-lat/MacOBlox, MIT, v0.21patch1) — reviewed 2026-10-09
+Same route (Darling 0.1.20260608 + shim, OpenGL by hiding Metal). Their notes report main menu,
+Quick Login, avatar and games working. Independent agreement with Vine on: CALayerContext GL-context
+restore, xattr, exit, DNS concurrency, IPC namespace vs X11 shared memory. Additional areas they cover
+that Vine has not reached: input (mouse capture/camera lock, raw mouse), audio HAL, captcha web view for
+password sign-in, UDP/RakNet reliability under Darling, darlingserver lock/ulock fixes, Wayland bridge.
+Not adopted (see DECISIONS D8): binary patch of Roblox's startup throttle, blocking Roblox telemetry hosts.
+
 Open blockers:
-- **Networking.** Darling's `NSURLSession` task classes are empty skeletons (no transfer code);
-  `NSURLConnection` HTTPS fails in Darling's TLS layer (SSL error -9836). Roblox logs `HttpError`
-  for its settings/version requests. Plain `getaddrinfo` DNS works (`tests/darwin/dns.m`).
-- **Window content.** Screenshots of the Xvfb display are still blank.
+- ~~Networking~~ solved for Roblox's own HTTP stack (above). Darling's `NSURLSession` remains a skeleton
+  and `NSURLConnection` HTTPS fails (-9836); only two minor Roblox call sites use them.
+- ~~Window content~~ solved (above).
+- **Sign-in** (needs the user): Quick Login (code entered on a signed-in device) is the route MacOBlox
+  reports working; password sign-in needs a captcha web view Darling can't show.
 - Some terrain shaders fail to compile on llvmpipe (`GrassVSUnified`, `SmoothClusterVSUnified`).
 - iokitd provides no platform-expert/HID services (no device identity, no controllers).

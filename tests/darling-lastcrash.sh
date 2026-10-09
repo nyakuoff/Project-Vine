@@ -4,7 +4,7 @@
 # Usage: tests/darling-lastcrash.sh [coredump-pid]
 set -uo pipefail
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
-PID=${1:-$(coredumpctl list --no-pager --no-legend 2>/dev/null | grep mldr | awk '{print $5, $NF}' | sort -k2 -h | awk '{print $1}' | tail -1)}
+PID=${1:-$(coredumpctl list --no-pager --no-legend 2>/dev/null | grep mldr | tail -1 | awk '{print $5}')}   # newest (list is chronological)
 [ -n "$PID" ] || { echo "no core"; exit 1; }
 T=$(mktemp -d); trap 'rm -rf "$T"' EXIT
 coredumpctl info "$PID" --no-pager 2>/dev/null | grep -E 'Timestamp|Signal|Command Line' | sed 's/^ *//'

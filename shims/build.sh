@@ -37,13 +37,17 @@ mktbd() {  # mktbd <original> <copy install name> <out.tbd>
     printf -- " ]\n...\n"; } > "$3"
 }
 
-# libsystem_kernel wrapper (xattr + fork/exit fixes, shims/kernel.c). Plain C, links only the wrapped library: it sits under libSystem.
-K=/usr/lib/system/libsystem_kernel.dylib
-mkdir -p "$O/usr/lib/system"
-cp "$D$K" "$O$K.darling"; "$SRC/rename-dylib-id.py" "$O$K.darling"
-mktbd "$D$K" "$K.darling" "$TMP/kernel.tbd"
-clang -target x86_64-apple-macos10.13 -dynamiclib -nostdlib -ffreestanding -fno-stack-protector -fuse-ld=lld -O2 \
-  -install_name "$K" $(vers "$D$K") -Wl,-reexport_library,"$TMP/kernel.tbd" -o "$O$K" "$SRC/kernel.c"
+# Plain-C wrappers for libraries loaded during libSystem start-up: they link only the wrapped
+# library (re-exported copy with a renamed id), no libSystem, no initializers.
+cwrap() {  # cwrap <install name> <source>
+  local K=$1; mkdir -p "$(dirname "$O$K")"
+  cp "$D$K" "$O$K.darling"; "$SRC/rename-dylib-id.py" "$O$K.darling"
+  mktbd "$D$K" "$K.darling" "$TMP/$(basename "$K").tbd"
+  clang -target x86_64-apple-macos10.13 -dynamiclib -nostdlib -ffreestanding -fno-builtin -fno-stack-protector -fuse-ld=lld -O2 \
+    -install_name "$K" $(vers "$D$K") -Wl,-reexport_library,"$TMP/$(basename "$K").tbd" -o "$O$K" "$2"
+}
+cwrap /usr/lib/system/libsystem_kernel.dylib "$SRC/kernel.c"   # xattr + fork/exit fixes
+cwrap /usr/lib/libresolv.9.dylib "$SRC/resolv.c"                # thread-safe res_query
 
 STUB=/usr/lib/vine/libvinestub.dylib
 cc "$O$STUB" "$STUB" "$SRC/VineStub.m"
@@ -58,7 +62,8 @@ for fw in $NEW $WRAP; do
     extra=($(vers "$D/$dir/$fw") -Wl,-reexport_library,"$TMP/$fw.tbd")
   fi
   # AppKit's shims use Foundation classes (NSThread, NSThreadSharedInstance)
-  [ "$fw" = AppKit ] && extra+=("$D/System/Library/Frameworks/Foundation.framework/Versions/C/Foundation")
+  [ "$fw" = QuartzCore ] && extra+=("$D/System/Library/Frameworks/OpenGL.framework/Versions/A/OpenGL")
+  [ "$fw" = AppKit ] && extra+=("$D/System/Library/Frameworks/Foundation.framework/Versions/C/Foundation" "$D/System/Library/Frameworks/OpenGL.framework/Versions/A/OpenGL")
   cc "$O/$dir/$fw" "/$dir/$fw" -DFW_$fw "$SRC/frameworks.m" "$O$STUB" "${extra[@]}"
   # framework layout symlinks (Darling's originals already have them for wrapped ones)
   [ -e "$D/System/Library/Frameworks/$fw.framework/$fw" ] || {
