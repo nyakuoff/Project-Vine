@@ -146,6 +146,20 @@ that Vine has not reached: input (mouse capture/camera lock, raw mouse), audio H
 password sign-in, UDP/RakNet reliability under Darling, darlingserver lock/ulock fixes, Wayland bridge.
 Not adopted (see DECISIONS D8): binary patch of Roblox's startup throttle, blocking Roblox telemetry hosts.
 
+**2026-10-09 (evening): input and quitting.**
+
+| Symptom | Evidence | Fix |
+|---|---|---|
+| Clicks "freeze everything" (user, KDE) | `CGAssociateMouseAndMouseCursorPosition` ~150/s → `grabMouse:` + 2 `warpMouse:` each: Darling grabs/warps when told *associated* (inverted) | correct sense, act on change only |
+| Clicks ignored | event tracer: down/up reach `RobloxOgreView` but no `mouseMoved:`; `buttonNumber`=1 for left; `timestamp` since 2001 vs `systemUptime` since 1970 | windows accept mouse-moved; macOS button numbers (`NSEvent` and `NSEvent_mouse`); both clocks = seconds since boot |
+| Close slow (13 s) / never (Xvfb) | `WM_DELETE_WINDOW` received; close scheduled as NSRunLoop perform that Roblox's CFRunLoop doesn't service; Cocotron `_checkForTerminate` unconditional (MacOBlox finding) | close via main dispatch queue; macOS "terminate after last window closed" via delegate; 3 s teardown watchdog |
+| Frames lost under Xvfb | MIT-SHM across IPC namespaces | D9 |
+
+Result: Sign In opens the sign-in page (`logs/route-b-signin-page-20261009.png`); close quits in ~3 s.
+Still open: Roblox's own teardown blocks ~10 s in `std::thread::join` (not telemetry, not the fd-limit
+kqueue scan — both measured); the watchdog hides it. Headless GPU testing: KWin `--virtual` + Xwayland
+renders on radeonsi, but XTest input doesn't reach clients there.
+
 Open blockers:
 - ~~Networking~~ solved for Roblox's own HTTP stack (above). Darling's `NSURLSession` remains a skeleton
   and `NSURLConnection` HTTPS fails (-9836); only two minor Roblox call sites use them.

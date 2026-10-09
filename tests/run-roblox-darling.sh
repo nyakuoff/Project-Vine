@@ -31,6 +31,10 @@ ENV=(MESA_SHADER_CACHE_DIR=/tmp/vine-mesa-cache DISPLAY="$DISP" VINE_OBJC_LENIEN
 LOG="$ROOT/logs/darling-roblox-$TS.log"
 # Fresh container, started by a throwaway command: darlingserver must not be a child of the timed run.
 "$ROOT/tests/darling-ns.sh" --stop
+# Start-up render throttle off (finding credited to MacOBlox; patches/startup_throttle.py). Vine's own
+# copy of the app only; VINE_NO_THROTTLE_PATCH=1 restores the original instruction.
+python3 "$ROOT/patches/startup_throttle.py" "$APP/Contents/MacOS/RobloxPlayer" \
+  $([ "${VINE_NO_THROTTLE_PATCH:-0}" = 1 ] && echo --undo) > /dev/null
 # (darling-ns.sh boots new containers with null stdio)
 timeout "$T" "$ROOT/tests/darling-ns.sh" shell env "${ENV[@]}" \
   /Applications/RobloxPlayer.app/Contents/MacOS/RobloxPlayer "$@" > "$LOG" 2>&1 &

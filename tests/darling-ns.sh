@@ -49,6 +49,9 @@ if [ -z "$(holder)" ]; then
   # (LD_PRELOAD splits on spaces and the project path may contain one: use a per-user runtime path)
   KEEP_IPC="${XDG_RUNTIME_DIR:-/tmp}/vine-keep-ipc.so"
   [ "$KEEP_IPC" -nt "$ROOT/shims/host/keep-ipc.c" ] || gcc -shared -fPIC -O2 -o "$KEEP_IPC" "$ROOT/shims/host/keep-ipc.c" -ldl
-  enter env LD_PRELOAD="$KEEP_IPC" /usr/bin/darling shell true </dev/null >/dev/null 2>&1 || true
+  # Darling's libkqueue walks a map sized to the hard RLIMIT_NOFILE on every close() (under a global
+  # lock); hosts default to 1048576, which made teardown/transitions take seconds. 65536 is ample.
+  NOFILE=${VINE_NOFILE:-65536}
+  enter bash -c 'ulimit -Sn "$1" 2>/dev/null; ulimit -Hn "$1"; exec env LD_PRELOAD="$2" /usr/bin/darling shell true' _ "$NOFILE" "$KEEP_IPC" </dev/null >/dev/null 2>&1 || true
 fi
 enter /usr/bin/darling "$@"

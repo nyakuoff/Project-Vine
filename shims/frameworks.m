@@ -602,3 +602,80 @@ int mach_timebase_info(vine_timebase_t *);
 }
 @end
 #endif
+
+#ifdef FW_AppKit
+// Darling's X11 backend handles WM_DELETE_WINDOW by scheduling -platformWindowWillClose: as an
+// ordered NSRunLoop perform. Roblox's main thread spins CFRunLoop directly, which does not service
+// those performs promptly (2.7 s on the user's desktop, never under Xvfb), so closing the window
+// lagged. Deliver it through the main dispatch queue, which that CFRunLoop does service.
+struct dispatch_queue_s;
+extern struct dispatch_queue_s _dispatch_main_q;
+void dispatch_async_f(struct dispatch_queue_s *, void *, void (*)(void *));
+id objc_retain(id); void objc_release(id);
+static void (*orig_perform)(id, SEL, SEL, id, id, unsigned long, id);
+struct vine_close { id target, arg; SEL sel; };
+static void vine_after_window_closed(void);
+
+static void vine_close_now(void *p) {
+    struct vine_close *c = p;
+    ((void (*)(id, SEL, id))objc_msgSend)(c->target, c->sel, c->arg);
+    vine_after_window_closed();
+    objc_release(c->target); objc_release(c->arg); free(c);
+}
+static void vine_perform(id self, SEL _cmd, SEL sel, id target, id arg, unsigned long order, id modes) {
+    if (sel == sel_registerName("platformWindowWillClose:")) {
+        static volatile int pending;   // Darling cancels+reschedules on repeated close requests: coalesce
+        if (__atomic_exchange_n(&pending, 1, __ATOMIC_ACQ_REL)) return;
+        struct vine_close *c = malloc(sizeof *c);
+        c->target = objc_retain(target); c->arg = objc_retain(arg); c->sel = sel;
+        dispatch_async_f(&_dispatch_main_q, c, vine_close_now);
+        __atomic_store_n(&pending, 0, __ATOMIC_RELEASE);
+        return;
+    }
+    orig_perform(self, _cmd, sel, target, arg, order, modes);
+}
+// macOS semantics for quitting after the last window closes, plus a teardown watchdog.
+//  - Cocotron's -_checkForTerminate quits whenever no non-panel window is visible -- including windows
+//    only hidden for a moment (place loads, returning to the menu) -- regardless of the delegate.
+//    (Finding credited to MacOBlox.) It becomes a no-op; the check runs when a window really closes.
+//  - On close: no visible windows left and -applicationShouldTerminateAfterLastWindowClosed: says YES
+//    -> -terminate:, as on macOS.
+//  - -terminate: arms a watchdog: Roblox's teardown can take >10 s under Darling; after 3 s the
+//    process exits (the app has had applicationShouldTerminate:/WillTerminate: by then).
+int pthread_create(void **, void *, void *(*)(void *), void *);
+unsigned int sleep(unsigned int);
+void _exit(int);
+static void *vine_quit_watchdog(void *a) { sleep(3); dprintf(2, "vine: teardown exceeded 3 s, exiting\n"); _exit(0); return 0; }
+static void (*orig_terminate)(id, SEL, id);
+static void vine_terminate(id self, SEL _cmd, id sender) {
+    static int armed;
+    if (!armed++ && !getenv("VINE_NO_QUIT_WATCHDOG")) { void *t; pthread_create(&t, 0, vine_quit_watchdog, 0); }
+    orig_terminate(self, _cmd, sender);
+}
+static void vine_check_for_terminate(id self, SEL _cmd) {}
+static void vine_after_window_closed(void) {
+    id app = NSApp, windows = ((id (*)(id, SEL))objc_msgSend)(app, sel_registerName("windows"));
+    unsigned long n = ((unsigned long (*)(id, SEL))objc_msgSend)(windows, sel_registerName("count"));
+    Class panel = objc_getClass("NSPanel");
+    for (unsigned long i = 0; i < n; i++) {
+        id w = ((id (*)(id, SEL, unsigned long))objc_msgSend)(windows, sel_registerName("objectAtIndex:"), i);
+        if (!((BOOL (*)(id, SEL, Class))objc_msgSend)(w, sel_registerName("isKindOfClass:"), panel) &&
+            ((BOOL (*)(id, SEL))objc_msgSend)(w, sel_registerName("isVisible")))
+            return;
+    }
+    id d = ((id (*)(id, SEL))objc_msgSend)(app, sel_registerName("delegate"));
+    SEL q = sel_registerName("applicationShouldTerminateAfterLastWindowClosed:");
+    if (d && ((BOOL (*)(id, SEL, SEL))objc_msgSend)(d, sel_registerName("respondsToSelector:"), q) &&
+        ((BOOL (*)(id, SEL, id))objc_msgSend)(d, q, app))
+        ((void (*)(id, SEL, id))objc_msgSend)(app, sel_registerName("terminate:"), app);
+}
+__attribute__((constructor)) static void vine_close_fix(void) {
+    Method t = class_getInstanceMethod(objc_getClass("NSApplication"), sel_registerName("terminate:"));
+    if (t) orig_terminate = (void (*)(id, SEL, id))method_setImplementation(t, (IMP)vine_terminate);
+    Method k = class_getInstanceMethod(objc_getClass("NSApplication"), sel_registerName("_checkForTerminate"));
+    if (k) method_setImplementation(k, (IMP)vine_check_for_terminate);
+    Method m = class_getInstanceMethod(objc_getClass("NSRunLoop"), sel_registerName("performSelector:target:argument:order:modes:"));
+    if (m) orig_perform = (void (*)(id, SEL, SEL, id, id, unsigned long, id))method_setImplementation(m, (IMP)vine_perform);
+    else dprintf(2, "vine: NSRunLoop performSelector:target:argument:order:modes: not found\n");
+}
+#endif

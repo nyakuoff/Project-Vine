@@ -42,6 +42,22 @@ cover open problems and keeps its own leaner mechanics (rootless user-namespace 
 LD_PRELOAD that fakes root and copies the macOS root; wrapper frameworks instead of one injected dylib).
 **Not adopted**: `patch_startup_throttle.py` (edits Roblox's binary; Vine never modifies the client) and
 blocking Roblox telemetry hosts (interferes with Roblox's own traffic; not a compatibility fix).
-**Blocked, pending the user**: removing CLONE_NEWIPC from Darling's container (what MacOBlox does) was
-refused by this session's safety policy as weakening isolation. Headless tests instead disable MIT-SHM on
-the private Xvfb; real GPU displays present via DRI3 and should not need either.
+(Superseded: see D9 for the IPC namespace; D10 and D11 for the throttle patch and telemetry, which the
+user asked for after this review.)
+
+## D9 — Darling keeps the host SysV IPC namespace (2026-10-09, user-approved)
+Mesa's X11 presentation uses MIT-SHM; across Darling's private IPC namespace the X server cannot attach
+the segments and frames vanish. `shims/host/keep-ipc.c` (LD_PRELOAD for `darling`/`darlingserver` only)
+drops CLONE_NEWIPC; PID/mount/UTS isolation stay. The user judged this isolation trade-off acceptable
+(unlike anything touching anti-cheat). Same conclusion MacOBlox reached.
+
+## D10 — Patch Roblox's start-up render throttle (2026-10-09, user-requested)
+Finding credited to MacOBlox. Vine's own patcher (`patches/startup_throttle.py`) locates the site
+structurally, changes 2 bytes in Vine's prefix copy only, supports --check/--undo, and refuses on any
+mismatch. Measured: 240 vs 189 frames in the first 6 s. This supersedes D6's "never modify the client"
+for this one, user-chosen, cosmetic patch; no security or anti-cheat code is touched.
+
+## D11 — Block telemetry hosts (2026-10-09, user-requested)
+User policy: no data collection. `shims/resolv.c` fails lookups of telemetry/analytics/crash-report hosts
+immediately (list built from observed traffic + names in the binary; functional hosts excluded; see the
+file). Limit: telemetry sent through `apis.roblox.com` paths can't be blocked by hostname.

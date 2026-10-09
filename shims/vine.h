@@ -14,6 +14,9 @@ typedef int32_t OSStatus;
 typedef id (*IMP)(id, SEL, ...);
 
 int dprintf(int, const char *, ...);
+void *malloc(size_t);
+void free(void *);
+id objc_msgSend(id, SEL, ...);
 const char *sel_getName(SEL);
 const char *class_getName(Class);
 Class object_getClass(id);
