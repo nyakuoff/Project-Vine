@@ -1,0 +1,19 @@
+date:      2026-10-09T10:15:48+00:00
+distro:    CachyOS rolling
+kernel:    7.2.9-1-cachyos  arch: x86_64
+cpu:       12th Gen Intel(R) Core(TM) i7-12700K
+gpu:       Intel Corporation Alder Lake-S GT1 [UHD Graphics 770] (rev 0c)
+gpu:       Advanced Micro Devices, Inc. [AMD/ATI] Navi 32 [Radeon RX 7700 XT / 7800 XT] (rev c8)
+vulkan:    AMD Radeon RX 7800 XT (RADV NAVI32) / Mesa 26.2.4-arch3.1
+vulkan:    Intel(R) UHD Graphics 770 (ADL-S GT1) / Mesa 26.2.4-arch3.1
+opengl:    4.6 (Core Profile) Mesa 26.2.4-arch3.1
+session:   wayland / KDE
+wine:      wine-11.19
+proton:    GE-Proton10-34 (wine-10.0 (Staging))
+proton:    GE-Proton11-1 (wine-11.0 (Staging))
+proton:    UMU-Proton-10.0-4 (wine-10.0)
+proton:    Proton 11.0 (wine-11.0)
+proton:    Proton - Experimental (wine-11.0)
+proton:    Proton Hotfix (wine-11.0)
+sober:     1.8.0
+vinegar:   1.9.4

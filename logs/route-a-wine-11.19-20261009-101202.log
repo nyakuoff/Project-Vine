@@ -1,0 +1,49 @@
+# wine: wine-11.19  kernel: 7.2.9-1-cachyos  date: 2026-10-09T10:12:07+00:00
+# exe sha256: 11a30ada177d15a9
+01b0:trace:seh:libc_addr_cb found signal trampoline in /usr/lib/libc.so.6
+01b0:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x00000025,0x7ffff043fa30,0x00000040,(nil))
+01b0:trace:loaddll:build_module Loaded L"C:\\Roblox\\RobloxPlayerBeta.exe" at 0000000140000000: native
+01b0:trace:loaddll:build_ntdll_module Loaded L"C:\\windows\\system32\\ntdll.dll" at 00006FFFFFBA0000: builtin
+01b0:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\kernelbase.dll" at 00006FFFFF320000: builtin
+01b0:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\kernel32.dll" at 00006FFFFF9C0000: builtin
+01b0:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\msvcrt.dll" at 00006FFFFEE20000: builtin
+01b0:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\ucrtbase.dll" at 00006FFFFE910000: builtin
+01b0:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\sechost.dll" at 00006FFFFED70000: builtin
+01b0:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\advapi32.dll" at 00006FFFFF1D0000: builtin
+01b0:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\win32u.dll" at 00006FFFFD7F0000: builtin
+01b0:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\gdi32.dll" at 00006FFFFD850000: builtin
+01b0:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\USER32.dll" at 00006FFFFDB20000: builtin
+01b0:trace:loaddll:build_module Loaded L"C:\\Roblox\\RobloxPlayerBeta.dll" at 00006FFFF94E0000: native
+01b0:trace:process:NtQueryInformationProcess (0xffffffffffffffff,0x0000001a,0x7ffff043f598,0x00000008,(nil))
+01b0:trace:process:GetEnvironmentVariableW (L"WINEUNIXCP" 00007FFFF043F320 85)
+01b0:fixme:ntdll:find_reg_tz_info Can't find matching timezone information in the registry for bias 0, std (d/m/y): 22/03/2026, dlt (d/m/y): 15/02/2026
+01b0:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\imm32.dll" at 00006FFFFD750000: builtin
+01b0:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\dbghelp.dll" at 00006FFFFB7A0000: builtin
+01b0:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\psapi.dll" at 00006FFFFBE90000: builtin
+01b0:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\version.dll" at 00006FFFFB760000: builtin
+01b0:warn:module:load_dll Failed to load module L"verifier.dll"; status=c0000135
+01b0:warn:module:load_dll Failed to load module L"verifier.dll"; status=c0000135
+01b0:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\powrprof.dll" at 00006FFFFB720000: builtin
+01b0:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\cryptbase.dll" at 00006FFFFE5E0000: builtin
+01b0:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\CRYPTSP.dll" at 00006FFFFB6E0000: builtin
+01b0:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\bcrypt.dll" at 00006FFFFB440000: builtin
+01b0:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\ncrypt.dll" at 00006FFFFB400000: builtin
+01b0:warn:module:load_dll Failed to load module L"GPAPI.dll"; status=c0000135
+01b0:warn:module:load_dll Failed to load module L"GPAPI.dll"; status=c0000135
+01b0:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\crypt32.dll" at 00006FFFFAF80000: builtin
+01b0:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\rpcrt4.dll" at 00006FFFFE620000: builtin
+01b0:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\combase.dll" at 00006FFFFC120000: builtin
+01b0:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\coml2.dll" at 00006FFFFC0B0000: builtin
+01b0:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\ole32.dll" at 00006FFFFC300000: builtin
+01b0:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\shcore.dll" at 00006FFFFC730000: builtin
+01b0:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\shlwapi.dll" at 00006FFFFC7A0000: builtin
+01b0:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\shell32.dll" at 00006FFFFC8E0000: builtin
+01b0:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\cryptnet.dll" at 00006FFFFB390000: builtin
+01b0:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\imagehlp.dll" at 00006FFFFAF20000: builtin
+01b0:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\wtsapi32.dll" at 00006FFFFAED0000: builtin
+01b0:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\winsta.dll" at 00006FFFFAE90000: builtin
+01b0:trace:seh:sigsys_handler SIGSYS, rax 0x769c8036, rip 0x6ffff9d9885f.
+01b0:trace:seh:sigsys_handler SIGSYS, rax 0x8681c0d7, rip 0x6ffff9dd0047.
+01b0:fixme:ntdll:NtRaiseHardError 0x50000018 4 0x3 0x7ffff043c850 0 0x7ffff043be80: stub
+01b0:trace:seh:sigsys_handler SIGSYS, rax 0x2d65c02c, rip 0x6ffff9dd1a72.
+# exit: 187

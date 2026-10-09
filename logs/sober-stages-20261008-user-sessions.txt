@@ -1,0 +1,26 @@
+log: ~/.var/app/org.vinegarhq.Sober/data/sober/sober_logs/2026-10-08_03-16-29.log
+PASS  client version known
+PASS  vulkan loaded
+PASS  window created
+PASS  GPU device selected
+PASS  joining experience
+PASS  server connection accepted
+PASS  clean exit
+AppVersion=741
+Vulkan Device: AMD Radeon RX 7800 XT (RADV NAVI32)
+session length: 994s
+Sending disconnect with reason: 285
+
+log: ~/.var/app/org.vinegarhq.Sober/data/sober/sober_logs/2026-10-08_04-37-24.log
+PASS  client version known
+PASS  vulkan loaded
+PASS  window created
+PASS  GPU device selected
+PASS  joining experience
+PASS  server connection accepted
+PASS  clean exit
+AppVersion=741
+Vulkan Device: AMD Radeon RX 7800 XT (RADV NAVI32)
+session length: 36s
+Sending disconnect with reason: 285
+
