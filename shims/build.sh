@@ -11,7 +11,7 @@ D="$ROOT/.work/darling-root/usr/libexec/darling"     # Darling's macOS root (rea
 LAYER="$ROOT/.work/vine-overlay"; NEWL="$LAYER.new"      # built in $NEWL, swapped in only on success
 O="$NEWL/usr/libexec/darling"                           # our layer
 NEW="CoreML"
-WRAP="AppKit AudioToolbox CFNetwork IOKit Carbon CoreAudio CoreGraphics CoreServices CoreVideo Foundation GameController Metal QuartzCore ServiceManagement SystemConfiguration VideoToolbox"
+WRAP="AppKit AudioToolbox CFNetwork IOKit OpenGL Carbon CoreAudio CoreGraphics CoreServices CoreVideo Foundation GameController Metal QuartzCore ServiceManagement SystemConfiguration VideoToolbox"
 
 rm -rf "$NEWL"; mkdir -p "$O/usr/lib/vine"
 TMP=$(mktemp -d); trap 'rm -rf "$TMP"' EXIT

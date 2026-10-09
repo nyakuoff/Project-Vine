@@ -679,3 +679,48 @@ __attribute__((constructor)) static void vine_close_fix(void) {
     else dprintf(2, "vine: NSRunLoop performSelector:target:argument:order:modes: not found\n");
 }
 #endif
+
+#ifdef FW_AppKit
+// Linux has no global menu bar, so Darling (Cocotron) draws the app's main menu as a strip inside
+// every titled window. Cocotron's override point +hasMainMenuForStyleMask: turns that off: no strip,
+// the content view gets the whole window. Key equivalents still work (they go through NSApp's main
+// menu, not the strip). VINE_MENU_BAR=1 restores it.
+@implementation NSWindow (VineNoMenuBar)
++ (BOOL)hasMainMenuForStyleMask:(unsigned long)styleMask {
+    static int show = -1;
+    if (show < 0) show = getenv("VINE_MENU_BAR") && *getenv("VINE_MENU_BAR") == '1';
+    return show && (styleMask & 1 /* NSWindowStyleMaskTitled */);
+}
+@end
+#endif
+
+#ifdef FW_OpenGL
+// Roblox's GLSL pack declares "#version 150" but 23 of its 733 shaders (smooth terrain, grass)
+// multiply uint by int literals, e.g. CB12[((uint(x) >> 8u) & 255u) * 1 + 0]. Implicit int->uint
+// conversion only exists from GLSL 4.00; Apple's compiler accepts it, Mesa rejects it, so terrain
+// failed to compile. Sources declaring 150 are submitted as 400 (all 733 compile; checked with
+// tests/host/glsl_check.c). Roblox requests a 3.2 core context; Mesa provides 4.x core.
+typedef unsigned int GLuint; typedef int GLsizei, GLint; typedef char GLchar;
+void *vine_orig(const char *image, const char *sym);
+size_t strlen(const char *);
+void *memcpy(void *, const void *, size_t);
+void glShaderSource(GLuint shader, GLsizei count, const GLchar *const *strings, const GLint *lengths) {
+    static void (*orig)(GLuint, GLsizei, const GLchar *const *, const GLint *);
+    if (!orig) orig = vine_orig("/System/Library/Frameworks/OpenGL.framework/Versions/A/OpenGL.darling", "glShaderSource");
+    if (!orig) return;
+    if (count < 1 || !strings || !strings[0]) { orig(shader, count, strings, lengths); return; }
+    size_t n = lengths && lengths[0] >= 0 ? (size_t)lengths[0] : strlen(strings[0]);
+    const char *s = strings[0], *v = 0;
+    for (size_t i = 0; i + 12 <= n && i < 256; i++)   // the #version line comes first (after comments)
+        if (!__builtin_memcmp(s + i, "#version 150", 12)) { v = s + i; break; }
+    if (!v) { orig(shader, count, strings, lengths); return; }
+    char *copy = malloc(n + 1);
+    memcpy(copy, s, n); copy[n] = 0;
+    memcpy(copy + (v - s) + 9, "400", 3);
+    const GLchar *strs[count]; GLint lens[count];
+    for (GLsizei i = 0; i < count; i++) { strs[i] = strings[i]; lens[i] = lengths ? lengths[i] : -1; }
+    strs[0] = copy; lens[0] = (GLint)n;
+    orig(shader, count, strs, lens);
+    free(copy);
+}
+#endif
