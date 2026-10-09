@@ -25,10 +25,10 @@
 | | A: Windows + Wine/Proton | B: macOS + Darling + Vine shims | C: Android + Sober |
 |---|---|---|---|
 | Feasibility | **Blocked** by design | **In progress**: engine + OpenGL init reached | **Works** |
-| Blocker | Hyperion detects Wine and exits: "Wine is not supported." | ~1.6k symbols / 165 classes / 1.3k selectors of Apple API; CoreML/WebKit missing in Darling | Remote-attestation games (Error 318) |
-| Complexity to progress | Requires defeating anti-tamper — out of scope | Multi-person-year runtime work | None (install) |
-| Tooling | Wine, Proton, DXVK — all mature | Darling (experimental GUI), darling-metal (early) | Sober 1.8.0 |
-| Evidence | `logs/route-a-*.log` (3 Wine builds) | Static analysis (RESEARCH §3), Darling #885 | `logs/sober-stages-*.txt`, Sober docs |
+| Blocker | Hyperion detects Wine and exits: "Wine is not supported." | Darling networking (NSURLSession skeleton, TLS -9836); no visible frame yet | Remote-attestation games (Error 318) |
+| Complexity to progress | Requires defeating anti-tamper — out of scope | Incremental Darling fixes (10 landed so far as shims) | None (install) |
+| Tooling | Wine, Proton, DXVK — all mature | Darling 0.1.20260608 rootless + `shims/` + crash/exception/coverage tools | Sober 1.8.0 |
+| Evidence | `logs/route-a-*.log` (3 Wine builds) | RESEARCH §5, `logs/darling-roblox-*.log`, `tests/darwin/` | `logs/sober-stages-*.txt`, Sober docs |
 
 ## Lifecycle stage results
 
