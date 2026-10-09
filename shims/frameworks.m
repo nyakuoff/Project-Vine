@@ -167,11 +167,16 @@ static void vine_trim(const char **s, const char **e) {
     while (*e > *s && ((*e)[-1] == ' ' || (*e)[-1] == '\t')) (*e)--;
 }
 static CFStringRef vine_str(const char *s, const char *e) { return CFStringCreateWithBytes(0, s, e - s, UTF8, 0); }
+typedef const struct __CFDate *CFDateRef;
+CFDateRef CFDateCreate(CFAllocatorRef, double);
+double CFAbsoluteTimeGetCurrent(void);
+#include "httpdate.h"
 
 // One cookie "name=value; Domain=x; Path=/; Secure; HttpOnly" -> appended cookie object.
 static void vine_cookie(const char *s, const char *e, CFURLRef url, CFMutableArrayRef out) {
     CFStringRef name = 0, value = 0, domain = 0, path = 0;
     BOOL secure = 0, httponly = 0;
+    double expires = 0, max_age = -1;   // CFAbsoluteTime; 0 = none
     for (const char *t = s; t < e; ) {
         const char *te = t; while (te < e && *te != ';') te++;
         const char *eq = t; while (eq < te && *eq != '=') eq++;
@@ -180,6 +185,8 @@ static void vine_cookie(const char *s, const char *e, CFURLRef url, CFMutableArr
         if (!name) { if (eq < te && ke > ks) { name = vine_str(ks, ke); value = vine_str(vs, ve); } else break; }
         else if (vine_ieq(ks, ke - ks, "domain") && ve > vs) { if (domain) CFRelease(domain); domain = vine_str(vs, ve); }
         else if (vine_ieq(ks, ke - ks, "path") && ve > vs) { if (path) CFRelease(path); path = vine_str(vs, ve); }
+        else if (vine_ieq(ks, ke - ks, "expires") && ve > vs) expires = vine_http_date(vs, ve);
+        else if (vine_ieq(ks, ke - ks, "max-age") && ve > vs) { max_age = 0; for (const char *q = vs; q < ve && *q >= '0' && *q <= '9'; q++) max_age = max_age * 10 + (*q - '0'); }
         else if (vine_ieq(ks, ke - ks, "secure")) secure = 1;
         else if (vine_ieq(ks, ke - ks, "httponly")) httponly = 1;
         t = te < e ? te + 1 : e;
@@ -189,7 +196,13 @@ static void vine_cookie(const char *s, const char *e, CFURLRef url, CFMutableArr
         const void *k[] = {CFSTR("Name"), CFSTR("Value"), CFSTR("Domain"), CFSTR("Path"), CFSTR("Secure"), CFSTR("HTTPOnly"), CFSTR("OriginURL")};
         const void *v[] = {name, value, domain, path ? path : CFSTR("/"), secure ? kCFBooleanTrue : kCFBooleanFalse,
                            httponly ? kCFBooleanTrue : kCFBooleanFalse, url};
-        CFDictionaryRef props = CFDictionaryCreate(0, k, v, url ? 7 : 6, kCFTypeDictionaryKeyCallBacks, kCFTypeDictionaryValueCallBacks);
+        if (max_age >= 0) expires = CFAbsoluteTimeGetCurrent() + max_age;   // Max-Age wins over Expires
+        CFDateRef exp = expires ? CFDateCreate(0, expires) : 0;
+        const void *k2[9], *v2[9]; int nk = 0;
+        for (int i = 0; i < (url ? 7 : 6); i++) { k2[nk] = k[i]; v2[nk++] = v[i]; }
+        if (exp) { k2[nk] = CFSTR("Expires"); v2[nk++] = exp; }
+        CFDictionaryRef props = CFDictionaryCreate(0, k2, v2, nk, kCFTypeDictionaryKeyCallBacks, kCFTypeDictionaryValueCallBacks);
+        if (exp) CFRelease(exp);
         CFHTTPCookieRef c = CFHTTPCookieCreateWithProperties(props);
         if (c) { CFArrayAppendValue(out, c); CFRelease(c); }
         CFRelease(props);
@@ -469,7 +482,9 @@ __attribute__((constructor)) static void vine_quartzcore_init(void) {
 // VINE_TRACE_EVENTS=1: log NSEvent dispatch (type, window location) through NSApplication, NSWindow
 // and Roblox's view, to see where input stops. Diagnostic only.
 @interface NSEvent : NSObject - (unsigned long)type; - (NSPoint)locationInWindow; - (id)window; + (NSPoint)mouseLocation;
-- (long)buttonNumber; - (long)clickCount; - (double)timestamp; - (long)windowNumber; @end
+- (long)buttonNumber; - (long)clickCount; - (double)timestamp; - (long)windowNumber;
+- (unsigned short)keyCode; - (id)characters; - (unsigned long)modifierFlags; @end
+@interface NSObject (VineUTF8) - (const char *)UTF8String; @end
 @interface NSProcessInfo : NSObject + (id)processInfo; - (double)systemUptime; @end
 @interface NSObject (VineFrame) - (NSRect)frame; @end
 @interface NSObject (VineFocus) - (BOOL)isKeyWindow; - (BOOL)isActive; @end
@@ -483,6 +498,7 @@ extern id NSApp;
             NSPoint p = [e locationInWindow]; \
             dprintf(2, "vine-ev: -[%s %s] type=%lu at %.0f,%.0f key=%d active=%d\n", class_getName(object_getClass(self)), sel_getName(_cmd), t, p.x, p.y, \
                     (int)(BOOL)(long)[[e window] isKeyWindow], (int)(BOOL)(long)[NSApp isActive]); \
+            if (t == 10 || t == 11) dprintf(2, "vine-ev:   keyCode=%u chars='%s' modifiers=0x%lx\n", [e keyCode], [[e characters] UTF8String] ?: "", [e modifierFlags]); \
             if (t == 1 || t == 2) { NSPoint m = [NSEvent mouseLocation]; NSRect f = [[e window] frame]; \
                 dprintf(2, "vine-ev:   mouseLocation=%.0f,%.0f window.frame=%.0f,%.0f %.0fx%.0f buttonNumber=%ld clickCount=%ld timestamp=%.3f uptime=%.3f windowNumber=%ld\n", \
                         m.x, m.y, f.origin.x, f.origin.y, f.size.width, f.size.height, [e buttonNumber], [e clickCount], [e timestamp], \
@@ -722,5 +738,211 @@ void glShaderSource(GLuint shader, GLsizei count, const GLchar *const *strings, 
     strs[0] = copy; lens[0] = (GLint)n;
     orig(shader, count, strs, lens);
     free(copy);
+}
+#endif
+
+#ifdef FW_AudioToolbox
+// Darling's HAL output unit (CoreAudio.component: AUHAL, DefaultOutputAU, SystemOutputAU) inherits
+// AUBase::ValidFormat, which only accepts the canonical non-interleaved float format; Apple's AUHAL
+// accepts any linear PCM. Game engines ask for interleaved float (FMOD in Roblox), get
+// kAudioUnitErr_FormatNotSupported and give up (FMOD_ERR_OUTPUT_INIT, no sound). AUHAL hands the
+// format to the device, which takes interleaved PCM, so accepting LPCM there is correct. The
+// component loads lazily: patch it right after the first AudioComponentInstanceNew.
+void *vine_orig(const char *image, const char *sym);
+void *vine_local_symbol(const char *image_suffix, const char *sym);
+int vine_detour_addr(void *fn, void *repl);
+typedef struct { double rate; uint32_t formatID, flags, bytesPerPacket, framesPerPacket, bytesPerFrame, channels, bits, reserved; } VineASBD;
+static BOOL vine_auhal_valid_format(void *self, uint32_t scope, uint32_t element, const VineASBD *f) {
+    return f && f->formatID == 0x6c70636d /* 'lpcm' */ && f->channels > 0 && f->channels <= 32 &&
+           (f->bits == 8 || f->bits == 16 || f->bits == 24 || f->bits == 32 || f->bits == 64) && f->rate > 0;
+}
+// AUHAL::StreamFormatWritable is `!running && IsInitialized()`: the format can only be set after
+// AudioUnitInitialize, while the usual order (and Apple's AUHAL) allows it before.
+// ponytail: also allows changes while running; Darling exposes no running flag to check from here.
+static BOOL vine_auhal_format_writable(void *self, uint32_t scope, uint32_t element) { return 1; }
+OSStatus AudioComponentInstanceNew(void *component, void **out) {
+    static OSStatus (*orig)(void *, void **);
+    static int patched;
+    if (!orig) orig = vine_orig("/System/Library/Frameworks/AudioToolbox.framework/Versions/A/AudioToolbox.darling", "AudioComponentInstanceNew");
+    OSStatus st = orig ? orig(component, out) : -1;
+    if (!patched) {
+        void *vf = vine_local_symbol("CoreAudio.component/Contents/MacOS/CoreAudio", "__ZN6AUBase11ValidFormatEjjRK24CAStreamBasicDescription");
+        void *wf = vine_local_symbol("CoreAudio.component/Contents/MacOS/CoreAudio", "__ZN5AUHAL20StreamFormatWritableEjj");
+        if (vf) { patched = 1; vine_detour_addr(vf, (void *)vine_auhal_valid_format); }
+        if (wf) vine_detour_addr(wf, (void *)vine_auhal_format_writable);
+    }
+    return st;
+}
+#endif
+
+#ifdef FW_AppKit
+// +[NSEvent addLocalMonitorForEventsMatchingMask:handler:] / +removeMonitor: are unimplemented
+// stubs in Darling; Roblox installs local monitors at start-up. macOS semantics: before an event is
+// dispatched by -[NSApplication sendEvent:], every monitor whose mask includes the event's type gets
+// it; the handler returns the event to dispatch (possibly a different one) or nil to swallow it.
+void *_Block_copy(const void *);
+void _Block_release(const void *);
+typedef id (^VineMonitorBlock)(id);
+static struct { unsigned long long mask; VineMonitorBlock handler; id token; } vine_monitors[32];
+static int vine_monitor_count;
+static id vine_add_monitor(id self, SEL _cmd, unsigned long long mask, VineMonitorBlock handler) {
+    if (!handler || vine_monitor_count == 32) return 0;
+    id token = [[NSObject alloc] init];
+    vine_monitors[vine_monitor_count].mask = mask;
+    vine_monitors[vine_monitor_count].handler = (VineMonitorBlock)_Block_copy(handler);
+    vine_monitors[vine_monitor_count].token = token;
+    vine_monitor_count++;
+    return token;
+}
+static void vine_remove_monitor(id self, SEL _cmd, id token) {
+    for (int i = 0; i < vine_monitor_count; i++)
+        if (vine_monitors[i].token == token) {
+            _Block_release(vine_monitors[i].handler);
+            vine_monitors[i] = vine_monitors[--vine_monitor_count];
+            return;
+        }
+}
+static void (*orig_app_sendEvent)(id, SEL, id);
+static void vine_app_sendEvent(id self, SEL _cmd, id event) {
+    for (int i = 0; event && i < vine_monitor_count; i++) {
+        unsigned long type = [event type];
+        if (type < 64 && (vine_monitors[i].mask & (1ULL << type)))
+            event = vine_monitors[i].handler(event);
+    }
+    if (event) orig_app_sendEvent(self, _cmd, event);
+}
+__attribute__((constructor)) static void vine_event_monitors(void) {
+    Class meta = object_getClass((id)objc_getClass("NSEvent"));
+    Method m;
+    if ((m = class_getInstanceMethod(meta, sel_registerName("addLocalMonitorForEventsMatchingMask:handler:"))))
+        method_setImplementation(m, (IMP)vine_add_monitor);
+    if ((m = class_getInstanceMethod(meta, sel_registerName("removeMonitor:"))))
+        method_setImplementation(m, (IMP)vine_remove_monitor);
+    if ((m = class_getInstanceMethod(objc_getClass("NSApplication"), sel_registerName("sendEvent:"))))
+        orig_app_sendEvent = (void (*)(id, SEL, id))method_setImplementation(m, (IMP)vine_app_sendEvent);
+}
+#endif
+
+#ifdef FW_CFNetwork
+// Persistent cookies. Darling's NSHTTPCookieStorage is an in-memory array, so Roblox's login cookie
+// was lost at every exit (macOS persists cookies that have an expiry). Persistent cookies (Expires in
+// the future) are written to ~/Library/Cookies/Vine-Cookies.plist (0600, atomic rename) whenever the
+// shared store changes, and loaded into it the first time it is used. The file holds the user's
+// session: treat it like a browser profile.
+@interface NSObject (VineCookies)
++ (id)sharedHTTPCookieStorage; + (id)cookieWithProperties:(id)p; + (id)date; + (id)array; + (id)dictionary;
+- (id)cookies; - (id)properties; - (id)objectForKey:(id)k; - (void)setObject:(id)o forKey:(id)k; - (void)addObject:(id)o;
+- (id)allKeys; - (unsigned long)count; - (id)objectAtIndex:(unsigned long)i; - (long)compare:(id)o;
+- (BOOL)isKindOfClass:(Class)c; - (id)absoluteString; - (const char *)UTF8String; - (BOOL)boolValue;
+@end
+typedef const void *CFPropertyListRef; typedef const struct __CFData *CFDataRef;
+CFDataRef CFPropertyListCreateData(CFAllocatorRef, CFPropertyListRef, long, unsigned long, void **);
+CFPropertyListRef CFPropertyListCreateWithData(CFAllocatorRef, CFDataRef, unsigned long, long *, void **);
+CFDataRef CFDataCreate(CFAllocatorRef, const unsigned char *, CFIndex);
+const unsigned char *CFDataGetBytePtr(CFDataRef); CFIndex CFDataGetLength(CFDataRef);
+int open(const char *, int, ...); long write(int, const void *, size_t); long read(int, void *, size_t);
+int close(int); int rename(const char *, const char *); int mkdir(const char *, unsigned short);
+char *strcpy(char *, const char *); char *strcat(char *, const char *);
+#define O_RDONLY 0
+#define O_WRONLY 1
+#define O_CREAT 0x200
+#define O_TRUNC 0x400
+static int vine_cookie_loading;
+static const char *vine_cookie_file(const char *suffix) {
+    static char path[1024];
+    const char *home = getenv("HOME");
+    if (!home || strlen(home) > 900) return 0;
+    strcpy(path, home); strcat(path, "/Library"); mkdir(path, 0700);
+    strcat(path, "/Cookies"); mkdir(path, 0700);
+    strcat(path, "/Vine-Cookies.plist"); strcat(path, suffix);
+    return path;
+}
+static BOOL vine_cookie_persistent(id props) {
+    id exp = [props objectForKey:@"Expires"];
+    if ([exp isKindOfClass:objc_getClass("NSDate")]) return [exp compare:[objc_getClass("NSDate") date]] > 0;
+    if ([exp isKindOfClass:objc_getClass("NSString")]) {
+        const char *s = [exp UTF8String];
+        double t = s ? vine_http_date(s, s + strlen(s)) : 0;
+        return t > CFAbsoluteTimeGetCurrent();
+    }
+    return 0;
+}
+static void vine_cookies_save(id storage) {
+    if (vine_cookie_loading) return;
+    id cookies = [storage cookies], out = [objc_getClass("NSMutableArray") array];
+    for (unsigned long i = 0; i < [cookies count]; i++) {
+        id props = [[cookies objectAtIndex:i] properties];
+        if (!vine_cookie_persistent(props)) continue;
+        id clean = [objc_getClass("NSMutableDictionary") dictionary], keys = [props allKeys];
+        for (unsigned long k = 0; k < [keys count]; k++) {   // plist-safe values only
+            id key = [keys objectAtIndex:k], v = [props objectForKey:key];
+            if ([v isKindOfClass:objc_getClass("NSURL")]) v = [v absoluteString];
+            if ([v isKindOfClass:objc_getClass("NSString")] || [v isKindOfClass:objc_getClass("NSDate")] ||
+                [v isKindOfClass:objc_getClass("NSNumber")])
+                [clean setObject:v forKey:key];
+        }
+        [out addObject:clean];
+    }
+    CFDataRef data = CFPropertyListCreateData(0, (CFPropertyListRef)out, 100 /* XML */, 0, 0);
+    const char *tmp = vine_cookie_file(".tmp");
+    if (!data || !tmp) { if (data) CFRelease(data); return; }
+    char tmpc[1024]; strcpy(tmpc, tmp);
+    int fd = open(tmpc, O_WRONLY | O_CREAT | O_TRUNC, 0600);
+    if (fd >= 0) {
+        long n = write(fd, CFDataGetBytePtr(data), CFDataGetLength(data));
+        close(fd);
+        if (n == CFDataGetLength(data)) rename(tmpc, vine_cookie_file(""));
+    }
+    CFRelease(data);
+}
+static void (*orig_setCookie)(id, SEL, id), (*orig_deleteCookie)(id, SEL, id), (*orig_setCookiesForURL)(id, SEL, id, id, id);
+static id (*orig_sharedStorage)(id, SEL);
+static void vine_setCookie(id self, SEL _cmd, id c) { orig_setCookie(self, _cmd, c); vine_cookies_save(self); }
+static void vine_deleteCookie(id self, SEL _cmd, id c) { orig_deleteCookie(self, _cmd, c); vine_cookies_save(self); }
+static void vine_setCookiesForURL(id self, SEL _cmd, id cs, id u, id m) { orig_setCookiesForURL(self, _cmd, cs, u, m); vine_cookies_save(self); }
+static id vine_sharedStorage(id self, SEL _cmd) {
+    id storage = orig_sharedStorage(self, _cmd);
+    static int loaded;
+    if (loaded++ || !storage) return storage;
+    const char *path = vine_cookie_file("");
+    int fd = path ? open(path, O_RDONLY) : -1;
+    if (fd < 0) return storage;
+    static unsigned char buf[1 << 20];   // ponytail: cookie file up to 1 MiB
+    long n = read(fd, buf, sizeof buf);
+    close(fd);
+    CFDataRef data = n > 0 ? CFDataCreate(0, buf, n) : 0;
+    id list = data ? (id)CFPropertyListCreateWithData(0, data, 0, 0, 0) : 0;
+    if (data) CFRelease(data);
+    vine_cookie_loading = 1;
+    for (unsigned long i = 0; list && i < [list count]; i++) {
+        id props = [[list objectAtIndex:i] mutableCopy];
+        if (!vine_cookie_persistent(props)) continue;
+        for (int b = 0; b < 2; b++) {   // Darling reads these with CFBooleanGetValue: must be booleans
+            id key = b ? @"HTTPOnly" : @"Secure", v = [props objectForKey:key];
+            BOOL on = [v isKindOfClass:objc_getClass("NSString")] ? (strcmp([v UTF8String], "TRUE") == 0 || strcmp([v UTF8String], "1") == 0)
+                    : (v ? [v boolValue] : 0);
+            [props setObject:(id)(on ? kCFBooleanTrue : kCFBooleanFalse) forKey:key];
+        }
+        id cookie = [objc_getClass("NSHTTPCookie") cookieWithProperties:props];
+        if (cookie) orig_setCookie(storage, sel_registerName("setCookie:"), cookie);
+    }
+    vine_cookie_loading = 0;
+    if (list) CFRelease((CFTypeRef)list);
+    return storage;
+}
+@interface NSObject (VineMutableCopy) - (id)mutableCopy; @end
+int strcmp(const char *, const char *);
+__attribute__((constructor)) static void vine_cookie_persistence(void) {
+    Class c = objc_getClass("NSHTTPCookieStorage");
+    Method m;
+    if (!c) return;
+    if ((m = class_getInstanceMethod(object_getClass((id)c), sel_registerName("sharedHTTPCookieStorage"))))
+        orig_sharedStorage = (id (*)(id, SEL))method_setImplementation(m, (IMP)vine_sharedStorage);
+    if ((m = class_getInstanceMethod(c, sel_registerName("setCookie:"))))
+        orig_setCookie = (void (*)(id, SEL, id))method_setImplementation(m, (IMP)vine_setCookie);
+    if ((m = class_getInstanceMethod(c, sel_registerName("deleteCookie:"))))
+        orig_deleteCookie = (void (*)(id, SEL, id))method_setImplementation(m, (IMP)vine_deleteCookie);
+    if ((m = class_getInstanceMethod(c, sel_registerName("setCookies:forURL:mainDocumentURL:"))))
+        orig_setCookiesForURL = (void (*)(id, SEL, id, id, id))method_setImplementation(m, (IMP)vine_setCookiesForURL);
 }
 #endif

@@ -63,6 +63,7 @@ for fw in $NEW $WRAP; do
   fi
   # AppKit's shims use Foundation classes (NSThread, NSThreadSharedInstance)
   [ "$fw" = QuartzCore ] && extra+=("$D/System/Library/Frameworks/OpenGL.framework/Versions/A/OpenGL")
+  [ "$fw" = CFNetwork ] && extra+=("$D/System/Library/Frameworks/Foundation.framework/Versions/C/Foundation")
   [ "$fw" = AppKit ] && extra+=("$D/System/Library/Frameworks/Foundation.framework/Versions/C/Foundation" "$D/System/Library/Frameworks/OpenGL.framework/Versions/A/OpenGL")
   cc "$O/$dir/$fw" "/$dir/$fw" -DFW_$fw "$SRC/frameworks.m" "$O$STUB" "${extra[@]}"
   # framework layout symlinks (Darling's originals already have them for wrapped ones)
