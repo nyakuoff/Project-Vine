@@ -1046,9 +1046,25 @@ static void vine_cookies_save(id storage) {
 }
 static void (*orig_setCookie)(id, SEL, id), (*orig_deleteCookie)(id, SEL, id), (*orig_setCookiesForURL)(id, SEL, id, id, id);
 static id (*orig_sharedStorage)(id, SEL);
-static void vine_setCookie(id self, SEL _cmd, id c) { orig_setCookie(self, _cmd, c); vine_cookies_save(self); }
-static void vine_deleteCookie(id self, SEL _cmd, id c) { orig_deleteCookie(self, _cmd, c); vine_cookies_save(self); }
-static void vine_setCookiesForURL(id self, SEL _cmd, id cs, id u, id m) { orig_setCookiesForURL(self, _cmd, cs, u, m); vine_cookies_save(self); }
+// Trace of cookie traffic in the run log: names and domains only, never values.
+static void vine_cookie_trace(const char *op, id c) {
+    id props = [c properties];
+    dprintf(2, "vine-cookie: %s %s domain=%s persistent=%d\n", op, [[c name] UTF8String],
+            [[props objectForKey:@"Domain"] UTF8String], (int)vine_cookie_persistent(props));
+}
+static void vine_setCookie(id self, SEL _cmd, id c) { vine_cookie_trace("set", c); orig_setCookie(self, _cmd, c); vine_cookies_save(self); }
+static void vine_deleteCookie(id self, SEL _cmd, id c) { vine_cookie_trace("delete", c); orig_deleteCookie(self, _cmd, c); vine_cookies_save(self); }
+static void vine_setCookiesForURL(id self, SEL _cmd, id cs, id u, id m) {
+    for (unsigned long i = 0; i < [cs count]; i++) vine_cookie_trace("set-for-url", [cs objectAtIndex:i]);
+    orig_setCookiesForURL(self, _cmd, cs, u, m); vine_cookies_save(self);
+}
+static id (*orig_cookiesForURL)(id, SEL, id);
+static id vine_cookiesForURL(id self, SEL _cmd, id url) {
+    id r = orig_cookiesForURL(self, _cmd, url);
+    dprintf(2, "vine-cookie: get %s -> %lu cookie(s), store has %lu\n", [[url absoluteString] UTF8String],
+            (unsigned long)[r count], (unsigned long)[[self cookies] count]);
+    return r;
+}
 static id vine_sharedStorage(id self, SEL _cmd) {
     id storage = orig_sharedStorage(self, _cmd);
     static int loaded;
@@ -1076,6 +1092,7 @@ static id vine_sharedStorage(id self, SEL _cmd) {
         if (cookie) orig_setCookie(storage, sel_registerName("setCookie:"), cookie);
     }
     vine_cookie_loading = 0;
+    dprintf(2, "vine-cookie: restored %lu saved cookie(s)\n", list ? (unsigned long)[list count] : 0ul);
     if (list) CFRelease((CFTypeRef)list);
     return storage;
 }
@@ -1093,6 +1110,8 @@ __attribute__((constructor)) static void vine_cookie_persistence(void) {
         orig_deleteCookie = (void (*)(id, SEL, id))method_setImplementation(m, (IMP)vine_deleteCookie);
     if ((m = class_getInstanceMethod(c, sel_registerName("setCookies:forURL:mainDocumentURL:"))))
         orig_setCookiesForURL = (void (*)(id, SEL, id, id, id))method_setImplementation(m, (IMP)vine_setCookiesForURL);
+    if ((m = class_getInstanceMethod(c, sel_registerName("cookiesForURL:"))))
+        orig_cookiesForURL = (id (*)(id, SEL, id))method_setImplementation(m, (IMP)vine_cookiesForURL);
 }
 #endif
 
