@@ -15,7 +15,7 @@ Goal: launch the official Roblox client on Linux, sign in, join experiences, ren
 
 **Bottom line:**
 - **Windows Player under Wine/Proton:** Roblox's Hyperion anti-tamper explicitly detects Wine ("Wine is not supported.") and exits, before any graphics code runs. Proton's anti-cheat support (EAC/BattlEye runtimes) doesn't apply because Roblox uses neither. No configuration fixes this, and we do not bypass it.
-- **macOS client:** would need a large part of Apple's frameworks reimplemented. There is no runtime close to that today.
+- **macOS client (active route):** runs on Darling (no root, no install) with Vine's shim layer. It now gets through engine start-up and **initializes its OpenGL renderer on Mesa**; next blockers are Darling's incomplete HTTPS/NSURLSession stack and getting a visible frame. See RESEARCH §5.
 - **What works:** the official Android client running natively through [Sober](https://sober.vinegarhq.org/).
 
 Details: [RESEARCH.md](RESEARCH.md) · [COMPATIBILITY.md](COMPATIBILITY.md) · [DECISIONS.md](DECISIONS.md) · [ARCHITECTURE.md](ARCHITECTURE.md) · [TODO.md](TODO.md)
@@ -29,6 +29,17 @@ tests/sober-stages.sh        # after a session: which lifecycle stages were reac
 ```
 
 Requirements (per Sober docs): kernel ≥ 5.11, x86-64 with SSE4.1, GLES 3.0 (Vulkan 1.1 recommended).
+
+## Route B (macOS client on Darling)
+
+```sh
+# once: unpack Darling release debs into .work/darling-root (see RESEARCH §5), then
+shims/build-ffmpeg.sh && shims/build.sh       # Vine's shim layer
+tests/run-roblox-darling.sh 120               # headless run → logs/darling-roblox-*.log, logs/screens/
+VINE_DISPLAY=:0 tests/run-roblox-darling.sh   # on your desktop
+tests/darwin/run.sh <test>                    # Darwin regression tests (url_relative, dns, iokit_notify, urlsession, urlconnection)
+tests/darling-lastcrash.sh                    # explain the latest crash from its core dump
+```
 
 ## Reproduce the research
 

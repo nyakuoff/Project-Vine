@@ -280,3 +280,39 @@ static NSString *vine_resolve_path(NSString *p, NSURL *base) {
 - (id)initFileURLWithPath:(NSString *)p isDirectory:(BOOL)d relativeToURL:(NSURL *)b { return [self initFileURLWithPath:vine_resolve_path(p, b) isDirectory:d]; }
 @end
 #endif
+
+#ifdef FW_IOKit
+// Darling's iokitd serves only display/IOSurface/power objects; matching notifications for anything
+// else fail, and a NULL notification port is dereferenced. Report "nothing matched" instead.
+void *vine_orig(const char *image, const char *sym);
+typedef unsigned int io_iterator_t;
+typedef int kern_return_t;
+#define kIOReturnBadArgument ((kern_return_t)0xe00002c2)
+kern_return_t IOServiceAddMatchingNotification(void *port, const char *type, CFTypeRef matching,
+                                               void *callback, void *refcon, io_iterator_t *it) {
+    static kern_return_t (*orig)(void *, const char *, CFTypeRef, void *, void *, io_iterator_t *);
+    if (!orig) orig = vine_orig("/System/Library/Frameworks/IOKit.framework/Versions/A/IOKit.darling",
+                                "IOServiceAddMatchingNotification");
+    if (it) *it = 0;
+    if (!port || !orig) {
+        VINE_LOG_ONCE("IOServiceAddMatchingNotification(NULL port)");
+        void CFRelease(CFTypeRef);
+        if (matching) CFRelease(matching);   // the call consumes one reference to matching
+        return kIOReturnBadArgument;
+    }
+    return orig(port, type, matching, callback, refcon, it);
+}
+#endif
+
+#ifdef FW_CFNetwork
+// +[NSURLSession sharedSession] asks the private __NSCFURLSessionConfiguration (an NSObject
+// subclass in Darling, not exported) for +defaultSessionConfiguration; only the public
+// NSURLSessionConfiguration has it. Added at runtime since the class can't be linked against.
+@interface NSURLSessionConfiguration : NSObject + (id)defaultSessionConfiguration; @end
+Class objc_getClass(const char *);
+static id vine_default_config(id self, SEL _cmd) { return [NSURLSessionConfiguration defaultSessionConfiguration]; }
+__attribute__((constructor)) static void vine_cfnetwork_config(void) {
+    Class c = objc_getClass("__NSCFURLSessionConfiguration");
+    if (c) class_addMethod(object_getClass((id)c), @selector(defaultSessionConfiguration), (IMP)vine_default_config, "@@:");
+}
+#endif

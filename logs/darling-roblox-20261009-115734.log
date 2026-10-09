@@ -1,0 +1,107 @@
+MESA-EGL: warning: DRI3 error: Could not get DRI3 device
+MESA-EGL: warning: Ensure your X server supports DRI3 to get accelerated rendering
+vine-objc: -[RobloxOgreView setAllowedTouchTypes:] unimplemented
+vine-stub: -[VineSink setAllowedTouchTypes:] -> 0
+[77:77:20261009,115738.724024:INFO ClientCrashpadHandler.cpp:57] Handler executable command line:
+/Applications/RobloxPlayer.app/Contents/MacOS/RobloxCrashHandler --no-rate-limit --crashCounter Mac-ROBLOXPlayer-Crash --baseUrl https://www.roblox.com/ --sentryUrl https://sentry-relay.rbx.com/api/14/minidump/?sentry_key=605842214e2cc474d2e6af53f19795e1 --sentryDbPath /Users/root/Library/Logs/Roblox/crashes --sentryLogPath /Users/root/Library/Logs/Roblox/0.742.0.7421053_20261009T115738Z_Player_4bd26_last.log --attachment=attachment_0.742.0.7421053_20261009T115738Z_Player_4bd26_last.log=/Users/root/Library/Logs/Roblox/0.742.0.7421053_20261009T115738Z_Player_4bd26_last.log --database=/Users/root/Library/Logs/Roblox/crashes --metrics-dir=/Users/root/Library/Logs/Roblox/crashes --url=https://uploads.backtrace.rbx.com/post --annotation=AppVersion=0.742.0.7421053 --annotation=BaseUrl=https://www.roblox.com/ --annotation=CPUMake=итя€€ --annotation=EnableSessionEndCallback=true --annotation=EnableSessionStartCallback=true --annotation=EngineVersion=0.742.0.7421053 --annotation=Format=minidump --annotation=GPUMake=Main Display --annotation=OSPlatform=OSX --annotation=OSVersion=11.7.4 --annotation=PID=26 --annotation=PlatformId=0 --annotation=RobloxChannel=production --annotation=RobloxGitHash=1c8ca3efc668590d4a4a6fa1d1fd55945891d456 --annotation=RobloxProduct=RobloxPlayer --annotation=TotalMemoryGB=31 --annotation=UniqueId=1440552027869963753 --annotation=UploadAttachmentKiloByteLimit=1000 --handshake-fd=29
+[77:77:20261009,115738.724256:INFO ClientCrashpadHandler.cpp:87] Running the crashpad handler main function with 25 arguments:
+/Applications/RobloxPlayer.app/Contents/MacOS/RobloxCrashHandler --no-rate-limit --attachment=attachment_0.742.0.7421053_20261009T115738Z_Player_4bd26_last.log=/Users/root/Library/Logs/Roblox/0.742.0.7421053_20261009T115738Z_Player_4bd26_last.log --database=/Users/root/Library/Logs/Roblox/crashes --metrics-dir=/Users/root/Library/Logs/Roblox/crashes --url=https://uploads.backtrace.rbx.com/post --annotation=AppVersion=0.742.0.7421053 --annotation=BaseUrl=https://www.roblox.com/ --annotation=CPUMake=итя€€ --annotation=EnableSessionEndCallback=true --annotation=EnableSessionStartCallback=true --annotation=EngineVersion=0.742.0.7421053 --annotation=Format=minidump --annotation=GPUMake=Main Display --annotation=OSPlatform=OSX --annotation=OSVersion=11.7.4 --annotation=PID=26 --annotation=PlatformId=0 --annotation=RobloxChannel=production --annotation=RobloxGitHash=1c8ca3efc668590d4a4a6fa1d1fd55945891d456 --annotation=RobloxProduct=RobloxPlayer --annotation=TotalMemoryGB=31 --annotation=UniqueId=1440552027869963753 --annotation=UploadAttachmentKiloByteLimit=1000 --handshake-fd=29
+[26:26:20261009,115738.729794:ERROR mac_util.cc:141] version has unexpected format
+vine-objc: -[NSAppleEventManager currentAppleEvent] unimplemented
+vine-stub: -[VineSink currentAppleEvent] -> 0
+2026-10-09 11:57:37.739 RobloxPlayer[26:0] NSScanner: nil string argument
+2026-10-09 11:57:37.761 RobloxPlayer[26:0] -[NSView setCanDrawConcurrently:] unimplemented in /home/runner/work/darling/darling/src/external/cocotron/AppKit/NSView.m at 2127
+2026-10-09 11:57:37.938 RobloxPlayer[26:0] FreeType font face is not scalable
+2026-10-09 11:57:38.042 RobloxPlayer[26:0] FreeType font face is not scalable
+2026-10-09 11:57:38.045 RobloxPlayer[26:0] FreeType font face is not scalable
+2026-10-09 11:57:38.050 RobloxPlayer[26:0] FreeType font face is not scalable
+2026-10-09 11:57:38.084 RobloxPlayer[26:0] FreeType font face is not scalable
+2026-10-09 11:57:38.087 RobloxPlayer[26:0] FreeType font face is not scalable
+2026-10-09 11:57:38.089 RobloxPlayer[26:0] FreeType font face is not scalable
+2026-10-09 11:57:38.092 RobloxPlayer[26:0] FreeType font face is not scalable
+2026-10-09 11:57:38.094 RobloxPlayer[26:0] FreeType font face is not scalable
+2026-10-09 11:57:38.097 RobloxPlayer[26:0] FreeType font face is not scalable
+2026-10-09 11:57:38.102 RobloxPlayer[26:0] FreeType font face is not scalable
+2026-10-09 11:57:38.108 RobloxPlayer[26:0] FreeType font face is not scalable
+2026-10-09 11:57:38.119 RobloxPlayer[26:0] FreeType font face is not scalable
+2026-10-09 11:57:38.524 RobloxPlayer[26:0] FreeType font face is not scalable
+2026-10-09 11:57:38.527 RobloxPlayer[26:0] FreeType font face is not scalable
+2026-10-09 11:57:38.529 RobloxPlayer[26:0] FreeType font face is not scalable
+2026-10-09 11:57:38.532 RobloxPlayer[26:0] FreeType font face is not scalable
+2026-10-09 11:57:38.534 RobloxPlayer[26:0] FreeType font face is not scalable
+2026-10-09 11:57:38.537 RobloxPlayer[26:0] FreeType font face is not scalable
+2026-10-09 11:57:38.545 RobloxPlayer[26:0] FreeType font face is not scalable
+2026-10-09 11:57:38.553 RobloxPlayer[26:0] encoding =    
+2026-10-09 11:57:38.555 RobloxPlayer[26:0] FreeType font face is not scalable
+2026-10-09 11:57:38.557 RobloxPlayer[26:0] encoding =    
+2026-10-09 11:57:38.559 RobloxPlayer[26:0] FreeType font face is not scalable
+2026-10-09 11:57:38.562 RobloxPlayer[26:0] encoding =    
+2026-10-09 11:57:38.564 RobloxPlayer[26:0] FreeType font face is not scalable
+2026-10-09 11:57:38.567 RobloxPlayer[26:0] encoding =    
+2026-10-09 11:57:38.568 RobloxPlayer[26:0] FreeType font face is not scalable
+[FLog::Output] All use of Roblox services must comply with Roblox's Terms of Use, Privacy Policy, Community Standards, and applicable laws. Processing of User personal information is limited to the purposes expressly permitted therein.
+2026-10-09T11:57:39.183Z,1.183586,c01abe80,6 [FLog::Output] (AppDelegate) applicationDidFinishLaunching
+2026-10-09T11:57:39.183Z,1.183871,c01abe80,6,Info [FLog::UpdateController] UpdateController: versionQueryUrl: https://clientsettingscdn.roblox.com/v2/client-version/MacPlayer
+2026-10-09T11:57:39.183Z,1.183965,c01abe80,6,Info [FLog::UpdateController] MacUpdateController: updaterFullPath: /Applications/RobloxPlayer.app/Contents/MacOS/RobloxPlayerInstaller.app/Contents/MacOS/RobloxPlayerInstaller
+2026-10-09T11:57:39.185Z,1.185679,c01abe80,6,Warning [FLog::Output] settingsUrl: https://clientsettingscdn.roblox.com/v2/settings-compressed/application/MacDesktopClient/3274c4fe58582a02c0acdd9dd5463043c248ff1045b054f59923a70665a8ca79.dcz
+2026-10-09T11:57:39.185Z,1.185515,447f7000,6,Info [FLog::UpdateController] Update check thread started
+2026-10-09T11:57:39.193Z,1.193131,447f7000,6,Info [FLog::UpdateController] Checking if updater exists at /Applications/RobloxPlayer.app/Contents/MacOS/RobloxPlayerInstaller.app/Contents/MacOS/RobloxPlayerInstaller. Returning 1
+2026-10-09T11:57:40.060Z,2.060218,c01abe80,6,Error [FLog::Error] fetch flag exception: HttpError: DnsResolve
+2026-10-09T11:57:40.060Z,2.060632,c01abe80,6,Warning [FLog::Output] settingsUrl: https://clientsettingscdn.roblox.com/v2/settings-compressed/application/MacDesktopClient/3274c4fe58582a02c0acdd9dd5463043c248ff1045b054f59923a70665a8ca79.dcz
+2026-10-09T11:57:44.356Z,6.356781,447f7000,6,Error [FLog::UpdateController] Failed to acceMESA: error: Failed to attach to x11 shm
+MESA: error: Failed to attach to x11 shm
+# live pid=140544 darwin=26 tid=140544 S wchan=__skb_wait_for_more_packets syscall=47 /Applications/RobloxPlayer.app/Contents/MacOS/RobloxPlayer  
+# live pid=140544 darwin=26 tid=140547 S wchan=futex_wait syscall=202 /Applications/RobloxPlayer.app/Contents/MacOS/RobloxPlayer  
+# live pid=140544 darwin=26 tid=140548 S wchan=futex_wait syscall=202 /Applications/RobloxPlayer.app/Contents/MacOS/RobloxPlayer  
+# live pid=140544 darwin=26 tid=140549 S wchan=__x64_sys_epoll_wait.cold syscall=232 /Applications/RobloxPlayer.app/Contents/MacOS/RobloxPlayer  
+# live pid=140544 darwin=26 tid=140551 S wchan=0 syscall=running /Applications/RobloxPlayer.app/Contents/MacOS/RobloxPlayer  
+# live pid=140544 darwin=26 tid=140552 S wchan=futex_wait syscall=202 /Applications/RobloxPlayer.app/Contents/MacOS/RobloxPlayer  
+# live pid=140544 darwin=26 tid=140553 S wchan=futex_wait syscall=202 /Applications/RobloxPlayer.app/Contents/MacOS/RobloxPlayer  
+# live pid=140544 darwin=26 tid=140554 S wchan=futex_wait syscall=202 /Applications/RobloxPlayer.app/Contents/MacOS/RobloxPlayer  
+# live pid=140544 darwin=26 tid=140555 S wchan=futex_wait syscall=202 /Applications/RobloxPlayer.app/Contents/MacOS/RobloxPlayer  
+# live pid=140544 darwin=26 tid=140556 S wchan=futex_wait syscall=202 /Applications/RobloxPlayer.app/Contents/MacOS/RobloxPlayer  
+# live pid=140544 darwin=26 tid=140557 S wchan=futex_wait syscall=202 /Applications/RobloxPlayer.app/Contents/MacOS/RobloxPlayer  
+# live pid=140544 darwin=26 tid=140558 S wchan=futex_wait syscall=202 /Applications/RobloxPlayer.app/Contents/MacOS/RobloxPlayer  
+# live pid=140544 darwin=26 tid=140559 S wchan=futex_wait syscall=202 /Applications/RobloxPlayer.app/Contents/MacOS/RobloxPlayer  
+# live pid=140544 darwin=26 tid=140560 S wchan=futex_wait syscall=202 /Applications/RobloxPlayer.app/Contents/MacOS/RobloxPlayer  
+# live pid=140544 darwin=26 tid=140561 S wchan=futex_wait syscall=202 /Applications/RobloxPlayer.app/Contents/MacOS/RobloxPlayer  
+# live pid=140544 darwin=26 tid=140562 S wchan=futex_wait syscall=202 /Applications/RobloxPlayer.app/Contents/MacOS/RobloxPlayer  
+# live pid=140544 darwin=26 tid=140563 S wchan=futex_wait syscall=202 /Applications/RobloxPlayer.app/Contents/MacOS/RobloxPlayer  
+# live pid=140544 darwin=26 tid=140564 S wchan=futex_wait syscall=202 /Applications/RobloxPlayer.app/Contents/MacOS/RobloxPlayer  
+# live pid=140544 darwin=26 tid=140565 S wchan=futex_wait syscall=202 /Applications/RobloxPlayer.app/Contents/MacOS/RobloxPlayer  
+# live pid=140544 darwin=26 tid=140566 S wchan=futex_wait syscall=202 /Applications/RobloxPlayer.app/Contents/MacOS/RobloxPlayer  
+# live pid=140544 darwin=26 tid=140567 S wchan=futex_wait syscall=202 /Applications/RobloxPlayer.app/Contents/MacOS/RobloxPlayer  
+# live pid=140544 darwin=26 tid=140568 S wchan=futex_wait syscall=202 /Applications/RobloxPlayer.app/Contents/MacOS/RobloxPlayer  
+# live pid=140544 darwin=26 tid=140569 S wchan=futex_wait syscall=202 /Applications/RobloxPlayer.app/Contents/MacOS/RobloxPlayer  
+# live pid=140544 darwin=26 tid=140570 S wchan=futex_wait syscall=202 /Applications/RobloxPlayer.app/Contents/MacOS/RobloxPlayer  
+# live pid=140544 darwin=26 tid=140571 S wchan=futex_wait syscall=202 /Applications/RobloxPlayer.app/Contents/MacOS/RobloxPlayer  
+# live pid=140544 darwin=26 tid=140572 S wchan=futex_wait syscall=202 /Applications/RobloxPlayer.app/Contents/MacOS/RobloxPlayer  
+# live pid=140544 darwin=26 tid=140573 S wchan=futex_wait syscall=202 /Applications/RobloxPlayer.app/Contents/MacOS/RobloxPlayer  
+# live pid=140544 darwin=26 tid=140574 S wchan=futex_wait syscall=202 /Applications/RobloxPlayer.app/Contents/MacOS/RobloxPlayer  
+# live pid=140544 darwin=26 tid=140575 S wchan=futex_wait syscall=202 /Applications/RobloxPlayer.app/Contents/MacOS/RobloxPlayer  
+# live pid=140544 darwin=26 tid=140576 S wchan=futex_wait syscall=202 /Applications/RobloxPlayer.app/Contents/MacOS/RobloxPlayer  
+# live pid=140544 darwin=26 tid=140577 S wchan=futex_wait syscall=202 /Applications/RobloxPlayer.app/Contents/MacOS/RobloxPlayer  
+# live pid=140544 darwin=26 tid=140578 S wchan=futex_wait syscall=202 /Applications/RobloxPlayer.app/Contents/MacOS/RobloxPlayer  
+# live pid=140544 darwin=26 tid=140579 S wchan=futex_wait syscall=202 /Applications/RobloxPlayer.app/Contents/MacOS/RobloxPlayer  
+# live pid=140544 darwin=26 tid=140580 S wchan=futex_wait syscall=202 /Applications/RobloxPlayer.app/Contents/MacOS/RobloxPlayer  
+# live pid=140544 darwin=26 tid=140581 S wchan=futex_wait syscall=202 /Applications/RobloxPlayer.app/Contents/MacOS/RobloxPlayer  
+# live pid=140544 darwin=26 tid=140582 S wchan=futex_wait syscall=202 /Applications/RobloxPlayer.app/Contents/MacOS/RobloxPlayer  
+# live pid=140544 darwin=26 tid=140583 S wchan=futex_wait syscall=202 /Applications/RobloxPlayer.app/Contents/MacOS/RobloxPlayer  
+# live pid=140544 darwin=26 tid=140584 S wchan=futex_wait syscall=202 /Applications/RobloxPlayer.app/Contents/MacOS/RobloxPlayer  
+# live pid=140544 darwin=26 tid=140585 S wchan=futex_wait syscall=202 /Applications/RobloxPlayer.app/Contents/MacOS/RobloxPlayer  
+# live pid=140544 darwin=26 tid=140586 S wchan=futex_wait syscall=202 /Applications/RobloxPlayer.app/Contents/MacOS/RobloxPlayer  
+# live pid=140544 darwin=26 tid=140587 S wchan=futex_wait syscall=202 /Applications/RobloxPlayer.app/Contents/MacOS/RobloxPlayer  
+# live pid=140544 darwin=26 tid=140588 S wchan=futex_wait syscall=202 /Applications/RobloxPlayer.app/Contents/MacOS/RobloxPlayer  
+# live pid=140544 darwin=26 tid=140589 S wchan=futex_wait syscall=202 /Applications/RobloxPlayer.app/Contents/MacOS/RobloxPlayer  
+# live pid=140544 darwin=26 tid=140590 S wchan=futex_wait syscall=202 /Applications/RobloxPlayer.app/Contents/MacOS/RobloxPlayer  
+# live pid=140544 darwin=26 tid=140591 S wchan=futex_wait syscall=202 /Applications/RobloxPlayer.app/Contents/MacOS/RobloxPlayer  
+# live pid=140544 darwin=26 tid=140592 S wchan=futex_wait syscall=202 /Applications/RobloxPlayer.app/Contents/MacOS/RobloxPlayer  
+# live pid=140544 darwin=26 tid=140600 S wchan=__skb_wait_for_more_packets syscall=47 /Applications/RobloxPlayer.app/Contents/MacOS/RobloxPlayer  
+# live pid=140544 darwin=26 tid=140601 S wchan=__x64_sys_poll.cold syscall=7 /Applications/RobloxPlayer.app/Contents/MacOS/RobloxPlayer  
+# live pid=140544 darwin=26 tid=140613 S wchan=futex_wait syscall=202 /Applications/RobloxPlayer.app/Contents/MacOS/RobloxPlayer  
+# live pid=140595 darwin=77 tid=140595 S wchan=__skb_wait_for_more_packets syscall=47 /Applications/RobloxPlayer.app/Contents/MacOS/RobloxCrashHan
+# live pid=140595 darwin=77 tid=140596 S wchan=futex_wait syscall=202 /Applications/RobloxPlayer.app/Contents/MacOS/RobloxCrashHan
+# live pid=140595 darwin=77 tid=140597 S wchan=futex_wait syscall=202 /Applications/RobloxPlayer.app/Contents/MacOS/RobloxCrashHan
+# live pid=140595 darwin=77 tid=140598 S wchan=__skb_wait_for_more_packets syscall=47 /Applications/RobloxPlayer.app/Contents/MacOS/RobloxCrashHan
+# live pid=140595 darwin=77 tid=140599 S wchan=__skb_wait_for_more_packets syscall=47 /Applications/RobloxPlayer.app/Contents/MacOS/RobloxCrashHan
+# exit: 124

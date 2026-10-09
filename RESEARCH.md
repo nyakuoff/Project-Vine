@@ -95,3 +95,36 @@ Not in the original brief, but it is the official Roblox client and the only one
 - Locally installed: Sober 1.8.0, Android client AppVersion 741, Vulkan on RADV (RX 7800 XT).
 - The user's own sessions on 2026-10-08 (not run by Vine) show: Vulkan device → window → `Joining game` → `Connection accepted` → 994 s session → disconnect reason 285 → clean exit (`logs/sober-stages-20261008-user-sessions.txt`).
 - Known limits [V] ([Troubleshooting](https://vinegarhq.org/Sober/Troubleshooting.html)): experiences with Android Remote Attestation fail with Error 318; only allowlisted FFlags; no multi-instance; Flatpak-only.
+
+## 5. Route B in practice — macOS client on Darling (2026-10-09)
+
+Setup (no root, no install): official Darling 0.1.20260608 release debs unpacked into `.work/`,
+run inside an unprivileged user+mount namespace (`tests/darling-ns.sh`). Vine's shim layer
+(`shims/`, built on the host with clang + ld64.lld, no Apple SDK) is overlaid above Darling.
+
+Progress of RobloxPlayer 0.742.0.7421053 (x86_64), each step evidenced in `logs/` / Roblox's own log:
+
+| Stage | Blocker found | Fix (shims/) |
+|---|---|---|
+| dyld load | CoreML missing; 72 symbols missing from 13 frameworks | stub CoreML + wrapper frameworks re-exporting renamed copies |
+| dyld load | wrapper re-exported itself (dyld de-dups by install name) | `rename-dylib-id.py` |
+| Darling media frameworks | need FFmpeg 6 sonames, host has FFmpeg 9 | `build-ffmpeg.sh` (6.1.1, no deps) |
+| AppKit view setup | HiDPI APIs absent (`convertSizeToBacking:` …) | identity categories (1x) |
+| crash reporter init | Darling xattr: unprefixed names, getxattr returns 0 | `kernel.c` xattr wrappers |
+| crash reporter launch | forked child's exit ran Mesa atexit → pthread_join hang | single-threaded exit skips host atexit |
+| HTTP thread | Darling CFNetwork cookie parser NULL deref | replacement parser + runtime detour |
+| render thread | per-thread NSDisplay → "Failed to connect to a window server" | one NSDisplay per process + XInitThreads |
+| startup paths | `+[NSURL fileURLWithPath:relativeToURL:]` missing | Foundation category |
+| device watch | IOKit matching notification with NULL port | IOKit wrapper returns error |
+
+Reached: `applicationDidFinishLaunching`, local ClientSettings honored (OpenGL backend), reflection
+DB validated, **OpenGL 4.6 renderer initialized on Mesa** (llvmpipe under Xvfb), SurfaceController
+started, `stage: LuaApp`. Process now stays alive (no crash in 120 s) but nothing is drawn yet.
+
+Open blockers:
+- **Networking.** Darling's `NSURLSession` task classes are empty skeletons (no transfer code);
+  `NSURLConnection` HTTPS fails in Darling's TLS layer (SSL error -9836). Roblox logs `HttpError`
+  for its settings/version requests. Plain `getaddrinfo` DNS works (`tests/darwin/dns.m`).
+- **Window content.** Screenshots of the Xvfb display are still blank.
+- Some terrain shaders fail to compile on llvmpipe (`GrassVSUnified`, `SmoothClusterVSUnified`).
+- iokitd provides no platform-expert/HID services (no device identity, no controllers).

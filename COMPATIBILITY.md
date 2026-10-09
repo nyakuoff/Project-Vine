@@ -22,9 +22,9 @@
 
 ## Route comparison
 
-| | A: Windows + Wine/Proton | B: macOS + Darling-class runtime | C: Android + Sober |
+| | A: Windows + Wine/Proton | B: macOS + Darling + Vine shims | C: Android + Sober |
 |---|---|---|---|
-| Feasibility | **Blocked** by design | Theoretically possible, impractical | **Works** |
+| Feasibility | **Blocked** by design | **In progress**: engine + OpenGL init reached | **Works** |
 | Blocker | Hyperion detects Wine and exits: "Wine is not supported." | ~1.6k symbols / 165 classes / 1.3k selectors of Apple API; CoreML/WebKit missing in Darling | Remote-attestation games (Error 318) |
 | Complexity to progress | Requires defeating anti-tamper — out of scope | Multi-person-year runtime work | None (install) |
 | Tooling | Wine, Proton, DXVK — all mature | Darling (experimental GUI), darling-metal (early) | Sober 1.8.0 |
@@ -46,3 +46,15 @@
 | 10 | Sustained play | not reached | — | PASS* (994 s session, clean exit) |
 
 \* From the user's own 2026-10-08 Sober logs, not a session executed by Vine. Input handling is implied by a 16-minute session but not independently logged.
+
+## Route B stage results (Darling 0.1.20260608 + Vine shims, 2026-10-09)
+
+| # | Stage | Result |
+|---|---|---|
+| 1–4 | bundle, launch, runtime, dyld load | PASS (with shims) |
+| 5 | OS services (xattr, fork/exit, IOKit, AppKit display) | PASS (with shims) |
+| 6 | Graphics | PASS-partial: OpenGL 4.6 via Mesa initialized; no visible frame yet |
+| 6 | Audio | not yet examined |
+| 7 | Networking / auth | **FAIL**: Darling NSURLSession is a skeleton; NSURLConnection TLS error -9836 |
+| 8 | App init | PASS-partial: `stage: LuaApp` reached |
+| 9–10 | Join / play | not reached |

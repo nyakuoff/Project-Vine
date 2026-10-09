@@ -8,5 +8,6 @@ OUTDIR="$ROOT/.work/darwin-tests"; mkdir -p "$OUTDIR"   # host path; Darling see
 clang -target x86_64-apple-macos10.13 -nostdlib -fuse-ld=lld -w -fobjc-runtime=macosx-10.13 \
   -Wl,-syslibroot,"$D" -o "$OUTDIR/$1" "$ROOT/tests/darwin/$1.m" \
   "$D/usr/lib/libobjc.A.dylib" "$D/usr/lib/libSystem.B.dylib" \
-  "$D/System/Library/Frameworks/Foundation.framework/Versions/C/Foundation"
+  "$D/System/Library/Frameworks/Foundation.framework/Versions/C/Foundation" \
+  "$D/System/Library/Frameworks/IOKit.framework/Versions/A/IOKit" "$D/usr/lib/libresolv.9.dylib" "$D/System/Library/Frameworks/CFNetwork.framework/Versions/A/CFNetwork"
 "$ROOT/tests/darling-ns.sh" shell "/Volumes/SystemRoot$OUTDIR/$1"

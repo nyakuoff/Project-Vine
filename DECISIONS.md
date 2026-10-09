@@ -23,3 +23,15 @@ Sober already provides install, update handling and launch. A Vine launcher woul
 
 ## D5 — Isolated, reversible experiments
 Wine prefixes live in `.work/` (gitignored) with one prefix per Wine build, and runs use Xvfb. Client artifacts stay in `artifacts/` (gitignored, Roblox-copyrighted). No host packages were installed or changed.
+
+## D6 — Route B via Darling, fixes as an overlay layer (2026-10-09)
+The user prioritised the macOS client. Darling runs rootless from the release debs inside a user
+namespace, avoiding a host install. Fixes go in an overlay above Darling (wrappers that re-export
+renamed originals, categories, runtime detours) instead of a Darling fork, so they are small, testable
+(`tests/darwin/`) and individually upstreamable. Roblox's own binary is never modified.
+**Rejected**: macOS VM (Apple EULA on non-Apple hardware, and no GPU for Navi 3x); building Darling from
+source (hours, not needed until a fix must go inside Darling).
+
+## D7 — OpenGL backend for Route B
+Roblox's Metal pack is precompiled metallibs (Darling's Metal→Vulkan layer is early); the GLSL 3.2 pack
+compiles on Mesa natively. Selected through Roblox's own `FFlagDebugGraphicsPreferOpenGL` local setting.

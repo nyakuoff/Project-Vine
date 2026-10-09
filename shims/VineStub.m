@@ -60,3 +60,11 @@ int vine_detour(const char *image, const char *sym, void *repl) {
     mprotect((void *)page, 8192, 5 /* RX */);
     return 0;
 }
+
+// Original implementation of a symbol a wrapper overrides (looked up in the renamed .darling copy).
+void *vine_orig(const char *image, const char *sym) {
+    void *h = dlopen(image, RTLD_LAZY | RTLD_NOLOAD);
+    void *f = h ? dlsym(h, sym) : 0;
+    if (!f) dprintf(2, "vine-orig: %s not found in %s\n", sym, image);
+    return f;
+}
