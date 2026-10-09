@@ -170,6 +170,8 @@ renders on radeonsi, but XTest input doesn't reach clients there.
 | FMOD audio threads overflow in Darling's RPC code (MacOBlox finding) | — | `pthread_attr_setstacksize` floor 8 MiB (`thread_stack.m`) |
 | Signed out at every launch | Roblox keeps its login in the Keychain (`SecItemAdd`, generic password), not a cookie (`syncCookiesFromNativeToEngine was skipped`); Darling's SecItem calls hang waiting for a security daemon (MacOBlox: not persisted) | Security wrapper keeps generic passwords in `~/Library/Keychains/Vine-GenericPasswords.plist` (0600) (`keychain_persist.m`) |
 
+| Kicked ~10 s after the game connection opens ("Disconnected", error 256; log: "Rejecting send channel open on failed connection") | `tests/darwin/udp_probe.m`: `recv(MSG_DONTWAIT)` on an empty UDP socket blocked until SO_RCVTIMEO: Darling's `sys_recvfrom` computes the Linux flags but passes the Darwin ones (0x80 = Linux MSG_EOR); `connectx` unimplemented (ENOSYS) | `kernel.c`: translate recvfrom flags; `connectx` as bind + connect + optional send (both also MacOBlox findings). kqueue EV_CLEAR read events: no loss seen (500/500) |
+
 Not verified in a game yet (needs the user's account): sound, the black screen (it lasted only the ~4 s
 before the crash, so it may just be the loading phase), sustained play.
 

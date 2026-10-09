@@ -220,3 +220,47 @@ int __workq_kernreturn(int options, void *item, int affinity, int prio) {
     }
     return (int)p_bsd_syscall(SYS_workq_kernreturn, options, item, affinity, prio);
 }
+
+// ---- sockets ------------------------------------------------------------------------------
+// recvfrom (and recv, which libc builds on it): Darling's sys_recvfrom computes the Linux flags but
+// passes the Darwin ones (recvfrom.c), so MSG_DONTWAIT (0x80) reached Linux as MSG_EOR and a
+// "non-blocking" receive slept until data or SO_RCVTIMEO (MacOBlox found this too). Translate here;
+// the handler then passes them through unchanged. recvmsg/sendto/sendmsg translate correctly.
+enum { SYS_recvfrom = 29, SYS_recvfrom_nocancel = 403, SYS_connect = 98, SYS_bind = 104, SYS_sendmsg = 28 };
+static int msg_flags_linux(int f) {
+    static const int map[][2] = {{0x1, 0x1}, {0x2, 0x2}, {0x4, 0x4}, {0x8, 0x80}, {0x10, 0x20},
+                                 {0x20, 0x8}, {0x40, 0x100}, {0x80, 0x40}};   // OOB PEEK DONTROUTE EOR TRUNC CTRUNC WAITALL DONTWAIT
+    int o = 0;
+    for (size_t i = 0; i < sizeof map / sizeof *map; i++) if (f & map[i][0]) o |= map[i][1];
+    return o;
+}
+static ssize_t vine_recvfrom(int nr, int fd, void *buf, size_t len, int flags, void *from, void *fromlen) {
+    return p_bsd_syscall(nr, fd, buf, len, msg_flags_linux(flags), from, fromlen);
+}
+ssize_t recvfrom(int fd, void *b, size_t n, int f, void *from, void *fl) { return vine_recvfrom(SYS_recvfrom, fd, b, n, f, from, fl); }
+ssize_t recvfrom_nocancel(int, void *, size_t, int, void *, void *) __asm__("_recvfrom$NOCANCEL");
+ssize_t recvfrom_nocancel(int fd, void *b, size_t n, int f, void *from, void *fl) { return vine_recvfrom(SYS_recvfrom_nocancel, fd, b, n, f, from, fl); }
+ssize_t __recvfrom(int fd, void *b, size_t n, int f, void *from, void *fl) { return vine_recvfrom(SYS_recvfrom, fd, b, n, f, from, fl); }
+ssize_t __recvfrom_nocancel(int fd, void *b, size_t n, int f, void *from, void *fl) { return vine_recvfrom(SYS_recvfrom_nocancel, fd, b, n, f, from, fl); }
+
+// connectx: unimplemented in Darling (syscall 447, ENOSYS). Roblox's RbxTransport connects its UDP
+// socket with it; the socket stayed unconnected and the game connection failed (finding credited
+// to MacOBlox). Done as Apple documents it: bind to the source if given, connect to the destination,
+// send the optional initial data. A pending (EINPROGRESS) connect is returned as such.
+typedef struct { unsigned srcif; const void *src; uint32_t srclen; const void *dst; uint32_t dstlen; } vine_sa_endpoints;
+struct vine_msghdr { void *name; uint32_t namelen; const void *iov; int iovlen; void *control; uint32_t controllen; int flags; };
+int connectx(int s, const vine_sa_endpoints *ep, uint32_t assoc, unsigned flags, const void *iov, unsigned iovcnt,
+             size_t *sent, uint32_t *connid) {
+    if (sent) *sent = 0;
+    if (!ep || !ep->dst) { *__error() = 22; return -1; }   // EINVAL
+    if (ep->src && p_bsd_syscall(SYS_bind, s, ep->src, ep->srclen) < 0) return -1;
+    if (p_bsd_syscall(SYS_connect, s, ep->dst, ep->dstlen) < 0) return -1;
+    if (connid) *connid = 1;
+    if (iov && iovcnt) {
+        struct vine_msghdr m = {0, 0, iov, (int)iovcnt, 0, 0, 0};
+        long n = p_bsd_syscall(SYS_sendmsg, s, &m, 0);
+        if (n < 0) return -1;
+        if (sent) *sent = (size_t)n;
+    }
+    return 0;
+}

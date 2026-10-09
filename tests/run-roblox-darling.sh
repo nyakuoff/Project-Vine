@@ -38,18 +38,20 @@ python3 "$ROOT/patches/startup_throttle.py" "$APP/Contents/MacOS/RobloxPlayer" \
 # (darling-ns.sh boots new containers with null stdio)
 timeout "$T" "$ROOT/tests/darling-ns.sh" shell env "${ENV[@]}" \
   /Applications/RobloxPlayer.app/Contents/MacOS/RobloxPlayer "$@" > "$LOG" 2>&1 &
-RUN=$!
+RUN=$!; SECONDS=0
+# Sleep until second $1 of the run, returning early (status 1) once Roblox has quit.
+until_s() { while kill -0 $RUN 2>/dev/null; do [ $SECONDS -lt $1 ] || return 0; sleep 1; done; return 1; }
 if [ -n "$XVFB" ]; then   # screenshots at 15 s, 45 s, then every 60 s
   for s in 15 45 $(seq 105 60 "$T"); do
-    [ "$s" -lt "$T" ] || break
-    sleep $(( s - ${prev:-0} )); prev=$s
-    kill -0 $RUN 2>/dev/null || break
+    [ "$s" -lt "$T" ] && until_s "$s" || break
     import -display "$DISP" -window root "$ROOT/logs/screens/$TS-${s}s.png" 2>/dev/null
   done
 fi
-# Live state of every Darling process just before the deadline (Linux pid, Darwin pid, blocking point).
-sleep $(( T - ${prev:-0} - 5 > 0 ? T - ${prev:-0} - 5 : 0 ))
-for p in $(pgrep -f '^/Applications/|mldr'); do
+# Wait for Roblox to quit (the container is stopped right after) or the deadline; if it is still
+# running 5 s before the deadline, log the live state of every Darling process (Linux pid, Darwin
+# pid, blocking point).
+until_s $(( T - 5 ))
+kill -0 $RUN 2>/dev/null && for p in $(pgrep -f '^/Applications/|mldr'); do
   for t in /proc/$p/task/*; do
     printf '# live pid=%s darwin=%s tid=%s %s wchan=%s syscall=%s %s\n' "$p" "$(awk '/NSpid/{print $3}' /proc/$p/status)" \
       "${t##*/}" "$(awk '/State/{print $2}' $t/status)" "$(cat $t/wchan)" "$(cut -d' ' -f1 $t/syscall)" "$(tr '\0' ' ' < /proc/$p/cmdline | cut -c1-60)"
