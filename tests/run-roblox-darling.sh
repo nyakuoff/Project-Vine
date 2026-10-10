@@ -29,6 +29,14 @@ ENV=(MESA_SHADER_CACHE_DIR=/tmp/vine-mesa-cache DISPLAY="$DISP" VINE_OBJC_LENIEN
 [ "${VINE_XTRACE:-0}" = 1 ] && ENV+=(XTRACE_NO_COLOR=1 XTRACE_LOG_FILE=/private/tmp/rbx.xtrace XTRACE_LOG_FILE_PER_THREAD=1
                                    DYLD_INSERT_LIBRARIES=/usr/lib/darling/libxtrace.dylib)
 LOG="$ROOT/logs/darling-roblox-$TS.log"
+# Game audio is played on the host from a FIFO (Darling's PulseAudio output path crashes; see
+# shims/frameworks.m). VINE_DARLING_AUDIO=1 keeps Darling's path.
+FIFO=""
+if [ "${VINE_DARLING_AUDIO:-0}" != 1 ] && command -v pacat >/dev/null; then
+  FIFO="${XDG_RUNTIME_DIR:-/tmp}/vine-audio-$$"; rm -f "$FIFO" "$FIFO.fmt"; mkfifo -m 600 "$FIFO"
+  "$ROOT/tests/host-audio.sh" "$FIFO" & PLAYER=$!
+  ENV+=(VINE_AUDIO_FIFO="/Volumes/SystemRoot$FIFO")
+fi
 # Fresh container, started by a throwaway command: darlingserver must not be a child of the timed run.
 "$ROOT/tests/darling-ns.sh" --stop
 # Start-up render throttle off (finding credited to MacOBlox; patches/startup_throttle.py). Vine's own
@@ -64,4 +72,5 @@ done >> "$LOG" 2>/dev/null
 wait $RUN; echo "# exit: $?" >> "$LOG"
 "$ROOT/tests/darling-ns.sh" --stop
 [ -n "$XVFB" ] && kill $XVFB
+[ -n "$FIFO" ] && { rm -f "$FIFO" "$FIFO.fmt"; pkill -P $PLAYER 2>/dev/null; kill $PLAYER 2>/dev/null; }
 echo "$LOG"

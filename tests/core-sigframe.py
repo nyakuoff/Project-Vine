@@ -38,8 +38,8 @@ def main():
     found = 0
     for va, off, sz in segs:
         blob = data[off:off + sz]
-        for code in (1, 2):
-            pat = struct.pack('<iii', 11, 0, code)
+        for sig, code in [(11, 1), (11, 2)] + [(4, c) for c in range(1, 9)]:   # SIGSEGV; SIGILL (si_addr = rip)
+            pat = struct.pack('<iii', sig, 0, code)
             i = blob.find(pat)
             while i >= 0:
                 frame = va + i - 312
@@ -47,7 +47,7 @@ def main():
                 si_addr = struct.unpack_from('<Q', blob, i + 16)[0]
                 if ctx:
                     r = dict(zip(NAMES, struct.unpack('<' + 'Q' * len(NAMES), ctx)))
-                    if r['cr2'] == si_addr and r['rip'] > 0x1000:
+                    if (r['cr2'] if sig == 11 else r['rip']) == si_addr and r['rip'] > 0x1000:
                         found += 1
                         print(f'SIGFRAME #{found}: fault addr 0x{si_addr:x} code {code} rip 0x{r["rip"]:x} rsp 0x{r["rsp"]:x}')
                         print('  ' + ' '.join(f'{k}=0x{r[k]:x}' for k in ('rax', 'rbx', 'rcx', 'rdx', 'rdi', 'rsi', 'rbp')))

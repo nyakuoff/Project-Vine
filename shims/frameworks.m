@@ -126,6 +126,71 @@ OSStatus AudioObjectSetPropertyData(AudioObjectID obj, const VineAOPA *a, uint32
 }
 typedef OSStatus (*VineListener)(AudioObjectID, uint32_t, const VineAOPA *, void *);
 OSStatus AudioObjectAddPropertyListener(AudioObjectID obj, const VineAOPA *a, VineListener l, void *c) { return 0; }
+// PulseAudio I/O watches. Darling's PADispatchMainLoop gives each PulseAudio descriptor a read and a
+// write dispatch source. io_free cancels them (asynchronously) and PulseAudio then closes the
+// descriptor at once: until libdispatch unregisters, its watch belongs to a closed and soon reused
+// number, and events reach freed sources (SIGILL/SIGSEGV in _dispatch_kevent_merge once game audio
+// runs; reproduced by tests/darwin/audiounit_hal.m 30 busy). It also freed its bookkeeping in the
+// write source's cancel handler while the read source could still fire. Replacement: the sources
+// watch a dup() of the descriptor, closed only after both cancel handlers have run, and the
+// bookkeeping lives until then; nothing is delivered to PulseAudio after io_free.
+typedef struct dispatch_source_s *vine_source_t;
+typedef struct dispatch_queue_s *vine_queue_t;
+extern const struct dispatch_source_type_s _dispatch_source_type_read, _dispatch_source_type_write;
+vine_source_t dispatch_source_create(const void *type, uintptr_t handle, unsigned long mask, vine_queue_t q);
+void dispatch_source_set_event_handler(vine_source_t, void (^)(void));
+void dispatch_source_set_cancel_handler(vine_source_t, void (^)(void));
+void dispatch_source_cancel(vine_source_t); void dispatch_resume(void *); void dispatch_suspend(void *); void dispatch_release(void *);
+int fcntl(int, int, ...); int close(int);
+void *calloc(size_t, size_t);
+typedef void (*VinePaIoCb)(void *api, void *ev, int fd, int events, void *ud);
+typedef void (*VinePaIoDestroy)(void *api, void *ev, void *ud);
+enum { PA_IN = 1, PA_OUT = 2, PA_HUP = 4, PA_ERR = 8 };
+typedef struct { void *api; int fd, dupfd, freed, live, rd_on, wr_on; VinePaIoCb cb; VinePaIoDestroy destroy; void *ud; vine_source_t rd, wr; } VinePaIo;
+static void vine_pa_io_done(VinePaIo *e) {   // a cancel handler ran (on the loop's queue)
+    if (--e->live) return;
+    if (e->destroy) e->destroy(e->api, e, e->ud);
+    close(e->dupfd);
+    free(e);
+}
+static void vine_pa_io_enable(VinePaIo *e, int events) {
+    int r = !!(events & (PA_IN | PA_HUP | PA_ERR)), w = !!(events & PA_OUT);
+    if (r != e->rd_on) { r ? dispatch_resume(e->rd) : dispatch_suspend(e->rd); e->rd_on = r; }
+    if (w != e->wr_on) { w ? dispatch_resume(e->wr) : dispatch_suspend(e->wr); e->wr_on = w; }
+}
+static void *vine_pa_io_new(void *api, int fd, int events, VinePaIoCb cb, void *ud) {
+    vine_queue_t q = **(vine_queue_t **)api;   // api->userdata = PADispatchMainLoop, whose first field is m_queue
+    VinePaIo *e = calloc(1, sizeof *e);
+    int d = fcntl(fd, 67 /* F_DUPFD_CLOEXEC */, 0);
+    if (!e || d < 0) { if (e) free(e); return 0; }
+    e->api = api; e->fd = fd; e->dupfd = d; e->cb = cb; e->ud = ud; e->live = 2;
+    e->rd = dispatch_source_create(&_dispatch_source_type_read, d, 0, q);
+    e->wr = dispatch_source_create(&_dispatch_source_type_write, d, 0, q);
+    dispatch_source_set_event_handler(e->rd, ^{ if (!e->freed) e->cb(e->api, e, e->fd, PA_IN, e->ud); });
+    dispatch_source_set_event_handler(e->wr, ^{ if (!e->freed) e->cb(e->api, e, e->fd, PA_OUT, e->ud); });
+    dispatch_source_set_cancel_handler(e->rd, ^{ vine_pa_io_done(e); });
+    dispatch_source_set_cancel_handler(e->wr, ^{ vine_pa_io_done(e); });
+    vine_pa_io_enable(e, events);
+    return e;
+}
+static void vine_pa_io_set_destroy(VinePaIo *e, VinePaIoDestroy cb) { e->destroy = cb; }
+static void vine_pa_io_free(VinePaIo *e) {
+    e->freed = 1;
+    vine_pa_io_enable(e, PA_IN | PA_OUT);   // a suspended source must be resumed to be cancelled
+    dispatch_source_cancel(e->rd); dispatch_source_cancel(e->wr);
+    dispatch_release(e->rd); dispatch_release(e->wr);
+}
+int vine_detour(const char *image, const char *sym, void *repl);
+__attribute__((constructor)) static void vine_pa_io_fix(void) {
+    if (getenv("VINE_DARLING_PA_IO")) return;
+    static const struct { const char *sym; void *fn; } t[] = {
+        {"_ZN18PADispatchMainLoop6io_newEP15pa_mainloop_apii17pa_io_event_flagsPFvS1_P11pa_io_eventiS2_PvES5_", (void *)vine_pa_io_new},
+        {"_ZN18PADispatchMainLoop9io_enableEP11pa_io_event17pa_io_event_flags", (void *)vine_pa_io_enable},
+        {"_ZN18PADispatchMainLoop7io_freeEP11pa_io_event", (void *)vine_pa_io_free},
+        {"_ZN18PADispatchMainLoop14io_set_destroyEP11pa_io_eventPFvP15pa_mainloop_apiS1_PvE", (void *)vine_pa_io_set_destroy},
+    };
+    for (int i = 0; i < 4; i++) vine_detour(CA_IMG, t[i].sym, t[i].fn);   // all four, or the layouts would mix
+}
 OSStatus AudioObjectRemovePropertyListener(AudioObjectID obj, const VineAOPA *a, VineListener l, void *c) { return 0; }
 #endif
 
@@ -961,9 +1026,148 @@ OSStatus AudioComponentInstanceNew(void *component, void **out) {
 #define AT_FULL "/System/Library/Frameworks/AudioToolbox.framework/Versions/A/AudioToolbox.darling"
 #define AU_TRACE(name, st, prop, scope, elem) \
     if (st) dprintf(2, "vine-audio: %s prop=%u scope=%u elem=%u -> %d\n", name, (unsigned)(prop), (unsigned)(scope), (unsigned)(elem), (int)(st))
+// Render on Vine's own thread. Darling plays an output unit from its PulseAudio loop, a GCD queue;
+// the unit's render callback (FMOD's whole mixer, in Roblox) ran on that thread, and a callback that
+// takes real time breaks the loop: libdispatch traps in _dispatch_kevent_merge on a freed source
+// (tests/darwin/audiounit_hal.m with 1 ms of work per callback crashes in seconds; without, 30 s
+// pass). Same conclusion as MacOBlox (audio_hal.c), Vine's own implementation: the client's
+// callback is replaced by a proxy that only copies from a ring; a thread with an 8 MiB stack calls
+// the real callback 512 frames at a time to keep the ring ~1536 frames ahead (~35 ms at 44.1 kHz).
+// Interleaved formats only (one buffer); others keep Darling's direct path.
+typedef struct { uint32_t channels, bytes; void *data; } VineABuf;
+typedef struct { uint32_t count; uint32_t pad; VineABuf b[1]; } VineABL;
+typedef OSStatus (*VineRender)(void *, uint32_t *, const void *, uint32_t, uint32_t, VineABL *);
+typedef struct { double sample; uint64_t host; double rate; uint64_t word; char smpte[24]; uint32_t flags, reserved; } VineTS;
+#define RING (1u << 16)   /* bytes, power of two */
+typedef struct {
+    void *unit; VineRender cb; void *ref; uint32_t frame_bytes;
+    volatile int running; void *thread; int fifo; VineASBD fmt;
+    unsigned char ring[RING]; volatile uint32_t head, tail;   // head: written, tail: read (byte counts)
+    double sample;
+} VineProxy;
+static VineProxy vine_proxies[4];
+static uint32_t vine_frame_bytes[4]; static void *vine_fmt_unit[4]; static VineASBD vine_fmt[4];   // stream format per unit
+uint64_t mach_absolute_time(void);
+int pthread_create(void **, void *, void *(*)(void *), void *);
+int pthread_join(void *, void **);
+int pthread_attr_init(void *); int pthread_attr_setstacksize(void *, size_t);
+struct vine_ts { long sec, nsec; };
+int nanosleep(const struct vine_ts *, struct vine_ts *);
+void *memset(void *, int, size_t);
+static VineProxy *vine_proxy_for(void *unit, int create) {
+    for (int i = 0; i < 4; i++) if (vine_proxies[i].unit == unit) return &vine_proxies[i];
+    if (create) for (int i = 0; i < 4; i++) if (!vine_proxies[i].unit) { vine_proxies[i].unit = unit; return &vine_proxies[i]; }
+    return 0;
+}
+static OSStatus vine_render_proxy(void *ref, uint32_t *flags, const void *ts, uint32_t bus, uint32_t frames, VineABL *io) {
+    VineProxy *p = ref;
+    static int logged;
+    if (!logged++) dprintf(2, "vine-audio: proxy render frames=%u buffers=%u bytes=%u ch=%u frame_bytes=%u\n", frames, io ? io->count : 0, io && io->count ? io->b[0].bytes : 0, io && io->count ? io->b[0].channels : 0, p->frame_bytes);
+    if (!io || io->count != 1) return 0;
+    unsigned char *out = io->b[0].data;
+    uint32_t want = frames * p->frame_bytes, have = __atomic_load_n(&p->head, __ATOMIC_ACQUIRE) - p->tail;
+    // Darling's AUHAL passes twice the frame count its buffer holds (measured: 1536 frames, 6144 bytes
+    // of stereo float); the buffer size is what real time consumes, so it decides.
+    if (want > io->b[0].bytes) want = io->b[0].bytes - io->b[0].bytes % p->frame_bytes;
+    uint32_t n = want < have ? want : have;
+    for (uint32_t i = 0; i < n; i++) out[i] = p->ring[(p->tail + i) & (RING - 1)];
+    __atomic_store_n(&p->tail, p->tail + n, __ATOMIC_RELEASE);
+    if (n < want) memset(out + n, 0, want - n);   // underrun: silence
+    io->b[0].bytes = want;
+    return 0;
+}
+static void *vine_render_thread(void *arg) {
+    VineProxy *p = arg;
+    enum { BLOCK = 512, AHEAD = 1536 };
+    static unsigned char buf[4][BLOCK * 64];
+    unsigned char *tmp = buf[p - vine_proxies];
+    while (p->running) {
+        uint32_t fill = p->head - __atomic_load_n(&p->tail, __ATOMIC_ACQUIRE);
+        if (fill >= AHEAD * p->frame_bytes || RING - fill < BLOCK * p->frame_bytes) {
+            struct vine_ts t = {0, 2000000}; nanosleep(&t, 0); continue;
+        }
+        VineABL l = {1, 0, {{0, BLOCK * p->frame_bytes, tmp}}};
+        l.b[0].channels = p->frame_bytes / 4;
+        VineTS ts = {p->sample, mach_absolute_time(), 1.0, 0, {0}, 1 | 2 /* sample + host time valid */, 0};
+        uint32_t fl = 0;
+        if (p->cb(p->ref, &fl, &ts, 0, BLOCK, &l) != 0) memset(tmp, 0, BLOCK * p->frame_bytes);
+        p->sample += BLOCK;
+        for (uint32_t i = 0; i < BLOCK * p->frame_bytes; i++) p->ring[(p->head + i) & (RING - 1)] = tmp[i];
+        __atomic_store_n(&p->head, p->head + BLOCK * p->frame_bytes, __ATOMIC_RELEASE);
+    }
+    return 0;
+}
+
+// Host playback (VINE_AUDIO_FIFO, set by tests/run-roblox-darling.sh). Even with the proxy, Darling's
+// PulseAudio stream (a GCD loop) still crashes now and then in libdispatch's kevent code (~1 in 3
+// 30 s soaks). As MacOBlox does (audio_hal.c: FIFO + pw-cat), the output unit then never starts
+// Darling's stream: this thread renders 512-frame blocks and writes them to a FIFO that the
+// launcher plays with pacat on the host. Blocking writes pace it at the sound card's rate. The
+// format goes first to "<fifo>.fmt" ("float32le 48000 2"), which the launcher reads before pacat.
+int open(const char *, int, ...); long write(int, const void *, size_t); int rename(const char *, const char *); int close(int);
+int snprintf(char *, size_t, const char *, ...);
+static const char *vine_pcm_format(const VineASBD *f) {   // pacat name, or 0 if unsupported
+    if (f->formatID != 0x6c70636d || (f->flags & 32) || !f->channels || f->channels > 8) return 0;
+    if ((f->flags & 1) && f->bits == 32) return "float32le";
+    if (!(f->flags & 1) && f->bits == 16) return "s16le";
+    if (!(f->flags & 1) && f->bits == 32) return "s32le";
+    return 0;
+}
+static void *vine_fifo_thread(void *arg) {
+    VineProxy *p = arg;
+    const char *fifo = getenv("VINE_AUDIO_FIFO");
+    char path[1024], tmp[1024], line[64];
+    snprintf(path, sizeof path, "%s.fmt", fifo); snprintf(tmp, sizeof tmp, "%s.fmt.tmp", fifo);
+    int n = snprintf(line, sizeof line, "%s %u %u\n", vine_pcm_format(&p->fmt), (unsigned)p->fmt.rate, p->fmt.channels);
+    int fd = open(tmp, 0x601 /* O_WRONLY|O_CREAT|O_TRUNC */, 0600);
+    if (fd >= 0) { write(fd, line, n); close(fd); rename(tmp, path); }
+    p->fifo = open(fifo, 1 /* O_WRONLY */);   // waits for the launcher's player
+    enum { BLOCK = 512 };
+    static unsigned char buf[4][BLOCK * 64];
+    unsigned char *b = buf[p - vine_proxies];
+    while (p->running && p->fifo >= 0) {
+        VineABL l = {1, 0, {{p->fmt.channels, BLOCK * p->frame_bytes, b}}};
+        VineTS ts = {p->sample, mach_absolute_time(), 1.0, 0, {0}, 1 | 2, 0};
+        uint32_t fl = 0;
+        if (p->cb(p->ref, &fl, &ts, 0, BLOCK, &l) != 0) memset(b, 0, BLOCK * p->frame_bytes);
+        p->sample += BLOCK;
+        for (long off = 0, len = BLOCK * p->frame_bytes; off < len; ) {
+            long w = write(p->fifo, b + off, len - off);
+            if (w <= 0) { p->running = 0; break; }   // player gone
+            off += w;
+        }
+    }
+    if (p->fifo >= 0) close(p->fifo);
+    p->fifo = -1;
+    return 0;
+}
+
 OSStatus AudioUnitSetProperty(void *u, uint32_t prop, uint32_t scope, uint32_t elem, const void *data, uint32_t size) {
     static OSStatus (*o)(void *, uint32_t, uint32_t, uint32_t, const void *, uint32_t);
     if (!o) o = vine_orig(AT_FULL, "AudioUnitSetProperty");
+    if (prop == 8 && scope == 1 && elem == 0 && data && size >= 40) {   // StreamFormat, input scope: what the callback renders
+        const VineASBD *f = data;
+        for (int i = 0; i < 4; i++) if (vine_fmt_unit[i] == u || !vine_fmt_unit[i]) {
+            vine_fmt_unit[i] = u; vine_fmt[i] = *f;
+            vine_frame_bytes[i] = (f->flags & 32 /* non-interleaved */) || f->bytesPerFrame > 64 ? 0 : f->bytesPerFrame;
+            break;
+        }
+    }
+    if (prop == 23 && scope == 1 && elem == 0 && data && size >= 16 && !getenv("VINE_DIRECT_RENDER")) {   // SetRenderCallback
+        uint32_t fb = 0;
+        for (int i = 0; i < 4; i++) if (vine_fmt_unit[i] == u) fb = vine_frame_bytes[i];
+        VineProxy *p = fb ? vine_proxy_for(u, 1) : 0;
+        if (p && !p->running) {
+            const struct { VineRender cb; void *ref; } *rc = data;
+            p->cb = rc->cb; p->ref = rc->ref; p->frame_bytes = fb; p->head = p->tail = 0; p->sample = 0; p->fifo = -1;
+            for (int i = 0; i < 4; i++) if (vine_fmt_unit[i] == u) p->fmt = vine_fmt[i];
+            struct { VineRender cb; void *ref; } mine = {vine_render_proxy, p};
+            OSStatus st = o(u, prop, scope, elem, &mine, sizeof mine);
+            if (st) p->unit = 0;
+            AU_TRACE("AudioUnitSetProperty", st, prop, scope, elem);
+            return st;
+        }
+    }
     OSStatus st = o(u, prop, scope, elem, data, size);
     // kAudioUnitProperty_AudioChannelLayout (19): Darling's AUBase answers InvalidProperty (-10879);
     // FMOD sets it (stereo) and treats the failure as FMOD_ERR_OUTPUT_INIT. The layout only
@@ -989,9 +1193,38 @@ OSStatus AudioUnitInitialize(void *u) {
 OSStatus AudioOutputUnitStart(void *u) {
     static OSStatus (*o)(void *);
     if (!o) o = vine_orig(AT_FULL, "AudioOutputUnitStart");
+    VineProxy *p = vine_proxy_for(u, 0);
+    if (p && p->cb && !p->running) {
+        struct { long sig; char opaque[56]; } attr;
+        pthread_attr_init(&attr); pthread_attr_setstacksize(&attr, 8u << 20);
+        int host = getenv("VINE_AUDIO_FIFO") && vine_pcm_format(&p->fmt);
+        p->running = 1;
+        if (pthread_create(&p->thread, &attr, host ? vine_fifo_thread : vine_render_thread, p)) p->running = 0;
+        else if (host) { dprintf(2, "vine-audio: host playback %s %u Hz %u ch\n", vine_pcm_format(&p->fmt), (unsigned)p->fmt.rate, p->fmt.channels); return 0; }
+    }
     OSStatus st = o(u);
     AU_TRACE("AudioOutputUnitStart", st, 0, 0, 0);
     return st;
+}
+
+OSStatus AudioOutputUnitStop(void *u) {
+    static OSStatus (*o)(void *);
+    if (!o) o = vine_orig(AT_FULL, "AudioOutputUnitStop");
+    VineProxy *p = vine_proxy_for(u, 0);
+    if (p && p->running) {
+        int host = p->fifo >= 0 || (getenv("VINE_AUDIO_FIFO") && vine_pcm_format(&p->fmt));
+        p->running = 0; pthread_join(p->thread, 0);
+        if (host) return 0;
+    }
+    return o(u);
+}
+OSStatus AudioComponentInstanceDispose(void *u) {
+    static OSStatus (*o)(void *);
+    if (!o) o = vine_orig("/System/Library/Frameworks/AudioToolbox.framework/Versions/A/AudioToolbox.darling", "AudioComponentInstanceDispose");
+    VineProxy *p = vine_proxy_for(u, 0);
+    if (p) { if (p->running) { p->running = 0; pthread_join(p->thread, 0); } p->unit = 0; p->cb = 0; }
+    for (int i = 0; i < 4; i++) if (vine_fmt_unit[i] == u) vine_fmt_unit[i] = 0;
+    return o ? o(u) : -50;
 }
 
 // A disposed AudioUnit must fail calls with badComponentInstance, as on macOS. Darling's

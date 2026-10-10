@@ -184,6 +184,8 @@ renders on radeonsi, but XTest input doesn't reach clients there.
 | No sound | `vine-audio:` trace: `AudioUnitSetProperty(19 AudioChannelLayout, input)` → -10879 | accepted (stereo description) |
 | (Vine bug) user's login cookie deleted by a test | Darling's `cookiesForURL:` returns every cookie regardless of URL; the test deleted "its" cookies | cookies filtered by domain/path/Secure/expiry (also stops sending the login cookie to other hosts); Darwin tests run with their own HOME |
 
+| Crash just before the game appears (SIGILL/SIGSEGV in libdispatch `_dispatch_kevent_merge`, once FMOD started) | reproduced: `audiounit_hal.m 30 busy` (1 ms of work per render callback) crashes within seconds; without the work 30 s pass. Darling's AUHAL also passes twice the frame count its buffer holds (1536 frames, 6144 bytes), so a mixer that trusts it overruns the buffer; and Darling's PulseAudio loop closes descriptors before their dispatch sources are unregistered | render callback moved to Vine's thread (buffer-size bounded); PADispatchMainLoop io_* replaced (dup'd descriptors, freed after both cancels); still ~1/3 soak crashes, so by default (as MacOBlox) the output unit never starts Darling's PulseAudio stream: Vine's thread writes to a FIFO played by `pacat` on the host (`tests/host-audio.sh`): 3/3 soaks, real-time pace |
+
 Not verified in a game yet (needs the user's account): sound, the black screen (it lasted only the ~4 s
 before the crash, so it may just be the loading phase), sustained play.
 

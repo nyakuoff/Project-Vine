@@ -11,6 +11,10 @@ clang -target x86_64-apple-macos10.13 -nostdlib -fuse-ld=lld -w -fobjc-runtime=m
   "$D/System/Library/Frameworks/Foundation.framework/Versions/C/Foundation" \
   "$D/System/Library/Frameworks/IOKit.framework/Versions/A/IOKit" "$D/usr/lib/libresolv.9.dylib" "$D/System/Library/Frameworks/CFNetwork.framework/Versions/A/CFNetwork" \
   "$D/System/Library/Frameworks/AppKit.framework/Versions/C/AppKit" "$D/System/Library/Frameworks/OpenGL.framework/Versions/A/OpenGL" "$D/System/Library/Frameworks/CoreAudio.framework/Versions/A/CoreAudio" "$D/System/Library/Frameworks/AudioToolbox.framework/Versions/A/AudioToolbox" "$D/System/Library/Frameworks/AudioUnit.framework/Versions/A/AudioUnit" "$D/System/Library/Frameworks/Security.framework/Versions/A/Security"
-# Own HOME: tests that write cookies or Keychain items must never touch the user's (Roblox login).
-"$ROOT/tests/darling-ns.sh" shell env HOME=/private/tmp/vine-test-home sh -c 'mkdir -p "$HOME" && exec "$0" "$@"' \
-  "/Volumes/SystemRoot$OUTDIR/$1" "${@:2}"
+# Own HOME for tests that write cookies or Keychain items: never the user's (Roblox login). Others keep
+# the real HOME (PulseAudio finds its auth cookie there).
+case $1 in
+  *cookie*|*keychain*) "$ROOT/tests/darling-ns.sh" shell env HOME=/private/tmp/vine-test-home sh -c 'mkdir -p "$HOME" && exec "$0" "$@"' \
+                         "/Volumes/SystemRoot$OUTDIR/$1" "${@:2}" ;;
+  *) "$ROOT/tests/darling-ns.sh" shell "/Volumes/SystemRoot$OUTDIR/$1" "${@:2}" ;;
+esac
