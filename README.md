@@ -1,10 +1,8 @@
 <div align="center">
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="assets/vine-logo-text.png">
-  <img src="assets/vine-logo.png" alt="Project Vine" width="160">
+  <img src="assets/vine-logo.png" alt="Project Vine" width="320">
 </picture>
-
-# Project Vine
 
 **The official Roblox client on Linux, without Wine: the macOS build on [Darling](https://www.darlinghq.org/) plus a small shim layer.**
 
