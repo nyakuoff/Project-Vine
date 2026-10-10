@@ -465,10 +465,45 @@ static int (*x_warp)(void *, unsigned long, unsigned long, int, int, unsigned, u
 static int (*x_sync)(void *, int);
 static unsigned long (*x_root)(void *);
 static ptrdiff_t x_display_ivar;
+// X request serials order our warps against incoming events (finding credited to MacOBlox,
+// pointer_motion.h): an event with a serial below the warp's request was generated before it.
+static unsigned long (*x_next_request)(void *);
+static volatile unsigned long vine_cur_serial, vine_warp_serial;
+static volatile int vine_warp_pending;
+// Where the pointer really is after a warp, relative to the warp target (root pixels). Xwayland
+// ignores XWarpPointer unless the cursor is hidden (it then emulates the warp with a pointer lock),
+// so a recentring could silently not happen; the camera then jumped by the distance it assumed.
+static int (*x_query_pointer)(void *, unsigned long, unsigned long *, unsigned long *, int *, int *, int *, int *, unsigned *);
+static volatile double vine_warp_off_x, vine_warp_off_y;
 static void vine_warp_mouse(id self, SEL _cmd, struct { double x, y; } p) {
     void *dpy = *(void **)((char *)self + x_display_ivar);
+    if (x_next_request) { vine_warp_serial = x_next_request(dpy); vine_warp_pending = 1; }
     x_warp(dpy, 0, x_root(dpy), 0, 0, 0, 0, (int)p.x, (int)p.y);
     x_sync(dpy, 0);
+    unsigned long r, c; int rx, ry, wx, wy; unsigned m;
+    if (x_query_pointer && x_query_pointer(dpy, x_root(dpy), &r, &c, &rx, &ry, &wx, &wy, &m)) {
+        vine_warp_off_x = rx - (int)p.x; vine_warp_off_y = ry - (int)p.y;
+    } else vine_warp_off_x = vine_warp_off_y = 0;
+}
+// Hidden cursor while locked: XFixes (host libXfixes through Darling's ELF loader; Darling bridges
+// no libXfixes). Finding credited to MacOBlox (xfixes_raw.c).
+void *elfcalls_get_pointer(void);
+static void (*x_fixes_cursor[2])(void *, unsigned long);   // hide, show
+static void vine_cursor_hidden(id display, int hide) {
+    static int tried;
+    if (!tried++) {
+        struct { void *(*dlopen)(const char *); int (*dlclose)(void *); void *(*dlsym)(void *, const char *); } *ec = elfcalls_get_pointer();
+        void *xf = ec ? ec->dlopen("libXfixes.so.3") : 0;
+        if (xf) { x_fixes_cursor[0] = ec->dlsym(xf, "XFixesHideCursor"); x_fixes_cursor[1] = ec->dlsym(xf, "XFixesShowCursor"); }
+        if (!x_fixes_cursor[0] || !x_fixes_cursor[1]) dprintf(2, "vine: XFixes unavailable, mouse lock recentring may not work under Xwayland\n");
+    }
+    void *dpy = *(void **)((char *)display + x_display_ivar);
+    if (x_fixes_cursor[hide ? 0 : 1]) { x_fixes_cursor[hide ? 0 : 1](dpy, x_root(dpy)); x_sync(dpy, 0); }
+}
+static void (*orig_postXEvent)(id, SEL, void *);
+static void vine_postXEvent(id self, SEL _cmd, void *ev) {
+    vine_cur_serial = ((unsigned long *)ev)[1];   // XAnyEvent: int type; unsigned long serial
+    orig_postXEvent(self, _cmd, ev);
 }
 // Mouse lock (camera) without a warp per motion event. Darling's grab pins the pointer: every X
 // motion event is answered with XWarpPointer + XSync back to the window centre and its delta is
@@ -478,7 +513,7 @@ static void vine_warp_mouse(id self, SEL _cmd, struct { double x, y; } p) {
 // event, and the pointer is recentred only when it strays more than a quarter of the window from
 // the centre. The recentring warp's own event (at the centre) gets a zero delta.
 double atof(const char *);
-static struct { int on, awaiting; NSPoint center, prev; double radius; } vine_lock;
+static struct { int on; NSPoint center, prev; double radius; } vine_lock;
 static long vine_grabbed_ivar = -1;
 static void (*orig_grabMouse)(id, SEL, BOOL);
 @interface NSObject (VineLockWindow) + (id)sharedApplication; - (id)keyWindow; - (NSPoint)mouseLocationOutsideOfEventStream; - (NSRect)frame; @end
@@ -496,11 +531,10 @@ static void vine_lock_center(id display) {
     vine_lock.center = (NSPoint){f.size.width / 2, f.size.height / 2};   // where grabMouse: warps (window coords)
     if (!vine_lock.on) vine_lock.prev = vine_lock.center;   // recentring: queued events still count from the last one
     vine_lock.radius = (f.size.width < f.size.height ? f.size.width : f.size.height) / 4;
-    vine_lock.awaiting = 1;
 }
 static void vine_grabMouse(id self, SEL _cmd, BOOL grab) {
-    if (grab) { vine_lock_center(self); vine_lock.on = 1; }
-    else { vine_lock.on = 0; orig_grabMouse(self, _cmd, 0); }
+    if (grab) { vine_cursor_hidden(self, 1); vine_lock_center(self); vine_lock.on = 1; }
+    else { vine_lock.on = 0; orig_grabMouse(self, _cmd, 0); vine_cursor_hidden(self, 0); }
 }
 static void vine_quiet_warp(void) {
     static int done;
@@ -511,6 +545,11 @@ static void vine_quiet_warp(void) {
     Ivar iv = class_getInstanceVariable(c, "_display");
     Method m = class_getInstanceMethod(c, sel_registerName("warpMouse:"));
     x_warp = x11 ? dlsym(x11, "XWarpPointer") : 0; x_sync = x11 ? dlsym(x11, "XSync") : 0; x_root = x11 ? dlsym(x11, "XDefaultRootWindow") : 0;
+    x_next_request = x11 ? dlsym(x11, "XNextRequest") : 0;
+    x_query_pointer = x11 ? dlsym(x11, "XQueryPointer") : 0;
+    Method px = class_getInstanceMethod(c, sel_registerName("postXEvent:"));
+    if (px && x_next_request) orig_postXEvent = (void (*)(id, SEL, void *))method_setImplementation(px, (IMP)vine_postXEvent);
+    else x_next_request = 0;   // without serials the lock falls back to recentring-by-position
     if (!iv || !m || !x_warp || !x_sync || !x_root) return;
     x_display_ivar = ivar_getOffset(iv);
     method_setImplementation(m, (IMP)vine_warp_mouse);
@@ -1363,15 +1402,19 @@ static void vine_postEvent(id self, SEL _cmd, id ev, BOOL atStart) {
         // (y stays in Darling's convention here; -deltaY flips it for every motion event, below)
         static double sens = -1;
         if (sens < 0) { const char *v = getenv("VINE_MOUSE_SENSITIVITY"); sens = v ? atof(v) : 1; if (sens <= 0 || sens > 20) sens = 1; }
+        // The first event the X server generated after our warp measures from the warp's destination,
+        // even when it merges the warp with real motion; earlier ones from the previous event.
+        if (vine_warp_pending && (long)(vine_cur_serial - vine_warp_serial) >= 0) {   // where the warp really left it
+            vine_lock.prev = (NSPoint){vine_lock.center.x + vine_warp_off_x, vine_lock.center.y - vine_warp_off_y};
+            vine_warp_pending = 0;
+        }
         double dx = (l.x - vine_lock.prev.x) * sens, dy = (l.y - vine_lock.prev.y) * sens;
-        double cx = l.x - vine_lock.center.x, cy = l.y - vine_lock.center.y;
-        if (vine_lock.awaiting && cx * cx + cy * cy <= 4) { dx = dy = 0; vine_lock.awaiting = 0; }   // the recentring warp (±2 px rounding)
         vine_lock.prev = l;
         id fixed = [objc_getClass("NSEvent") mouseEventWithType:t location:l modifierFlags:[ev modifierFlags] window:[ev window]
                                                    clickCount:1 deltaX:dx deltaY:dy];
         if (fixed) ev = fixed;
         double ox = l.x - vine_lock.center.x, oy = l.y - vine_lock.center.y;
-        if (!vine_lock.awaiting && ox * ox + oy * oy > vine_lock.radius * vine_lock.radius) vine_lock_center(self);
+        if (!vine_warp_pending && ox * ox + oy * oy > vine_lock.radius * vine_lock.radius) vine_lock_center(self);
     }
     if (!atStart && vine_queue_ivar >= 0 && (t == 5 || t == 6 || t == 7 || t == 27)) {   // moved, dragged
         id q = *(id *)((char *)self + vine_queue_ivar), last = [q lastObject];
