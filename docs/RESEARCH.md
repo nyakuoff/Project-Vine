@@ -1,7 +1,7 @@
 # Research findings
 
 Labels: **[V]** verified (primary source or reproduced locally), **[C]** community claim / inference.
-Local evidence lives in `logs/`; scripts in `tests/`.
+Archived evidence lives in `docs/evidence/` (new runs write to the untracked `logs/`); scripts in `tests/`.
 
 ## 1. Existing ecosystem
 
@@ -43,9 +43,9 @@ param[0] = 'Wine is not supported.'
 param[1] = 'Version Error'
 param[2] = 0x10  (MB_ICONERROR)
 ```
-(`logs/route-a-hard-error-text-wine-11.19-20261009.txt`)
+(`docs/evidence/route-a-hard-error-text-wine-11.19-20261009.txt`)
 
-**Every installed Wine/Proton build** [V] (`logs/route-a-summary-20261009.txt`):
+**Every installed Wine/Proton build** [V] (`docs/evidence/route-a-summary-20261009.txt`):
 
 | Build | Wine base | Hyperion first syscall | Result |
 |---|---|---|---|
@@ -133,7 +133,7 @@ counters, EGL error codes, back-buffer reads):
 
 Result: Roblox's own HTTPS (bundled curl/OpenSSL) works (version check returns real data; logged-out
 API calls answer 401 as expected), Lua app runs, and the sign-in screen is drawn
-(`logs/route-b-first-frame-20261009.png`).
+(`assets/screenshot-first-frame.png`).
 
 Note: my DNS baseline comparison (`tests/darwin/dns.m` with/without the shim) was invalidated by a
 concurrent harness run; the evidence for the fix is the xtrace plus Roblox's errors disappearing.
@@ -155,7 +155,7 @@ Not adopted (see DECISIONS D8): binary patch of Roblox's startup throttle, block
 | Close slow (13 s) / never (Xvfb) | `WM_DELETE_WINDOW` received; close scheduled as NSRunLoop perform that Roblox's CFRunLoop doesn't service; Cocotron `_checkForTerminate` unconditional (MacOBlox finding) | close via main dispatch queue; macOS "terminate after last window closed" via delegate; 3 s teardown watchdog |
 | Frames lost under Xvfb | MIT-SHM across IPC namespaces | D9 |
 
-Result: Sign In opens the sign-in page (`logs/route-b-signin-page-20261009.png`); close quits in ~3 s.
+Result: Sign In opens the sign-in page (`assets/screenshot-signin.png`); close quits in ~3 s.
 Still open: Roblox's own teardown blocks ~10 s in `std::thread::join` (not telemetry, not the fd-limit
 kqueue scan — both measured); the watchdog hides it. Headless GPU testing: KWin `--virtual` + Xwayland
 renders on radeonsi, but XTest input doesn't reach clients there.

@@ -8,7 +8,7 @@ variables on the command line. Needs PySide6 (Qt 6).
 import os, shlex, subprocess, sys
 from pathlib import Path
 from PySide6.QtCore import QProcess, QTimer, QUrl, Qt
-from PySide6.QtGui import QDesktopServices, QFontDatabase
+from PySide6.QtGui import QDesktopServices, QFontDatabase, QIcon, QPixmap
 from PySide6.QtWidgets import (QApplication, QCheckBox, QComboBox, QDoubleSpinBox, QFormLayout, QGroupBox,
                                QHBoxLayout, QLabel, QPlainTextEdit, QPushButton, QSpinBox, QVBoxLayout, QWidget)
 
@@ -66,9 +66,17 @@ class Window(QWidget):
     def __init__(self):
         super().__init__()
         self.setWindowTitle('Vine')
+        self.setWindowIcon(QIcon(str(ROOT / 'assets/vine-logo.png')))
         self.values = load()
         self.inputs = {}
         layout = QVBoxLayout(self)
+        # The text logo is white: on a dark banner it reads in light and dark themes alike.
+        banner = QLabel(alignment=Qt.AlignCenter)
+        banner.setStyleSheet('background: #111; border-radius: 6px; padding: 8px;')
+        pix = QPixmap(str(ROOT / 'assets/vine-logo-text.png'))
+        if not pix.isNull():
+            banner.setPixmap(pix.scaledToHeight(64, Qt.SmoothTransformation))
+            layout.addWidget(banner)
         for title, keys in SECTIONS:
             box = QGroupBox(title)
             form = QFormLayout(box)

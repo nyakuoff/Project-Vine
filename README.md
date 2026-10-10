@@ -1,63 +1,99 @@
-# Vine — Roblox on Linux compatibility research
+<div align="center">
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="assets/vine-logo-text.png">
+  <img src="assets/vine-logo.png" alt="Project Vine" width="160">
+</picture>
 
-Goal: launch the official Roblox client on Linux, sign in, join experiences, render, play.
+# Project Vine
 
-## Status (2026-10-09)
+**The official Roblox client on Linux, without Wine: the macOS build on [Darling](https://www.darlinghq.org/) plus a small shim layer.**
 
-| Milestone | Status |
+</div>
+
+Vine runs Roblox's macOS client unmodified (apart from two optional, documented patches) on Linux, with no root and no install. You can sign in, join experiences, hear sound, and play with mouse and keyboard.
+It is an unofficial compatibility project, not affiliated with Roblox. It uses normal account sign-in and does not touch Roblox's anti-cheat (see [Scope](#scope)).
+
+## Status
+
+| | |
 |---|---|
-| A. Feasibility established | **Done.** Windows route blocked, macOS route impractical, Android client via Sober works |
-| B. Reproducible startup | **Done** for the Windows client. It reaches Hyperion init, which shows "Wine is not supported." and exits. Identical on all 7 Wine/Proton builds, including umu-run with the EAC runtime |
-| C. Functional app init | **macOS client: done** — Roblox's sign-in screen renders on Linux via Darling + Vine shims ([screenshot](logs/route-b-first-frame-20261009.png)). Windows: blocked |
-| D. Authenticated session | Sober: evidenced in the user's 2026-10-08 logs |
-| E. Playable experience | Sober: join, server connection and a 16-minute session are evidenced in the user's logs. A fresh observed session is TODO #1 |
-| F. Usable Linux implementation | Sober is that implementation. Vine adds diagnostics only |
+| **Works** | Start-up, sign-in (stays signed in), game join, rendering (OpenGL, Vulkan through Zink optional), keyboard and mouse camera, audio, antialiasing |
+| **Rough edges** | Frame rate is below native Windows (see [docs/TODO.md](docs/TODO.md)); closing from inside a game can take several tries; voice chat microphone untested |
+| **Tested on** | CachyOS, KDE Plasma (Wayland / Xwayland), AMD RX 7800 XT, Roblox 0.742.0.7421053, Darling 0.1.20260608 |
 
-**Bottom line:**
-- **Windows Player under Wine/Proton:** Roblox's Hyperion anti-tamper explicitly detects Wine ("Wine is not supported.") and exits, before any graphics code runs. Proton's anti-cheat support (EAC/BattlEye runtimes) doesn't apply because Roblox uses neither. No configuration fixes this, and we do not bypass it.
-- **macOS client (active route):** runs on Darling (no root, no install) with Vine's shim layer. It starts, reaches Roblox's servers over HTTPS, and **renders the sign-in screen**. Next: sign in (Quick Login), then join a game. See RESEARCH §5.
-- **What works:** the official Android client running natively through [Sober](https://sober.vinegarhq.org/).
+## Quick start
 
-Details: [RESEARCH.md](RESEARCH.md) · [COMPATIBILITY.md](COMPATIBILITY.md) · [DECISIONS.md](DECISIONS.md) · [ARCHITECTURE.md](ARCHITECTURE.md) · [TODO.md](TODO.md)
-
-## Play Roblox on Linux
+Requirements: Linux with unprivileged user namespaces, Xorg or Xwayland, Mesa (OpenGL 3.2+ core), `clang` + `lld` + `llvm` tools (to build the shims), `pacat` (audio), Python 3 with PySide6 (settings window).
 
 ```sh
-flatpak install flathub org.vinegarhq.Sober
-flatpak run org.vinegarhq.Sober
-tests/sober-stages.sh        # after a session: which lifecycle stages were reached
+# One-time setup
+#  1. Unpack Darling's release debs into .work/darling-root (see docs/RESEARCH.md §5)
+#  2. Put Roblox's macOS client (RobloxPlayer.app) in artifacts/mac/
+shims/build-ffmpeg.sh && shims/build.sh      # build the shim layer
+
+./vine-launcher.py                           # settings window: Launch / Stop
+# or from a terminal:
+VINE_DISPLAY=:0 tests/run-roblox-darling.sh  # on your desktop
+tests/run-roblox-darling.sh 120              # hidden test display; screenshots in logs/screens
 ```
 
-Requirements (per Sober docs): kernel ≥ 5.11, x86-64 with SSE4.1, GLES 3.0 (Vulkan 1.1 recommended).
+The first launch needs a sign-in (Quick Login: Roblox shows a code to enter on a signed-in device).
 
-## Route B (macOS client on Darling)
+### Settings
 
-```sh
-# once: unpack Darling release debs into .work/darling-root (see RESEARCH §5), then
-shims/build-ffmpeg.sh && shims/build.sh       # Vine's shim layer
-tests/run-roblox-darling.sh 120               # headless run → logs/darling-roblox-*.log, logs/screens/
-VINE_DISPLAY=:0 tests/run-roblox-darling.sh   # on your desktop
-tests/darwin/run.sh <test>                    # Darwin regression tests (url_relative, dns, iokit_notify, urlsession, urlconnection)
-tests/darling-lastcrash.sh                    # explain the latest crash from its core dump
+The settings window writes `~/.config/vine/vine.conf`; `tests/run-roblox-darling.sh` reads the same file, and environment variables of the same names override it.
+
+| Setting | Variable | Notes |
+|---|---|---|
+| Window | `VINE_DISPLAY` | `desktop`, a display such as `:0`, or empty for a hidden test display |
+| Renderer | `VINE_RENDERER` | `gl` (default) or `zink` (OpenGL over Vulkan; slower on AMD) |
+| Camera sensitivity | `VINE_MOUSE_SENSITIVITY` | multiplier while the camera holds the mouse |
+| Frame rate overlay | `VINE_FPS_OVERLAY` | Mesa HUD |
+| Antialiasing on AMD | `VINE_GL_FULL_RENDERER=1` turns the fix off | hides "AMD" from Roblox's GPU name (see [docs/RESEARCH.md](docs/RESEARCH.md)) |
+| Audio | `VINE_DARLING_AUDIO` | host playback (default) or Darling's audio |
+| Network protocol | `VINE_RBXTRANSPORT` | RakNet (default); RbxTransport is cut after ~10 s under Darling |
+| Fast start-up | `VINE_NO_THROTTLE_PATCH=1` turns it off | removes Roblox's start-up render throttle |
+| Diagnostics | `VINE_TRACE_UDP`, `tests/profile.sh` | network trace; per-thread profile of a running game |
+
+## How it works
+
+Darling runs the macOS binary; its macOS frameworks are incomplete, so Vine **wraps** them: each framework or system library is re-exported from a renamed copy, with fixes and missing symbols added (`shims/`). Details and the layer diagram: [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).
+Typical fixes: wrong or missing system calls, a slow memory and locking layer, audio, input, cookies and Keychain, GPU details Roblox reads. Every fix is backed by a regression test in `tests/darwin/` that runs inside Darling.
+
+Credit: many findings were cross-checked against, or first reported by, [MacOBlox](https://github.com/aubree-lat/MacOBlox), a project on the same route. Vine's code is its own; where a finding is theirs the source and docs say so.
+
+## Repository layout
+
+```
+vine-launcher.py     settings window (Qt)
+shims/               Darling shim layer: frameworks.m, kernel.c, pthread.c, platform.c, ...
+patches/             optional, structure-checked patches of Roblox's binary (--check / --undo)
+tests/               launcher scripts, Darwin regression tests (tests/darwin), host tests, diagnostics
+docs/                RESEARCH, ARCHITECTURE, DECISIONS, COMPATIBILITY, TODO, evidence/
+assets/              logos and screenshots
 ```
 
-## Reproduce the research
+Not in the repository: Roblox's client (`artifacts/`), Darling and build output (`.work/`), run logs (`logs/`).
+
+## Scope
+
+- **Windows client under Wine/Proton:** blocked. Roblox's Hyperion anti-tamper reports "Wine is not supported." and exits on every Wine and Proton build tried. Vine does not bypass it ([docs/DECISIONS.md](docs/DECISIONS.md) D1).
+- **Android client:** works natively through [Sober](https://sober.vinegarhq.org/); Vine only has a diagnostics script for it (`tests/sober-stages.sh`).
+- **macOS client on Darling:** the active route, this project.
+
+Roblox's own client is Roblox's property and is not distributed here.
+
+## Documentation
+
+[docs/RESEARCH.md](docs/RESEARCH.md) (findings, evidence) · [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) · [docs/DECISIONS.md](docs/DECISIONS.md) · [docs/COMPATIBILITY.md](docs/COMPATIBILITY.md) · [docs/TODO.md](docs/TODO.md)
+
+## Reproducing the Windows research
 
 ```sh
-tests/env.sh                                    # host matrix
-# put Roblox packages in artifacts/win and artifacts/mac (not committed)
-tests/route-a-wine-startup.sh                   # system Wine
+tests/env.sh                                     # host matrix
+# put Roblox packages in artifacts/win (not committed)
+tests/route-a-wine-startup.sh                    # system Wine
 tests/route-a-wine-startup.sh ~/.local/share/Steam/compatibilitytools.d/GE-Proton11-1/files/bin/wine
 ```
 
-Needs `wine`, `xvfb-run`, and `llvm-objdump`/`objdump` for static inspection. Nothing is installed or changed on the host. Prefixes go in `.work/`.
-
-## Launcher (settings GUI)
-
-`./vine-launcher.py` (Qt 6 / PySide6) sets Vine's options and launches or stops Roblox:
-window (desktop or hidden test display), renderer (OpenGL, or Vulkan through Mesa Zink),
-camera sensitivity, Mesa frame-rate overlay, time limit, the AMD antialiasing workaround, audio
-path, game network protocol (RakNet), the start-up throttle patch and a network trace. It also runs
-the profiler (`tests/profile.sh`) and opens `logs/`. Settings are stored in
-`~/.config/vine/vine.conf` and read by `tests/run-roblox-darling.sh`, so the command line uses
-them too (environment variables of the same names override them).
+Needs `wine`, `xvfb-run`, and `llvm-objdump`. Nothing is installed on the host; prefixes go in `.work/`.

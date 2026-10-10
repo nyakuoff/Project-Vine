@@ -1,2 +1,5 @@
 artifacts/
 .work/
+logs/
+__pycache__/
+*.pyc

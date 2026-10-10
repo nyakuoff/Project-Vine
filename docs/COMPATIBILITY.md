@@ -1,6 +1,6 @@
 # Compatibility matrix
 
-## Tested environment (2026-10-09, `tests/env.sh` → `logs/env-20261009.txt`)
+## Tested environment (2026-10-09, `tests/env.sh` → `docs/evidence/env-20261009.txt`)
 
 | | |
 |---|---|
@@ -28,7 +28,7 @@
 | Blocker | Hyperion detects Wine and exits: "Wine is not supported." | Darling networking (NSURLSession skeleton, TLS -9836); no visible frame yet | Remote-attestation games (Error 318) |
 | Complexity to progress | Requires defeating anti-tamper — out of scope | Incremental Darling fixes (10 landed so far as shims) | None (install) |
 | Tooling | Wine, Proton, DXVK — all mature | Darling 0.1.20260608 rootless + `shims/` + crash/exception/coverage tools | Sober 1.8.0 |
-| Evidence | `logs/route-a-*.log` (3 Wine builds) | RESEARCH §5, `logs/darling-roblox-*.log`, `tests/darwin/` | `logs/sober-stages-*.txt`, Sober docs |
+| Evidence | `docs/evidence/route-a-*.log` (Wine/Proton builds) | RESEARCH §5, `logs/darling-roblox-*.log`, `tests/darwin/` | `logs/sober-stages-*.txt`, Sober docs |
 
 ## Lifecycle stage results
 

@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=Vine
+Comment=Roblox on Linux (macOS client on Darling)
+Exec=python3 vine-launcher.py
+Icon=assets/vine-logo.png
+Terminal=false
+Categories=Game;
