@@ -24,7 +24,8 @@ if [ -z "${VINE_DISPLAY:-}" ]; then
 else DISP=$VINE_DISPLAY; fi
 echo "$DISP" > "$ROOT/.work/last-display"   # for helpers (x11-click.py, screenshots)
 
-ENV=(MESA_SHADER_CACHE_DIR=/tmp/vine-mesa-cache DISPLAY="$DISP" VINE_OBJC_LENIENT="${VINE_OBJC_LENIENT:-1}")
+ENV=(MESA_SHADER_CACHE_DIR=/tmp/vine-mesa-cache DISPLAY="$DISP" VINE_OBJC_LENIENT="${VINE_OBJC_LENIENT:-1}"
+     VINE_TRACE_UDP="${VINE_TRACE_UDP:-1}")   # first game join's UDP handshake in the log (shims/kernel.c)
 [ -n "${VINE_ENV:-}" ] && ENV+=($VINE_ENV)   # extra env, e.g. VINE_ENV="GALLIUM_HUD=fps"
 [ "${VINE_XTRACE:-0}" = 1 ] && ENV+=(XTRACE_NO_COLOR=1 XTRACE_LOG_FILE=/private/tmp/rbx.xtrace XTRACE_LOG_FILE_PER_THREAD=1
                                    DYLD_INSERT_LIBRARIES=/usr/lib/darling/libxtrace.dylib)

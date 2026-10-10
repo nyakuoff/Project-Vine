@@ -234,8 +234,70 @@ static int msg_flags_linux(int f) {
     for (size_t i = 0; i < sizeof map / sizeof *map; i++) if (f & map[i][0]) o |= map[i][1];
     return o;
 }
+// VINE_TRACE_UDP=1: UDP sends/receives (300 per socket, 12 sockets) to stderr (time, socket, size, how long a
+// receive waited), to see where a game join's handshake waits. Read from /proc/self/environ: this
+// wrapper sits underneath libc (no getenv).
+enum { L_write = 1, L_getsockopt = 55, L_clock_gettime = 228 };
+static int udp_trace_on(void) {
+    static int on = -1;
+    if (on >= 0) return on;
+    char buf[8192]; long fd = __linux_syscall(L_open, "/proc/self/environ", 0), n;
+    on = 0;
+    if (fd < 0) return on;
+    n = __linux_syscall(L_read, fd, buf, sizeof buf - 1);
+    __linux_syscall(L_close, fd);
+    static const char key[] = "VINE_TRACE_UDP=1";
+    for (long i = 0; i + 16 <= n; i++) {
+        if (i && buf[i - 1]) continue;
+        int k = 0; while (k < 16 && buf[i + k] == key[k]) k++;
+        if (k == 16) on = 1;
+    }
+    return on;
+}
+static long now_us(void) {
+    struct { long s, ns; } t; __linux_syscall(L_clock_gettime, 1, &t); return t.s * 1000000 + t.ns / 1000;
+}
+static int is_net_udp(int fd) {   // UDP over IPv4/IPv6 (not local socket pairs)
+    int type = 0, dom = 0; unsigned len = 4, len2 = 4;
+    return __linux_syscall(L_getsockopt, fd, 1, 3 /* SO_TYPE */, &type, &len) == 0 && type == 2 &&
+           __linux_syscall(L_getsockopt, fd, 1, 39 /* SO_DOMAIN */, &dom, &len2) == 0 && (dom == 2 || dom == 10);
+}
+static void udp_trace(const char *op, int fd, long bytes, long waited_us) {
+    // 300 events per socket, 12 sockets: the join's RakNet socket is traced even after the menu's
+    // other UDP traffic (a QUIC-style connection, STUN probes)
+    static struct { int fd, n; } socks[12]; static int nsocks, skip[32], nskip; static long t0;
+    if (!udp_trace_on()) return;
+    // ponytail: a skipped number reused later by a network socket stays untraced; check per call if it matters
+    for (int k = 0; k < nskip; k++) if (skip[k] == fd) return;   // known local socket pairs
+    int i = 0;
+    while (i < nsocks && socks[i].fd != fd) i++;
+    if (i == nsocks) {
+        if (nsocks == 12) return;
+        if (!is_net_udp(fd)) { if (nskip < 32) skip[nskip++] = fd; return; }
+        socks[nsocks].fd = fd; socks[nsocks++].n = 0;
+    }
+    if (socks[i].n++ >= 300) return;
+    if (!t0) t0 = now_us();
+    char line[96], *p = line + 96;   // "vine-udp: +SSS.mmm op fd=N bytes waited=Nms\n", built backwards
+    #define PUT(c) (*--p = (c))
+    #define NUM(v) do { long v_ = (v); int neg_ = v_ < 0; if (neg_) v_ = -v_; do PUT('0' + v_ % 10); while (v_ /= 10); if (neg_) PUT('-'); } while (0)
+    PUT('\n'); PUT('s'); PUT('m'); NUM(waited_us / 1000); PUT('='); PUT('t'); PUT('i'); PUT('a'); PUT('w'); PUT(' ');
+    NUM(bytes); PUT(' '); NUM(fd); PUT('='); PUT('d'); PUT('f'); PUT(' ');
+    const char *e = op; while (*e) e++;
+    while (e > op) PUT(*--e);
+    PUT(' '); long ms = (now_us() - t0) / 1000;
+    PUT('0' + ms % 10); PUT('0' + ms / 10 % 10); PUT('0' + ms / 100 % 10); PUT('.'); NUM(ms / 1000); PUT('+'); PUT(' ');
+    static const char tag[] = "vine-udp:";
+    for (int i = 8; i >= 0; i--) PUT(tag[i]);
+    __linux_syscall(L_write, 2, p, line + 96 - p);
+    #undef PUT
+    #undef NUM
+}
 static ssize_t vine_recvfrom(int nr, int fd, void *buf, size_t len, int flags, void *from, void *fromlen) {
-    return p_bsd_syscall(nr, fd, buf, len, msg_flags_linux(flags), from, fromlen);
+    long t = udp_trace_on() ? now_us() : 0;
+    ssize_t r = p_bsd_syscall(nr, fd, buf, len, msg_flags_linux(flags), from, fromlen);
+    if (t && r >= 0) udp_trace("recvfrom", fd, r, now_us() - t);
+    return r;
 }
 ssize_t recvfrom(int fd, void *b, size_t n, int f, void *from, void *fl) { return vine_recvfrom(SYS_recvfrom, fd, b, n, f, from, fl); }
 ssize_t recvfrom_nocancel(int, void *, size_t, int, void *, void *) __asm__("_recvfrom$NOCANCEL");
@@ -346,6 +408,7 @@ static ssize_t vine_sendmsg(int fd, const struct d_msghdr *m, int flags) {
     }
     if (out) { l.control = ctl; l.controllen = out; }
     long r = __linux_syscall(L_sendmsg, fd, &l, msg_flags_linux(flags));
+    if (r >= 0) udp_trace("sendmsg", fd, r, 0);
     return r < 0 ? net_err(r) : r;
 }
 
@@ -353,8 +416,10 @@ static ssize_t vine_recvmsg(int fd, struct d_msghdr *m, int flags) {
     char ctl[2048];
     struct l_msghdr l = {m->name, m->namelen, m->iov, (size_t)m->iovlen, 0, 0, 0};
     if (m->control && m->controllen) { l.control = ctl; l.controllen = sizeof ctl; }
+    long t = udp_trace_on() ? now_us() : 0;
     long r = __linux_syscall(L_recvmsg, fd, &l, msg_flags_linux(flags));
     if (r < 0) return net_err(r);
+    if (t) udp_trace("recvmsg", fd, r, now_us() - t);
     if (m->name && l.namelen >= 2) {   // sockaddr: Linux u16 family -> Darwin {len, family}
         uint8_t *a = m->name;
         int fam = family_to_darwin(*(uint16_t *)a);
@@ -396,6 +461,14 @@ int setsockopt(int fd, int level, int name, const void *val, uint32_t len) {
         {41, 62, 62} /* IPV6_DONTFRAG */, {41, 37, 51} /* IPV6_RECVHOPLIMIT */,
     };
     long r;
+    // SO_SNDTIMEO/SO_RCVTIMEO: Darwin's timeval is {long, int} + 4 bytes padding, Linux's {long, long};
+    // Darling passed it unconverted, so junk padding became a huge tv_usec -> EDOM (RakNet's send
+    // timeout failed; MacOBlox finding). Pass Linux's layout.
+    if (level == 0xffff && (name == 0x1005 || name == 0x1006) && val && len >= 12) {
+        struct { long sec, usec; } tv = {((const long *)val)[0], ((const int *)val)[2]};
+        r = __linux_syscall(L_setsockopt, fd, 1 /* SOL_SOCKET */, name == 0x1005 ? 21 : 20, &tv, sizeof tv);
+        return r < 0 ? (int)net_err(r) : 0;
+    }
     if (level == 0 && name == 28 && val && len >= 4) {   // IP_DONTFRAG -> IP_MTU_DISCOVER DO/DONT
         int v = *(const int *)val ? 2 : 0;
         r = __linux_syscall(L_setsockopt, fd, 0, 10, &v, 4);
@@ -461,3 +534,16 @@ int host_statistics64(unsigned host, int flavor, unsigned *info, unsigned *count
     if (!r && (flavor == 4 /* HOST_VM_INFO64 */ || flavor == 2) && count) fill_vm_counts(info, *count, flavor == 4);
     return r;
 }
+
+// sendto: unchanged (Darling's translates correctly), traced with VINE_TRACE_UDP=1.
+enum { SYS_sendto = 133, SYS_sendto_nocancel = 413 };
+static ssize_t vine_sendto(int nr, int fd, const void *b, size_t n, int f, const void *to, uint32_t tl) {
+    ssize_t r = p_bsd_syscall(nr, fd, b, n, f, to, tl);
+    if (r >= 0) udp_trace("sendto", fd, r, 0);
+    return r;
+}
+ssize_t sendto(int fd, const void *b, size_t n, int f, const void *to, uint32_t tl) { return vine_sendto(SYS_sendto, fd, b, n, f, to, tl); }
+ssize_t sendto_nocancel(int, const void *, size_t, int, const void *, uint32_t) __asm__("_sendto$NOCANCEL");
+ssize_t sendto_nocancel(int fd, const void *b, size_t n, int f, const void *to, uint32_t tl) { return vine_sendto(SYS_sendto_nocancel, fd, b, n, f, to, tl); }
+ssize_t __sendto(int fd, const void *b, size_t n, int f, const void *to, uint32_t tl) { return vine_sendto(SYS_sendto, fd, b, n, f, to, tl); }
+ssize_t __sendto_nocancel(int fd, const void *b, size_t n, int f, const void *to, uint32_t tl) { return vine_sendto(SYS_sendto_nocancel, fd, b, n, f, to, tl); }
