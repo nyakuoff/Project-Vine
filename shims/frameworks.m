@@ -593,6 +593,56 @@ static NSString *vine_resolve_path(NSString *p, NSURL *base) {
 #endif
 
 #ifdef FW_IOKit
+// IOFBMemorySize for the placeholder display entry (CoreGraphics wrapper): the host GPU's video
+// memory from the launcher (VINE_VRAM_BYTES), 2 GiB if unknown.
+#define VINE_DISPLAY_SERVICE 0x56524d31u
+void *vine_orig(const char *image, const char *sym);
+long long atoll(const char *);
+CFTypeRef CFNumberCreate(const void *, long, const void *);
+unsigned char CFStringGetCString(CFStringRef, char *, long, unsigned int);
+#define IOKIT_IMG "/System/Library/Frameworks/IOKit.framework/Versions/A/IOKit.darling"
+CFTypeRef IORegistryEntryCreateCFProperty(unsigned int entry, CFStringRef key, const void *alloc, unsigned int opts) {
+    static CFTypeRef (*o)(unsigned int, CFStringRef, const void *, unsigned int);
+    if (!o) o = (CFTypeRef (*)(unsigned int, CFStringRef, const void *, unsigned int))vine_orig(IOKIT_IMG, "IORegistryEntryCreateCFProperty");
+    CFTypeRef r = entry != VINE_DISPLAY_SERVICE && o ? o(entry, key, alloc, opts) : 0;
+    char k[64];
+    if (!r && key && CFStringGetCString(key, k, sizeof k, 0x08000100 /* UTF-8 */) && !strcmp(k, "IOFBMemorySize")) {
+        const char *v = getenv("VINE_VRAM_BYTES");
+        long long bytes = v ? atoll(v) : 0;
+        if (bytes < (256LL << 20)) bytes = 2LL << 30;
+        r = CFNumberCreate(0, 4 /* kCFNumberSInt64Type */, &bytes);
+    }
+    return r;
+}
+// Roblox reads the whole property dictionary (IORegistryEntryCreateCFProperties) and looks up
+// IOFBMemorySize in it.
+void *CFDictionaryCreateMutable(const void *, long, const void *, const void *);
+void CFDictionarySetValue(void *, const void *, const void *);
+void CFRelease(CFTypeRef);
+extern const char kCFTypeDictionaryKeyCallBacks[], kCFTypeDictionaryValueCallBacks[];
+int IORegistryEntryCreateCFProperties(unsigned int entry, void **props, const void *alloc, unsigned int opts) {
+    static int (*o)(unsigned int, void **, const void *, unsigned int);
+    if (entry != VINE_DISPLAY_SERVICE) {
+        if (!o) o = (int (*)(unsigned int, void **, const void *, unsigned int))vine_orig(IOKIT_IMG, "IORegistryEntryCreateCFProperties");
+        return o ? o(entry, props, alloc, opts) : 0xe00002bc /* kIOReturnError */;
+    }
+    if (!props) return 0xe00002c2;   // kIOReturnBadArgument
+    void *d = CFDictionaryCreateMutable(alloc, 0, kCFTypeDictionaryKeyCallBacks, kCFTypeDictionaryValueCallBacks);
+    CFTypeRef v = IORegistryEntryCreateCFProperty(entry, (CFStringRef)@"IOFBMemorySize", alloc, 0);
+    if (d && v) CFDictionarySetValue(d, @"IOFBMemorySize", v);
+    if (v) CFRelease(v);
+    *props = d;
+    return d ? 0 : 0xe00002bd;   // kIOReturnNoMemory
+}
+int IOObjectRelease(unsigned int obj) {
+    static int (*o)(unsigned int);
+    if (obj == VINE_DISPLAY_SERVICE) return 0;
+    if (!o) o = (int (*)(unsigned int))vine_orig(IOKIT_IMG, "IOObjectRelease");
+    return o ? o(obj) : 0;
+}
+#endif
+
+#ifdef FW_IOKit
 // Darling's iokitd serves only display/IOSurface/power objects; matching notifications for anything
 // else fail, and a NULL notification port is dereferenced. Report "nothing matched" instead.
 void *vine_orig(const char *image, const char *sym);
@@ -877,6 +927,18 @@ int CGAssociateMouseAndMouseCursorPosition(unsigned int connected) {
 // motion event with a huge delta, then warps back to its pin point: a ~4000 warps/s feedback loop
 // (285k "Warp to" lines in one session), the game froze at any movement, the camera jumped
 // (finding matches MacOBlox's notes). Darling's grab keeps the pointer pinned, so ignore them.
+// Display IOKit entry: Darling's CGDisplayIOServicePort finds no IODisplayConnect and returns 0, so
+// Roblox could not read IOFBMemorySize (video memory), assumed 64 MB ("gpu_memMB 64" in its perf
+// reports) and lowered quality. A placeholder entry answered by the IOKit wrapper (finding credited
+// to MacOBlox, gpu_info.c).
+#define VINE_DISPLAY_SERVICE 0x56524d31u   /* 'VRM1' */
+void *vine_orig(const char *image, const char *sym);
+unsigned int CGDisplayIOServicePort(unsigned int display) {
+    static unsigned int (*o)(unsigned int);
+    if (!o) o = (unsigned int (*)(unsigned int))vine_orig("/System/Library/Frameworks/CoreGraphics.framework/Versions/A/CoreGraphics.darling", "CGDisplayIOServicePort");
+    unsigned int r = o ? o(display) : 0;
+    return r ? r : VINE_DISPLAY_SERVICE;
+}
 typedef struct { double x, y; } VinePoint;
 void *vine_orig(const char *image, const char *sym);
 int CGWarpMouseCursorPosition(VinePoint p) {

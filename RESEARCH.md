@@ -197,6 +197,8 @@ renders on radeonsi, but XTest input doesn't reach clients there.
 | Low-memory warning at every join, menu unloaded | `vm_stats.m`: host_statistics64 free pages 0 | /proc/meminfo counts (MacOBlox finding) |
 | RakNet connect takes 7.5-19.6 s per join (black screen) | log: "binding socket" → "Connection accepted"; SO_SNDTIMEO with junk padding → EDOM (fixed) | `VINE_TRACE_UDP` per-socket trace for the next join |
 
+| Roblox assumes 64 MB of video memory ("Video memory size: 67108864", lowers quality/budgets) | it walks CGGetOnlineDisplayList → CGDisplayIOServicePort → IORegistryEntryCreateCFProperties → IOFBMemorySize; Darling's CGDisplayIOServicePort returns 0 | placeholder display entry answering IOFBMemorySize with the host VRAM (launcher: amdgpu sysfs) (MacOBlox finding): log now "Video memory size: 2147483648" (Roblox's cap) |
+
 Not verified in a game yet (needs the user's account): sound, the black screen (it lasted only the ~4 s
 before the crash, so it may just be the loading phase), sustained play.
 
