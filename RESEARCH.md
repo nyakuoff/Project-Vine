@@ -179,6 +179,11 @@ renders on radeonsi, but XTest input doesn't reach clients there.
 | Game list / menus don't scroll | log: `scrollingDeltaY`, `hasPreciseScrollingDeltas`, `phase`, `momentumPhase` unimplemented on Darling's NSEvent | category on NSEvent (wheel: line deltas, not precise, no phases); verified on Xvfb (home page scrolls) |
 | No sound: FMOD now lists "PulseAudio 44100/2" but `System::init` fails (51) | — | failing AudioUnit calls logged as `vine-audio:` for the next in-game run |
 
+| ~20-30 fps in game, stalls | Roblox's own counters: averageFPS 29 with only ~4 ms work per frame (GPU 0.3, perform 3.2, present 0.2 ms) — the loop waits; dserver.log: 9217 "PSYNCH: psync_cvwait; invalid sequence numbers" (~90/s in game) | `shims/pthread.c`: condition variables on Linux futexes (MacOBlox finding; `cond_stress.m`: 200k items 4x4 threads, timed wait, broadcast; no psynch errors). Sleeps measured fine (1 ms → 1.07 ms), left alone |
+| Freezes while the mouse moves | Darling posts one NSEvent per X motion (1000/s with a gaming mouse; MacOBlox measured the game 180-340 events behind) | moved/dragged events coalesced in Darling's queue (2000 motions → 1 event, final position) |
+| No sound | `vine-audio:` trace: `AudioUnitSetProperty(19 AudioChannelLayout, input)` → -10879 | accepted (stereo description) |
+| (Vine bug) user's login cookie deleted by a test | Darling's `cookiesForURL:` returns every cookie regardless of URL; the test deleted "its" cookies | cookies filtered by domain/path/Secure/expiry (also stops sending the login cookie to other hosts); Darwin tests run with their own HOME |
+
 Not verified in a game yet (needs the user's account): sound, the black screen (it lasted only the ~4 s
 before the crash, so it may just be the loading phase), sustained play.
 

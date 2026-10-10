@@ -48,6 +48,7 @@ cwrap() {  # cwrap <install name> <source>
 }
 cwrap /usr/lib/system/libsystem_kernel.dylib "$SRC/kernel.c"   # xattr + fork/exit fixes
 cwrap /usr/lib/libresolv.9.dylib "$SRC/resolv.c"                # thread-safe res_query
+cwrap /usr/lib/system/libsystem_pthread.dylib "$SRC/pthread.c" # condition variables on futexes
 
 STUB=/usr/lib/vine/libvinestub.dylib
 cc "$O$STUB" "$STUB" "$SRC/VineStub.m"

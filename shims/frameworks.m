@@ -965,6 +965,10 @@ OSStatus AudioUnitSetProperty(void *u, uint32_t prop, uint32_t scope, uint32_t e
     static OSStatus (*o)(void *, uint32_t, uint32_t, uint32_t, const void *, uint32_t);
     if (!o) o = vine_orig(AT_FULL, "AudioUnitSetProperty");
     OSStatus st = o(u, prop, scope, elem, data, size);
+    // kAudioUnitProperty_AudioChannelLayout (19): Darling's AUBase answers InvalidProperty (-10879);
+    // FMOD sets it (stereo) and treats the failure as FMOD_ERR_OUTPUT_INIT. The layout only
+    // describes the channels; Darling's device plays plain stereo. ponytail: accepted, not stored.
+    if (st == -10879 && prop == 19) return 0;
     AU_TRACE("AudioUnitSetProperty", st, prop, scope, elem);
     return st;
 }
@@ -1051,7 +1055,39 @@ static void vine_app_sendEvent(id self, SEL _cmd, id event) {
     }
     if (event) orig_app_sendEvent(self, _cmd, event);
 }
+// Mouse motion coalescing, as macOS AppKit does. Darling posts one NSEvent per X motion event, so a
+// 1000 Hz mouse sends ~1000 events/s through Roblox's input handling; the game falls behind and
+// freezes while the mouse moves (finding credited to MacOBlox: 180-340 events late). A moved or
+// dragged event that would queue behind another of the same type, window and modifiers replaces it:
+// newest position, deltas summed. Nothing else changes order.
+@interface NSObject (VineQueue) - (id)lastObject; - (unsigned long)count; - (void)replaceObjectAtIndex:(unsigned long)i withObject:(id)o;
++ (id)mouseEventWithType:(unsigned long)t location:(NSPoint)l modifierFlags:(unsigned long)f window:(id)w clickCount:(long)c deltaX:(double)dx deltaY:(double)dy; @end
+static void (*orig_postEvent)(id, SEL, id, BOOL);
+static long vine_queue_ivar = -1;
+static void vine_postEvent(id self, SEL _cmd, id ev, BOOL atStart) {
+    unsigned long t = [ev type];
+    if (!atStart && vine_queue_ivar >= 0 && (t == 5 || t == 6 || t == 7 || t == 27)) {   // moved, dragged
+        id q = *(id *)((char *)self + vine_queue_ivar), last = [q lastObject];
+        if (last && [last type] == t && [last window] == [ev window] && [last modifierFlags] == [ev modifierFlags]) {
+            id merged = [objc_getClass("NSEvent") mouseEventWithType:t location:[ev locationInWindow] modifierFlags:[ev modifierFlags]
+                                                               window:[ev window] clickCount:1
+                                                               deltaX:[last deltaX] + [ev deltaX] deltaY:[last deltaY] + [ev deltaY]];
+            if (merged) { [q replaceObjectAtIndex:[q count] - 1 withObject:merged]; return; }
+        }
+    }
+    orig_postEvent(self, _cmd, ev, atStart);
+}
+
 __attribute__((constructor)) static void vine_event_monitors(void) {
+    {
+        Class d = objc_getClass("NSDisplay");
+        Ivar iv = d ? class_getInstanceVariable(d, "_eventQueue") : 0;
+        Method pm = d ? class_getInstanceMethod(d, sel_registerName("postEvent:atStart:")) : 0;
+        if (iv && pm) {
+            vine_queue_ivar = ivar_getOffset(iv);
+            orig_postEvent = (void (*)(id, SEL, id, BOOL))method_setImplementation(pm, (IMP)vine_postEvent);
+        }
+    }
     Class meta = object_getClass((id)objc_getClass("NSEvent"));
     Method m;
     if ((m = class_getInstanceMethod(meta, sel_registerName("addLocalMonitorForEventsMatchingMask:handler:"))))
@@ -1157,8 +1193,36 @@ static void vine_setCookiesForURL(id self, SEL _cmd, id cs, id u, id m) {
     vine_cookies_save(self);
 }
 static id (*orig_cookiesForURL)(id, SEL, id);
+// Darling's -cookiesForURL: returns every stored cookie, whatever the URL: Roblox's login cookie
+// went out with requests to any host, and a caller deleting "its" cookies deleted all of them.
+// Keep only cookies that match as RFC 6265 says: host equals or is a subdomain of the cookie's
+// domain, path prefix, Secure only over https, not expired.
+int strcasecmp(const char *, const char *); int strncmp(const char *, const char *, size_t);
+@interface NSObject (VineCookieURL) - (id)host; - (id)path; - (id)scheme; - (BOOL)boolValue; - (void)addObject:(id)o; @end
+static int vine_cookie_matches(id c, id url) {
+    id props = [c properties];
+    const char *host = [[url host] UTF8String], *dom = [[props objectForKey:@"Domain"] UTF8String];
+    const char *path = [[url path] UTF8String], *cpath = [[props objectForKey:@"Path"] UTF8String];
+    if (!host || !dom) return 0;
+    if (*dom == '.') dom++;
+    size_t hl = strlen(host), dl = strlen(dom);
+    if (hl < dl || strcasecmp(host + hl - dl, dom) || (hl > dl && host[hl - dl - 1] != '.')) return 0;
+    if (cpath && *cpath) {
+        size_t pl = strlen(cpath);
+        if (!path || !*path) path = "/";
+        if (strncmp(path, cpath, pl) || (path[pl] && cpath[pl - 1] != '/' && path[pl] != '/')) return 0;
+    }
+    id secure = [props objectForKey:@"Secure"];
+    BOOL sec = [secure isKindOfClass:objc_getClass("NSString")] ? (strcasecmp([secure UTF8String], "TRUE") == 0 || !strcmp([secure UTF8String], "1")) : [secure boolValue];
+    if (sec && strcasecmp([[url scheme] UTF8String] ?: "", "https")) return 0;
+    id exp = [props objectForKey:@"Expires"];
+    if (exp && !vine_cookie_persistent(props) && ([exp isKindOfClass:objc_getClass("NSDate")] || [exp isKindOfClass:objc_getClass("NSString")])) return 0;
+    return 1;
+}
 static id vine_cookiesForURL(id self, SEL _cmd, id url) {
-    id r = orig_cookiesForURL(self, _cmd, url);
+    id all = orig_cookiesForURL(self, _cmd, url), r = [objc_getClass("NSMutableArray") array];
+    for (unsigned long i = 0; i < [all count]; i++)
+        if (vine_cookie_matches([all objectAtIndex:i], url)) [r addObject:[all objectAtIndex:i]];
     dprintf(2, "vine-cookie: get %s -> %lu cookie(s), store has %lu\n", [[url absoluteString] UTF8String],
             (unsigned long)[r count], (unsigned long)[[self cookies] count]);
     return r;
