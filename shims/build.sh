@@ -39,16 +39,22 @@ mktbd() {  # mktbd <original> <copy install name> <out.tbd>
 
 # Plain-C wrappers for libraries loaded during libSystem start-up: they link only the wrapped
 # library (re-exported copy with a renamed id), no libSystem, no initializers.
-cwrap() {  # cwrap <install name> <source>
+cwrap() {  # cwrap <install name> <source> [extra link inputs...]
   local K=$1; mkdir -p "$(dirname "$O$K")"
   cp "$D$K" "$O$K.darling"; "$SRC/rename-dylib-id.py" "$O$K.darling"
   mktbd "$D$K" "$K.darling" "$TMP/$(basename "$K").tbd"
   clang -target x86_64-apple-macos10.13 -dynamiclib -nostdlib -ffreestanding -fno-builtin -fno-stack-protector -fuse-ld=lld -O2 \
-    -install_name "$K" $(vers "$D$K") -Wl,-reexport_library,"$TMP/$(basename "$K").tbd" -o "$O$K" "$2"
+    -install_name "$K" $(vers "$D$K") -Wl,-reexport_library,"$TMP/$(basename "$K").tbd" -o "$O$K" "$2" "${@:3}"
 }
 cwrap /usr/lib/system/libsystem_kernel.dylib "$SRC/kernel.c"   # xattr + fork/exit fixes
 cwrap /usr/lib/libresolv.9.dylib "$SRC/resolv.c"                # thread-safe res_query
-cwrap /usr/lib/system/libsystem_pthread.dylib "$SRC/pthread.c" # condition variables on futexes
+# libsystem_pthread: condition variables and contended mutex waits on futexes. The helper gives the
+# wrapper Darling's own mutex lock/unlock (pthread_orig.c).
+PTH=/usr/lib/system/libsystem_pthread.dylib; PTHO=/usr/lib/vine/libvine_pthread_orig.dylib
+mktbd "$D$PTH" "$PTH.darling" "$TMP/pth_orig.tbd"
+clang -target x86_64-apple-macos10.13 -dynamiclib -nostdlib -ffreestanding -fno-builtin -fno-stack-protector -fuse-ld=lld -O2 \
+  -install_name "$PTHO" -o "$O$PTHO" "$SRC/pthread_orig.c" "$TMP/pth_orig.tbd"
+cwrap "$PTH" "$SRC/pthread.c" "$O$PTHO"
 
 STUB=/usr/lib/vine/libvinestub.dylib
 cc "$O$STUB" "$STUB" "$SRC/VineStub.m"

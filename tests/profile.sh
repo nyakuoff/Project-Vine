@@ -42,15 +42,40 @@ for t in inf.threads():
         if nrbp <= rbp: break
         rbp = nrbp
     out.write('T %d %s\n' % (t.ptid[1], ' '.join(hex(a) for a in addrs)))
+    rsp = int(gdb.parse_and_eval('$rsp')) & (2**64 - 1)   # stack scan: frame pointers end in ELF code
+    try: words = struct.unpack('<2048Q', bytes(inf.read_memory(rsp, 16384)))
+    except Exception: words = ()
+    out.write('S %d %s\n' % (t.ptid[1], ' '.join(hex(w) for w in words if 0x100000000 <= w < 0x800000000000)))
 PY
 echo "sampling $N stacks of threads $TOP..."
 for i in $(seq 1 $N); do
   VINE_TIDS=$TOP VINE_OUT=$TMP/stacks timeout 20 gdb -nx -batch -p $PID -ex 'set auto-solib-add off' -ex "source $TMP/walk.py" >/dev/null 2>&1
   sleep 0.3
 done
-awk '{printf "0x%s 0x%s 0x0 0x%s %s\n", substr($1,1,index($1,"-")-1), substr($1,index($1,"-")+1), $3, $6}' \
-  <(sed -E 's/^([0-9a-f]+-[0-9a-f]+) +([^ ]+) +([0-9a-f]+) +([^ ]+) +([0-9]+) +(.*)$/\1 \2 \3 \4 \5 \6/' /proc/$PID/maps | awk 'NF >= 6') > $TMP/maps
-awk '{for (i = 3; i <= NF; i++) print "#" i - 3, $i}' $TMP/stacks > $TMP/frames
+python3 - /proc/$PID/maps > $TMP/maps <<'PY'
+import sys   # /proc maps -> gdb "info proc mappings" lines (paths may contain spaces)
+for line in open(sys.argv[1]):
+    f = line.rstrip('\n').split(None, 5)
+    if len(f) == 6 and f[5].startswith('/'):
+        a, b = f[0].split('-')
+        print('0x%s 0x%s 0x0 0x%s %s' % (a, b, f[2], f[5]))
+PY
+python3 - /proc/$PID/maps $TMP/stacks > $TMP/frames <<'PY'
+import sys, bisect   # every sampled address, scan words only when they point into executable code
+ex = []
+for line in open(sys.argv[1]):
+    f = line.split(None, 5)
+    if len(f) >= 2 and 'x' in f[1]:
+        a, b = f[0].split('-'); ex.append((int(a, 16), int(b, 16)))
+ex.sort(); starts = [a for a, b in ex]
+def code(v):
+    i = bisect.bisect_right(starts, v) - 1
+    return i >= 0 and v < ex[i][1]
+for line in open(sys.argv[2]):
+    w = line.split()
+    for i, v in enumerate(w[2:]):
+        if w[0] == 'T' or code(int(v, 16)): print('#%d %s' % (i, v))
+PY
 cat $TMP/maps $TMP/frames > $TMP/in
 python3 "$ROOT/tests/darling-symbolize.py" $TMP/in "$ROOT/.work/vine-overlay/usr/libexec/darling:$ROOT/.work/darling-prefix:$ROOT/.work/darling-root/usr/libexec/darling" > $TMP/sym 2>/dev/null
 python3 - "$TMP/stacks" "$TMP/sym" "$PID" >> "$OUT" <<'PY'
@@ -60,22 +85,41 @@ syms = [re.sub(r'^\s*#\d+\s+0x[0-9a-f]+\s+', '', l.rstrip()) for l in open(sys.a
 pid = sys.argv[3]
 k = 0
 top, incl = collections.defaultdict(collections.Counter), collections.defaultdict(collections.Counter)
+first_sys = collections.defaultdict(collections.Counter)
 per = collections.Counter()
+import bisect
+ex = []
+for line in open('/proc/%s/maps' % pid):
+    f = line.split(None, 5)
+    if len(f) >= 2 and 'x' in f[1]:
+        a, b = f[0].split('-'); ex.append((int(a, 16), int(b, 16)))
+ex.sort(); starts = [a for a, b in ex]
+def code(v):
+    i = bisect.bisect_right(starts, v) - 1
+    return i >= 0 and v < ex[i][1]
+clean = lambda n: re.sub(r' \[0x[0-9a-f]+\]$', '', n)
 for s in stacks:
-    tid, frames = s[1], s[2:]
+    kind, tid, frames = s[0], s[1], s[2:]
+    if kind == 'S': frames = [f for f in frames if code(int(f, 16))]
     names = syms[k:k + len(frames)]; k += len(frames)
     if not names: continue
-    per[tid] += 1
-    top[tid][names[0]] += 1
-    for n in set(names): incl[tid][n] += 1
+    if kind == 'T':
+        per[tid] += 1
+        top[tid][names[0]] += 1
+        sysf = next((n for n in names if not n.startswith('RobloxPlayer')), None)
+        if sysf: first_sys[tid][sysf] += 1
+    else:
+        for n in set(clean(x) for x in names if '?' not in x): incl[tid][n] += 1
 for tid in per:
     try: comm = open('/proc/%s/task/%s/comm' % (pid, tid)).read().strip()
     except Exception: comm = '?'
     print('\n# thread %s (%s): %d samples' % (tid, comm, per[tid]))
     print('  where it was (innermost frame):')
     for n, c in top[tid].most_common(8): print('    %3d  %s' % (c, n))
-    print('  on the stack (inclusive):')
-    for n, c in incl[tid].most_common(15): print('    %3d  %s' % (c, n))
+    print('  innermost non-Roblox frame (system library it is in):')
+    for n, c in first_sys[tid].most_common(8): print('    %3d  %s' % (c, n))
+    print('  functions found on the stack (scan, inclusive):')
+    for n, c in incl[tid].most_common(25): print('    %3d  %s' % (c, n))
 PY
-rm -rf $TMP
+mkdir -p "${OUT%.txt}"; cp $TMP/stacks $TMP/maps $TMP/sym "${OUT%.txt}/"; rm -rf $TMP   # raw data kept
 echo "report: $OUT"; head -16 "$OUT"

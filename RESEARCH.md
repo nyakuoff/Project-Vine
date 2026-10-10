@@ -189,6 +189,8 @@ renders on radeonsi, but XTest input doesn't reach clients there.
 | Camera movement freezes the game (idle 60 fps) | Darling's grab answers every motion event with XWarpPointer + XSync (expensive under Xwayland; ~1000/s with a gaming mouse) and measures deltas from the pin: `tests/darwin/mouse_lock.sh` (300 x 4 px moves while locked): Darling's grab 1240 px total, steps up to 64 px | grab kept, Darling's per-event pinning off; deltas from the previous event; recentre only beyond a quarter window (its own event gets 0): 1200 px exactly, max step 4 px, a few warps instead of one per event |
 | FPS drops to ~20 with abilities/particles | Roblox's perf counters show short-lived spikes, not slow average frames | `vine-gl:` log of shader compiles/links over 5 ms, to confirm or rule out first-use compiles |
 
+| Lag in game: Roblox workers 50-82% CPU, darlingserver 33% (user's `tests/profile.sh`) | stack samples: `dserver_rpc_psynch_mutexwait` / `psynch_mutexdrop` — every contended mutex wait/release is a darlingserver request | `pthread.c`: contended `pthread_mutex_lock` spins, then sleeps on a futex picked by address; unlock wakes it (taking/releasing stay Darling's; 10 s fallback to Darling's wait). MacOBlox finding. `mutex_stress.m` 800k exact, darlingserver idle; `cond_stress` 1470 → 183 ms |
+
 Not verified in a game yet (needs the user's account): sound, the black screen (it lasted only the ~4 s
 before the crash, so it may just be the loading phase), sustained play.
 
