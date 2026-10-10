@@ -46,7 +46,13 @@ cwrap() {  # cwrap <install name> <source> [extra link inputs...]
   clang -target x86_64-apple-macos10.13 -dynamiclib -nostdlib -ffreestanding -fno-builtin -fno-stack-protector -fuse-ld=lld -O2 \
     -install_name "$K" $(vers "$D$K") -Wl,-reexport_library,"$TMP/$(basename "$K").tbd" -o "$O$K" "$2" "${@:3}"
 }
-cwrap /usr/lib/system/libsystem_kernel.dylib "$SRC/kernel.c"   # xattr + fork/exit fixes
+# libsystem_kernel: xattr, fork/exit, workqueue, sockets, memory statistics. The helper gives the
+# wrapper Darling's own host_statistics* (kernel_orig.c).
+KRN=/usr/lib/system/libsystem_kernel.dylib; KRNO=/usr/lib/vine/libvine_kernel_orig.dylib
+mktbd "$D$KRN" "$KRN.darling" "$TMP/krn_orig.tbd"
+clang -target x86_64-apple-macos10.13 -dynamiclib -nostdlib -ffreestanding -fno-builtin -fno-stack-protector -fuse-ld=lld -O2 \
+  -install_name "$KRNO" -o "$O$KRNO" "$SRC/kernel_orig.c" "$TMP/krn_orig.tbd"
+cwrap "$KRN" "$SRC/kernel.c" "$O$KRNO"
 cwrap /usr/lib/libresolv.9.dylib "$SRC/resolv.c"                # thread-safe res_query
 # libsystem_pthread: condition variables and contended mutex waits on futexes. The helper gives the
 # wrapper Darling's own mutex lock/unlock (pthread_orig.c).

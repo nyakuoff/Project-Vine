@@ -408,3 +408,56 @@ int setsockopt(int fd, int level, int name, const void *val, uint32_t len) {
         }
     return (int)p_bsd_syscall(SYS_setsockopt, fd, level, name, val, len);
 }
+
+// ---- memory statistics ---------------------------------------------------------------------
+// Darling's host_statistics/host_statistics64 (HOST_VM_INFO, HOST_VM_INFO64) succeed with every
+// page count 0. Roblox derives available memory from free + inactive pages, saw 0 MB, raised "Low
+// memory warning" at every game join and unloaded its menu app (black screen while joining, slow
+// return to the menu). Finding credited to MacOBlox (memory_stats.c). When Darling's counts are
+// zero they come from /proc/meminfo: free = MemFree, inactive = the rest of MemAvailable (cache that
+// can be dropped, as macOS counts inactive), active = the rest of MemTotal.
+extern int (*vine_darling_host_statistics)(unsigned, int, unsigned *, unsigned *);
+extern int (*vine_darling_host_statistics64)(unsigned, int, unsigned *, unsigned *);
+static int meminfo_kb(unsigned long long *total, unsigned long long *freek, unsigned long long *avail) {
+    char buf[2048];
+    long fd = __linux_syscall(L_open, "/proc/meminfo", 0), n;
+    if (fd < 0) return 0;
+    n = __linux_syscall(L_read, fd, buf, sizeof buf - 1);
+    __linux_syscall(L_close, fd);
+    if (n <= 0) return 0;
+    buf[n] = 0;
+    *total = *freek = *avail = 0;
+    for (char *p = buf; *p; ) {
+        unsigned long long *dst = 0;
+        if (p[0] == 'M' && p[1] == 'e' && p[2] == 'm') {
+            if (p[3] == 'T') dst = total; else if (p[3] == 'F') dst = freek; else if (p[3] == 'A') dst = avail;
+        }
+        while (*p && *p != ':') p++;
+        if (*p) p++;
+        while (*p == ' ') p++;
+        unsigned long long v = 0;
+        while (*p >= '0' && *p <= '9') v = v * 10 + (*p++ - '0');
+        if (dst) *dst = v;
+        while (*p && *p != '\n') p++;
+        if (*p) p++;
+    }
+    return *total && *avail;
+}
+static void fill_vm_counts(unsigned *w, unsigned count, int wide) {
+    unsigned long long total, freek, avail;
+    if (count < 4 || w[0] || !meminfo_kb(&total, &freek, &avail)) return;   // Darling had real data
+    w[0] = (unsigned)(freek / 4);                                            // 4 KiB pages
+    w[1] = (unsigned)((total - avail) / 4);
+    w[2] = (unsigned)((avail - freek) / 4);
+    if (wide && count >= 36) { w[34] = w[2]; w[35] = w[1]; }   // external (file) / internal (anonymous)
+}
+int host_statistics(unsigned host, int flavor, unsigned *info, unsigned *count) {
+    int r = vine_darling_host_statistics(host, flavor, info, count);
+    if (!r && flavor == 2 /* HOST_VM_INFO */ && count) fill_vm_counts(info, *count, 0);
+    return r;
+}
+int host_statistics64(unsigned host, int flavor, unsigned *info, unsigned *count) {
+    int r = vine_darling_host_statistics64(host, flavor, info, count);
+    if (!r && (flavor == 4 /* HOST_VM_INFO64 */ || flavor == 2) && count) fill_vm_counts(info, *count, flavor == 4);
+    return r;
+}
