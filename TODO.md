@@ -10,6 +10,13 @@ The goal is the **desktop** client (Windows or macOS). Sober/Android does not co
    login kept in the Keychain. Verify: picture after join (was black for ~4 s before the crash), sound,
    WASD + mouse look (MacOBlox notes: raw_mouse.c), sustained UDP play, still signed in after a restart.
 4. Find the ~10 s thread join in Roblox's teardown (matters for leaving games too).
+4b. Closing from in game (user, 2026-10-10): Roblox's own close/leave button needs several clicks; Alt+F4
+   sometimes does nothing. Log: after WM_DELETE_WINDOW the window is unmapped and mapped again and the game
+   continues. Darling also logs a stream of LeaveNotify during play (pointer leaving the window while locked;
+   MacOBlox confines the pointer to the window).
+4c. FPS gap (user: ~140 where native is ~240): Roblox's counters show ~5 ms of work per frame; profile in game
+   (tests/profile.sh) at high frame rate. MSAA: Roblox still reports "Texture: MSAA 0" on radeonsi even with
+   the core profile (llvmpipe: 1).
 5. Upstream Vine's Darling fixes (xattr, fork-exit, cookies, NSDisplay, NSURL, IOKit, resolver, CALayerContext).
 5. **Regression watch for Route A.** After each Roblox Windows release, run `tests/route-a-wine-startup.sh` and `tests/hard-error-text.sh`. If the "Wine is not supported." string or the `+0x8B885F` site disappears, Roblox has changed its policy, so revisit D1.
 3. *(out of Player scope)* Roblox **Studio** via Vinegar 1.9.4 (installed). It is a desktop Windows client that Roblox does not block under Wine.
