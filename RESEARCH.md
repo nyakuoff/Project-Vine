@@ -186,6 +186,9 @@ renders on radeonsi, but XTest input doesn't reach clients there.
 
 | Crash just before the game appears (SIGILL/SIGSEGV in libdispatch `_dispatch_kevent_merge`, once FMOD started) | reproduced: `audiounit_hal.m 30 busy` (1 ms of work per render callback) crashes within seconds; without the work 30 s pass. Darling's AUHAL also passes twice the frame count its buffer holds (1536 frames, 6144 bytes), so a mixer that trusts it overruns the buffer; and Darling's PulseAudio loop closes descriptors before their dispatch sources are unregistered | render callback moved to Vine's thread (buffer-size bounded); PADispatchMainLoop io_* replaced (dup'd descriptors, freed after both cancels); still ~1/3 soak crashes, so by default (as MacOBlox) the output unit never starts Darling's PulseAudio stream: Vine's thread writes to a FIFO played by `pacat` on the host (`tests/host-audio.sh`): 3/3 soaks, real-time pace |
 
+| Camera movement freezes the game (idle 60 fps) | Darling's grab answers every motion event with XWarpPointer + XSync (expensive under Xwayland; ~1000/s with a gaming mouse) and measures deltas from the pin: `tests/darwin/mouse_lock.sh` (300 x 4 px moves while locked): Darling's grab 1240 px total, steps up to 64 px | grab kept, Darling's per-event pinning off; deltas from the previous event; recentre only beyond a quarter window (its own event gets 0): 1200 px exactly, max step 4 px, a few warps instead of one per event |
+| FPS drops to ~20 with abilities/particles | Roblox's perf counters show short-lived spikes, not slow average frames | `vine-gl:` log of shader compiles/links over 5 ms, to confirm or rule out first-use compiles |
+
 Not verified in a game yet (needs the user's account): sound, the black screen (it lasted only the ~4 s
 before the crash, so it may just be the loading phase), sustained play.
 

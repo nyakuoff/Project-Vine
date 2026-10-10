@@ -470,6 +470,31 @@ static void vine_warp_mouse(id self, SEL _cmd, struct { double x, y; } p) {
     x_warp(dpy, 0, x_root(dpy), 0, 0, 0, 0, (int)p.x, (int)p.y);
     x_sync(dpy, 0);
 }
+// Mouse lock (camera) without a warp per motion event. Darling's grab pins the pointer: every X
+// motion event is answered with XWarpPointer + XSync back to the window centre and its delta is
+// measured from that pin. With a 1000 Hz mouse that is ~1000 round trips/s on the main thread
+// (expensive warps under Xwayland): moving the camera froze the game. Here the grab stays (pointer
+// captured) but Darling's per-event pinning is turned off; deltas are taken from the previous
+// event, and the pointer is recentred only when it strays more than a quarter of the window from
+// the centre. The recentring warp's own event (at the centre) gets a zero delta.
+static struct { int on, awaiting; NSPoint center, prev; double radius; } vine_lock;
+static long vine_grabbed_ivar = -1;
+static void (*orig_grabMouse)(id, SEL, BOOL);
+@interface NSObject (VineLockWindow) + (id)sharedApplication; - (id)keyWindow; - (NSPoint)mouseLocationOutsideOfEventStream; - (NSRect)frame; @end
+static void vine_lock_center(id display) {
+    orig_grabMouse(display, sel_registerName("grabMouse:"), 1);   // XGrabPointer, warp to the centre
+    if (vine_grabbed_ivar >= 0) *(BOOL *)((char *)display + vine_grabbed_ivar) = 0;
+    id w = [[objc_getClass("NSApplication") sharedApplication] keyWindow];
+    NSRect f = w ? [w frame] : (NSRect){{0, 0}, {800, 600}};
+    vine_lock.center = (NSPoint){f.size.width / 2, f.size.height / 2};   // where grabMouse: warps (window coords)
+    if (!vine_lock.on) vine_lock.prev = vine_lock.center;   // recentring: queued events still count from the last one
+    vine_lock.radius = (f.size.width < f.size.height ? f.size.width : f.size.height) / 4;
+    vine_lock.awaiting = 1;
+}
+static void vine_grabMouse(id self, SEL _cmd, BOOL grab) {
+    if (grab) { vine_lock_center(self); vine_lock.on = 1; }
+    else { vine_lock.on = 0; orig_grabMouse(self, _cmd, 0); }
+}
 static void vine_quiet_warp(void) {
     static int done;
     Class c = done ? 0 : objc_getClass("X11Display");
@@ -482,6 +507,12 @@ static void vine_quiet_warp(void) {
     if (!iv || !m || !x_warp || !x_sync || !x_root) return;
     x_display_ivar = ivar_getOffset(iv);
     method_setImplementation(m, (IMP)vine_warp_mouse);
+    Ivar g = class_getInstanceVariable(c, "_cursorGrabbed");
+    Method gm = class_getInstanceMethod(c, sel_registerName("grabMouse:"));
+    if (g && gm && !getenv("VINE_DARLING_GRAB")) {
+        vine_grabbed_ivar = ivar_getOffset(g);
+        orig_grabMouse = (void (*)(id, SEL, BOOL))method_setImplementation(gm, (IMP)vine_grabMouse);
+    }
 }
 
 
@@ -986,6 +1017,26 @@ void glShaderSource(GLuint shader, GLsizei count, const GLchar *const *strings, 
     orig(shader, count, strs, lens);
     free(copy);
 }
+// Shader compile/link time in the log ("vine-gl: ... ms" for calls over 5 ms, with running totals):
+// in game, framerate drops to ~20 whenever abilities/particles appear; compiling new programs on
+// first use would show up here.
+uint64_t mach_absolute_time(void);
+static unsigned vine_gl_n; static double vine_gl_ms;
+static void vine_gl_time(const char *what, uint64_t t0) {
+    double ms = (mach_absolute_time() - t0) / 1e6;
+    vine_gl_n++; vine_gl_ms += ms;
+    if (ms > 5 || vine_gl_n == 1) dprintf(2, "vine-gl: %s %.1f ms (total %u calls, %.0f ms)\n", what, ms, vine_gl_n, vine_gl_ms);
+}
+void glCompileShader(GLuint sh) {
+    static void (*orig)(GLuint);
+    if (!orig) orig = vine_orig("/System/Library/Frameworks/OpenGL.framework/Versions/A/OpenGL.darling", "glCompileShader");
+    uint64_t t0 = mach_absolute_time(); orig(sh); vine_gl_time("glCompileShader", t0);
+}
+void glLinkProgram(GLuint prog) {
+    static void (*orig)(GLuint);
+    if (!orig) orig = vine_orig("/System/Library/Frameworks/OpenGL.framework/Versions/A/OpenGL.darling", "glLinkProgram");
+    uint64_t t0 = mach_absolute_time(); orig(prog); vine_gl_time("glLinkProgram", t0);
+}
 #endif
 
 #ifdef FW_AudioToolbox
@@ -1299,6 +1350,18 @@ static void (*orig_postEvent)(id, SEL, id, BOOL);
 static long vine_queue_ivar = -1;
 static void vine_postEvent(id self, SEL _cmd, id ev, BOOL atStart) {
     unsigned long t = [ev type];
+    if (vine_lock.on && (t == 5 || t == 6 || t == 7 || t == 27)) {
+        NSPoint l = [ev locationInWindow];
+        double dx = l.x - vine_lock.prev.x, dy = l.y - vine_lock.prev.y;
+        double cx = l.x - vine_lock.center.x, cy = l.y - vine_lock.center.y;
+        if (vine_lock.awaiting && cx * cx + cy * cy <= 4) { dx = dy = 0; vine_lock.awaiting = 0; }   // the recentring warp (±2 px rounding)
+        vine_lock.prev = l;
+        id fixed = [objc_getClass("NSEvent") mouseEventWithType:t location:l modifierFlags:[ev modifierFlags] window:[ev window]
+                                                   clickCount:1 deltaX:dx deltaY:dy];
+        if (fixed) ev = fixed;
+        double ox = l.x - vine_lock.center.x, oy = l.y - vine_lock.center.y;
+        if (!vine_lock.awaiting && ox * ox + oy * oy > vine_lock.radius * vine_lock.radius) vine_lock_center(self);
+    }
     if (!atStart && vine_queue_ivar >= 0 && (t == 5 || t == 6 || t == 7 || t == 27)) {   // moved, dragged
         id q = *(id *)((char *)self + vine_queue_ivar), last = [q lastObject];
         if (last && [last type] == t && [last window] == [ev window] && [last modifierFlags] == [ev modifierFlags]) {

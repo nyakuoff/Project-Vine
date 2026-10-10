@@ -16,5 +16,5 @@ clang -target x86_64-apple-macos10.13 -nostdlib -fuse-ld=lld -w -fobjc-runtime=m
 case $1 in
   *cookie*|*keychain*) "$ROOT/tests/darling-ns.sh" shell env HOME=/private/tmp/vine-test-home sh -c 'mkdir -p "$HOME" && exec "$0" "$@"' \
                          "/Volumes/SystemRoot$OUTDIR/$1" "${@:2}" ;;
-  *) "$ROOT/tests/darling-ns.sh" shell "/Volumes/SystemRoot$OUTDIR/$1" "${@:2}" ;;
+  *) "$ROOT/tests/darling-ns.sh" shell env ${DISPLAY:+DISPLAY=$DISPLAY} ${TEST_ENV:-} "/Volumes/SystemRoot$OUTDIR/$1" "${@:2}" ;;
 esac
