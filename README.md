@@ -51,3 +51,13 @@ tests/route-a-wine-startup.sh ~/.local/share/Steam/compatibilitytools.d/GE-Proto
 ```
 
 Needs `wine`, `xvfb-run`, and `llvm-objdump`/`objdump` for static inspection. Nothing is installed or changed on the host. Prefixes go in `.work/`.
+
+## Launcher (settings GUI)
+
+`./vine-launcher.py` (Qt 6 / PySide6) sets Vine's options and launches or stops Roblox:
+window (desktop or hidden test display), renderer (OpenGL, or Vulkan through Mesa Zink),
+camera sensitivity, Mesa frame-rate overlay, time limit, the AMD antialiasing workaround, audio
+path, game network protocol (RakNet), the start-up throttle patch and a network trace. It also runs
+the profiler (`tests/profile.sh`) and opens `logs/`. Settings are stored in
+`~/.config/vine/vine.conf` and read by `tests/run-roblox-darling.sh`, so the command line uses
+them too (environment variables of the same names override them).

@@ -1,13 +1,26 @@
 #!/usr/bin/env bash
 # Launch the macOS Roblox client under Darling (via tests/darling-ns.sh) and capture evidence.
 # Usage: tests/run-roblox-darling.sh [seconds=150] [RobloxPlayer args...]
-# Env:   VINE_DISPLAY=:0        show on a real display instead of a private Xvfb
+# Settings: ~/.config/vine/vine.conf (written by vine-launcher.py) or the same names in the environment.
+# Env:   VINE_DISPLAY=:0        show on a real display instead of a private Xvfb ("desktop": $DISPLAY)
 #        VINE_OBJC_LENIENT=0    disable lenient ObjC forwarding (default on)
 #        VINE_XTRACE=1          per-thread syscall trace into .work/darling-prefix/private/tmp/rbx.xtrace.*
 # Output: logs/darling-roblox-<ts>.log (+ logs/screens/<ts>-<sec>s.png when headless)
 set -uo pipefail
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
-T=${1:-150}; shift || true
+# Settings from the config GUI (vine-launcher.py): known keys only; variables already set win.
+CONF="${XDG_CONFIG_HOME:-$HOME/.config}/vine/vine.conf"
+if [ -f "$CONF" ]; then
+  while IFS='=' read -r k v; do
+    case $k in
+      VINE_DISPLAY|VINE_RENDERER|VINE_MOUSE_SENSITIVITY|VINE_GL_FULL_RENDERER|VINE_DARLING_AUDIO|VINE_RBXTRANSPORT|\
+      VINE_NO_THROTTLE_PATCH|VINE_TRACE_UDP|VINE_FPS_OVERLAY|VINE_SESSION_MINUTES)
+        [ -z "${!k+x}" ] && export "$k=$v" ;;
+    esac
+  done < "$CONF"
+fi
+[ "${VINE_DISPLAY:-}" = desktop ] && VINE_DISPLAY=${DISPLAY:-:0}   # "desktop": the session's own display
+T=${1:-$(( ${VINE_SESSION_MINUTES:-0} > 0 ? VINE_SESSION_MINUTES * 60 : 150 ))}; shift || true
 TS=$(date +%Y%m%d-%H%M%S)
 APP="$ROOT/.work/darling-prefix/Applications/RobloxPlayer.app"
 [ -d "$APP" ] || cp -a --reflink=auto "$ROOT/artifacts/mac/RobloxPlayer.app" "$APP"
@@ -25,7 +38,7 @@ else DISP=$VINE_DISPLAY; fi
 echo "$DISP" > "$ROOT/.work/last-display"   # for helpers (x11-click.py, screenshots)
 
 ENV=(MESA_SHADER_CACHE_DIR=/tmp/vine-mesa-cache DISPLAY="$DISP" VINE_OBJC_LENIENT="${VINE_OBJC_LENIENT:-1}"
-     VINE_TRACE_UDP="${VINE_TRACE_UDP:-1}")   # first game join's UDP handshake in the log (shims/kernel.c)
+     VINE_TRACE_UDP="${VINE_TRACE_UDP:-0}")   # 1: game UDP traffic in the log (shims/kernel.c)
 # Video memory for Roblox's graphics budget (IOFBMemorySize; shims/frameworks.m): the largest GPU's
 # VRAM (amdgpu sysfs); unset -> 2 GiB.
 VRAM=$(cat /sys/class/drm/card*/device/mem_info_vram_total 2>/dev/null | sort -n | tail -1)
@@ -33,6 +46,10 @@ VRAM=$(cat /sys/class/drm/card*/device/mem_info_vram_total 2>/dev/null | sort -n
 # VINE_RENDERER=zink: Roblox's OpenGL renderer through Mesa Zink on the Vulkan driver (OpenGL over
 # Vulkan; the macOS client has no Vulkan renderer of its own). Default: the native OpenGL driver.
 [ "${VINE_RENDERER:-gl}" = zink ] && ENV+=(MESA_LOADER_DRIVER_OVERRIDE=zink GALLIUM_DRIVER=zink)
+# Settings the shims read inside Darling
+[ -n "${VINE_MOUSE_SENSITIVITY:-}" ] && ENV+=(VINE_MOUSE_SENSITIVITY="$VINE_MOUSE_SENSITIVITY")
+[ "${VINE_GL_FULL_RENDERER:-0}" = 1 ] && ENV+=(VINE_GL_FULL_RENDERER=1)
+[ "${VINE_FPS_OVERLAY:-0}" = 1 ] && ENV+=(GALLIUM_HUD=fps,frametime)   # Mesa's overlay (OpenGL and Zink)
 [ -n "${VINE_ENV:-}" ] && ENV+=($VINE_ENV)   # extra env, e.g. VINE_ENV="GALLIUM_HUD=fps"
 [ "${VINE_XTRACE:-0}" = 1 ] && ENV+=(XTRACE_NO_COLOR=1 XTRACE_LOG_FILE=/private/tmp/rbx.xtrace XTRACE_LOG_FILE_PER_THREAD=1
                                    DYLD_INSERT_LIBRARIES=/usr/lib/darling/libxtrace.dylib)
@@ -44,7 +61,11 @@ if [ "${VINE_DARLING_AUDIO:-0}" != 1 ] && command -v pacat >/dev/null; then
   FIFO="${XDG_RUNTIME_DIR:-/tmp}/vine-audio-$$"; rm -f "$FIFO" "$FIFO.fmt"; mkfifo -m 600 "$FIFO"
   "$ROOT/tests/host-audio.sh" "$FIFO" & PLAYER=$!
   ENV+=(VINE_AUDIO_FIFO="/Volumes/SystemRoot$FIFO")
+  # Interrupted runs (Ctrl+C, closed terminal) must not leave the FIFO and its player behind.
+  trap 'rm -f "$FIFO" "$FIFO.fmt"; pkill -P $PLAYER 2>/dev/null; kill $PLAYER 2>/dev/null' EXIT
 fi
+# Interrupted (Ctrl+C, terminal closed, Stop from the GUI's process): stop Roblox too.
+trap '"$ROOT/tests/darling-ns.sh" --stop >/dev/null 2>&1; exit 130' INT TERM HUP
 # Fresh container, started by a throwaway command: darlingserver must not be a child of the timed run.
 "$ROOT/tests/darling-ns.sh" --stop
 # Start-up render throttle off (finding credited to MacOBlox; patches/startup_throttle.py). Vine's own
@@ -80,5 +101,4 @@ done >> "$LOG" 2>/dev/null
 wait $RUN; echo "# exit: $?" >> "$LOG"
 "$ROOT/tests/darling-ns.sh" --stop
 [ -n "$XVFB" ] && kill $XVFB
-[ -n "$FIFO" ] && { rm -f "$FIFO" "$FIFO.fmt"; pkill -P $PLAYER 2>/dev/null; kill $PLAYER 2>/dev/null; }
 echo "$LOG"
