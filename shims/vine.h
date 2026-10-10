@@ -19,6 +19,8 @@ void *memcpy(void *, const void *, size_t);
 void free(void *);
 id objc_msgSend(id, SEL, ...);
 char *getenv(const char *);
+// On/off switches: on only when set to 1 ("0" from the launcher's config is off).
+static inline int vine_env_on(const char *name) { const char *v = getenv(name); return v && *v == '1'; }
 size_t strlen(const char *);
 int strcmp(const char *, const char *);
 typedef void *Method;

@@ -182,7 +182,7 @@ static void vine_pa_io_free(VinePaIo *e) {
 }
 int vine_detour(const char *image, const char *sym, void *repl);
 __attribute__((constructor)) static void vine_pa_io_fix(void) {
-    if (getenv("VINE_DARLING_PA_IO")) return;
+    if (vine_env_on("VINE_DARLING_PA_IO")) return;
     static const struct { const char *sym; void *fn; } t[] = {
         {"_ZN18PADispatchMainLoop6io_newEP15pa_mainloop_apii17pa_io_event_flagsPFvS1_P11pa_io_eventiS2_PvES5_", (void *)vine_pa_io_new},
         {"_ZN18PADispatchMainLoop9io_enableEP11pa_io_event17pa_io_event_flags", (void *)vine_pa_io_enable},
@@ -555,7 +555,7 @@ static void vine_quiet_warp(void) {
     method_setImplementation(m, (IMP)vine_warp_mouse);
     Ivar g = class_getInstanceVariable(c, "_cursorGrabbed");
     Method gm = class_getInstanceMethod(c, sel_registerName("grabMouse:"));
-    if (g && gm && !getenv("VINE_DARLING_GRAB")) {
+    if (g && gm && !vine_env_on("VINE_DARLING_GRAB")) {
         vine_grabbed_ivar = ivar_getOffset(g);
         orig_grabMouse = (void (*)(id, SEL, BOOL))method_setImplementation(gm, (IMP)vine_grabMouse);
     }
@@ -720,7 +720,7 @@ static void vine_event_trace_install(void);
     }
     void *ctx = vine_ivar(self, "_glContext"), *win = vine_ivar(self, "_cglWindow");
     static int logged;
-    if (logged < 3 && getenv("VINE_GL_DEBUG")) {
+    if (logged < 3 && vine_env_on("VINE_GL_DEBUG")) {
         logged++;
         id sub = (id)vine_ivar(self, "_subwindow");
         dprintf(2, "vine-gl: flush ctx=%p cgl-current=%p win(surface)=%p egl-draw=%p view=%p subwindow=%p xwin=0x%lx\n", ctx, CGLGetCurrentContext(),
@@ -744,7 +744,7 @@ static void vine_event_trace_install(void);
         err = glGetError();
         dprintf(2, "vine-gl: surface %dx%d drawfb=%d back(center)=%u,%u,%u,%u glerr=0x%x\n", w, h, fb, px[0], px[1], px[2], px[3], err);
     }
-    if (!getenv("VINE_NO_GLREATTACH") && win && get_surface && CGLGetCurrentContext() == ctx && get_surface(0x3059 /* EGL_DRAW */) != win) {
+    if (!vine_env_on("VINE_NO_GLREATTACH") && win && get_surface && CGLGetCurrentContext() == ctx && get_surface(0x3059 /* EGL_DRAW */) != win) {
         VINE_LOG_ONCE("NSOpenGLContext re-attached to its view's current surface");
         CGLContextMakeCurrentAndAttachToWindow(ctx, win);
     }
@@ -755,7 +755,7 @@ static void vine_event_trace_install(void);
     static int xlooked;
     if (!xlooked) { void *x11 = dlopen("/usr/lib/native/libX11.dylib", 1); xflush = x11 ? (int (*)(void *))dlsym(x11, "XFlush") : 0; xlooked = 1; }
     void *xdpy = vine_main_display ? vine_ivar(vine_main_display, "_display") : 0;
-    if (xflush && xdpy && !getenv("VINE_NO_XFLUSH")) xflush(xdpy);
+    if (xflush && xdpy && !vine_env_on("VINE_NO_XFLUSH")) xflush(xdpy);
 }
 @end
 #endif
@@ -785,7 +785,7 @@ static void vine_swz(const char *cls, const char *sel, IMP repl, void **orig) {
     if (m) *orig = (void *)method_setImplementation(m, repl);
 }
 __attribute__((constructor)) static void vine_gl_trace(void) {
-    if (!getenv("VINE_GL_DEBUG")) return;
+    if (!vine_env_on("VINE_GL_DEBUG")) return;
     vine_swz("NSOpenGLContext", "initWithFormat:shareContext:", (IMP)trace_initWithFormat_shareContext_, (void **)&orig_initWithFormat_shareContext_);
     vine_swz("NSOpenGLContext", "setView:", (IMP)trace_setView_, (void **)&orig_setView_);
     vine_swz("NSOpenGLContext", "makeCurrentContext", (IMP)trace_makeCurrentContext, (void **)&orig_makeCurrentContext);
@@ -812,7 +812,7 @@ char *getenv(const char *);
 static void (*orig_renderLayer)(id, SEL, id);
 static void vine_renderLayer(id self, SEL _cmd, id layer) {
     static int skip = -1;
-    if (skip < 0) skip = getenv("VINE_SKIP_LAYER_RENDER") != 0;   // diagnostic
+    if (skip < 0) skip = vine_env_on("VINE_SKIP_LAYER_RENDER") != 0;   // diagnostic
     if (skip) return;
     void *prev = CGLGetCurrentContext();
     orig_renderLayer(self, _cmd, layer);
@@ -820,7 +820,7 @@ static void vine_renderLayer(id self, SEL _cmd, id layer) {
 }
 __attribute__((constructor)) static void vine_quartzcore_init(void) {
     Method m = class_getInstanceMethod(objc_getClass("CALayerContext"), sel_registerName("renderLayer:"));
-    if (getenv("VINE_NO_LAYERFIX")) return;
+    if (vine_env_on("VINE_NO_LAYERFIX")) return;
     if (m) orig_renderLayer = (void (*)(id, SEL, id))method_setImplementation(m, (IMP)vine_renderLayer);
     else dprintf(2, "vine: CALayerContext renderLayer: not found\n");
 }
@@ -870,7 +870,7 @@ extern id NSApp;
 // loaded and NSApp exists, so the real application subclass is hooked.
 static void vine_event_trace_install(void) {
     static int done;
-    if (done || !getenv("VINE_TRACE_EVENTS")) return;
+    if (done || !vine_env_on("VINE_TRACE_EVENTS")) return;
     done = 1;
     const char *appcls = NSApp ? class_getName(object_getClass(NSApp)) : "NSApplication";
     dprintf(2, "vine-ev: installing (app class %s)\n", appcls);
@@ -1051,7 +1051,7 @@ static void *vine_quit_watchdog(void *a) { sleep(3); dprintf(2, "vine: teardown 
 static void (*orig_terminate)(id, SEL, id);
 static void vine_terminate(id self, SEL _cmd, id sender) {
     static int armed;
-    if (!armed++ && !getenv("VINE_NO_QUIT_WATCHDOG")) { void *t; pthread_create(&t, 0, vine_quit_watchdog, 0); }
+    if (!armed++ && !vine_env_on("VINE_NO_QUIT_WATCHDOG")) { void *t; pthread_create(&t, 0, vine_quit_watchdog, 0); }
     orig_terminate(self, _cmd, sender);
 }
 static void vine_check_for_terminate(id self, SEL _cmd) {}
@@ -1154,7 +1154,7 @@ int CGLCreateContext(void *pix, void *share, void **out) {
         egl_create = egl ? dlsym(egl, "eglCreateContext") : 0; egl_destroy = egl ? dlsym(egl, "eglDestroyContext") : 0;
         display = vine_local_symbol("OpenGL.framework/Versions/A/OpenGL.darling", "_display");
         config = vine_local_symbol("OpenGL.framework/Versions/A/OpenGL.darling", "_config");
-        ready = egl_create && egl_destroy && display && config && !getenv("VINE_GL_COMPAT");
+        ready = egl_create && egl_destroy && display && config && !vine_env_on("VINE_GL_COMPAT");
         if (!ready) dprintf(2, "vine-gl: core profile unavailable (egl %d/%d, display %p, config %p)\n", !!egl_create, !!egl_destroy, display, config);
     }
     if (r || !ready || !pix || !out || !*out) return r;
@@ -1184,7 +1184,7 @@ const unsigned char *glGetString(unsigned int name) {
     static const unsigned char *(*orig)(unsigned int);
     if (!orig) orig = vine_orig("/System/Library/Frameworks/OpenGL.framework/Versions/A/OpenGL.darling", "glGetString");
     const unsigned char *r = orig ? orig(name) : 0;
-    if (name != 0x1F01 /* GL_RENDERER */ || !r || getenv("VINE_GL_FULL_RENDERER")) return r;
+    if (name != 0x1F01 /* GL_RENDERER */ || !r || vine_env_on("VINE_GL_FULL_RENDERER")) return r;
     static char buf[256];   // "AMD" removed wherever it is (Zink: "zink Vulkan 1.4(AMD Radeon ...)")
     size_t o = 0;
     for (const unsigned char *p = r; *p && o < sizeof buf - 1; ) {
@@ -1382,7 +1382,7 @@ OSStatus AudioUnitSetProperty(void *u, uint32_t prop, uint32_t scope, uint32_t e
             break;
         }
     }
-    if (prop == 23 && scope == 1 && elem == 0 && data && size >= 16 && !getenv("VINE_DIRECT_RENDER")) {   // SetRenderCallback
+    if (prop == 23 && scope == 1 && elem == 0 && data && size >= 16 && !vine_env_on("VINE_DIRECT_RENDER")) {   // SetRenderCallback
         uint32_t fb = 0;
         for (int i = 0; i < 4; i++) if (vine_fmt_unit[i] == u) fb = vine_frame_bytes[i];
         VineProxy *p = fb ? vine_proxy_for(u, 1) : 0;
