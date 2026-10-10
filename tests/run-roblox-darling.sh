@@ -35,6 +35,10 @@ LOG="$ROOT/logs/darling-roblox-$TS.log"
 # copy of the app only; VINE_NO_THROTTLE_PATCH=1 restores the original instruction.
 python3 "$ROOT/patches/startup_throttle.py" "$APP/Contents/MacOS/RobloxPlayer" \
   $([ "${VINE_NO_THROTTLE_PATCH:-0}" = 1 ] && echo --undo) > /dev/null
+# Join games over RakNet: Roblox's newer RbxTransport fails under Darling ~10 s after connecting
+# (error 256). Finding credited to MacOBlox; patches/raknet_transport.py. VINE_RBXTRANSPORT=1 undoes it.
+echo "raknet transport patch: $(python3 "$ROOT/patches/raknet_transport.py" "$APP/Contents/MacOS/RobloxPlayer" \
+  $([ "${VINE_RBXTRANSPORT:-0}" = 1 ] && echo --undo))" >&2
 # (darling-ns.sh boots new containers with null stdio)
 timeout "$T" "$ROOT/tests/darling-ns.sh" shell env "${ENV[@]}" \
   /Applications/RobloxPlayer.app/Contents/MacOS/RobloxPlayer "$@" > "$LOG" 2>&1 &

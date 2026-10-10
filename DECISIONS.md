@@ -61,3 +61,14 @@ for this one, user-chosen, cosmetic patch; no security or anti-cheat code is tou
 User policy: no data collection. `shims/resolv.c` fails lookups of telemetry/analytics/crash-report hosts
 immediately (list built from observed traffic + names in the binary; functional hosts excluded; see the
 file). Limit: telemetry sent through `apis.roblox.com` paths can't be blocked by hostname.
+
+## D12 — Join games over RakNet (2026-10-10)
+Roblox's newer RbxTransport connection completes its handshake under Darling, then the channel open
+fails ~10 s later (error 256). Four rounds of Darling socket fixes (recvfrom flags, connectx,
+sendmsg/recvmsg/setsockopt translation; all verified by `tests/darwin/udp_probe.m`) did not change
+that. The deciding flags (`UseRbxTransportClient`/`Server`, …) are not locally overridable (runtime
+read-back stayed 1). Following MacOBlox's finding (credited), `patches/raknet_transport.py` makes the
+client choose RakNet, which Roblox servers still accept. Vine's own patcher locates the four sites
+through the flags' registrations and refuses on any mismatch; it independently arrived at MacOBlox's
+offsets for 0.742.0.7421053. Compatibility only: no security or anti-cheat code is touched.
+`VINE_RBXTRANSPORT=1` restores the original. **Revisit**: root-cause RbxTransport under Darling.
