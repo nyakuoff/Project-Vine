@@ -97,3 +97,7 @@ tests/route-a-wine-startup.sh ~/.local/share/Steam/compatibilitytools.d/GE-Proto
 ```
 
 Needs `wine`, `xvfb-run`, and `llvm-objdump`. Nothing is installed on the host; prefixes go in `.work/`.
+
+## License
+
+GPL-3.0 (see [LICENSE](LICENSE)), matching Darling. Roblox, macOS and Darling are not part of this repository and keep their own licenses.
