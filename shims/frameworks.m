@@ -477,14 +477,21 @@ static void vine_warp_mouse(id self, SEL _cmd, struct { double x, y; } p) {
 // captured) but Darling's per-event pinning is turned off; deltas are taken from the previous
 // event, and the pointer is recentred only when it strays more than a quarter of the window from
 // the centre. The recentring warp's own event (at the centre) gets a zero delta.
+double atof(const char *);
 static struct { int on, awaiting; NSPoint center, prev; double radius; } vine_lock;
 static long vine_grabbed_ivar = -1;
 static void (*orig_grabMouse)(id, SEL, BOOL);
 @interface NSObject (VineLockWindow) + (id)sharedApplication; - (id)keyWindow; - (NSPoint)mouseLocationOutsideOfEventStream; - (NSRect)frame; @end
+@interface NSObject (VineLockWarp) - (id)platformWindow; - (NSRect)transformFrame:(NSRect)f; - (void)warpMouse:(NSPoint)p; @end
 static void vine_lock_center(id display) {
-    orig_grabMouse(display, sel_registerName("grabMouse:"), 1);   // XGrabPointer, warp to the centre
-    if (vine_grabbed_ivar >= 0) *(BOOL *)((char *)display + vine_grabbed_ivar) = 0;
     id w = [[objc_getClass("NSApplication") sharedApplication] keyWindow];
+    if (!vine_lock.on || !w) {   // first lock: Darling's grab (XGrabPointer + warp to the centre)
+        orig_grabMouse(display, sel_registerName("grabMouse:"), 1);
+        if (vine_grabbed_ivar >= 0) *(BOOL *)((char *)display + vine_grabbed_ivar) = 0;
+    } else {                     // recentring: the grab stays, only warp (as grabMouse: computes it)
+        NSRect g = [[w platformWindow] transformFrame:[w frame]];
+        [display warpMouse:(NSPoint){g.origin.x + g.size.width / 2, g.origin.y + g.size.height / 2}];
+    }
     NSRect f = w ? [w frame] : (NSRect){{0, 0}, {800, 600}};
     vine_lock.center = (NSPoint){f.size.width / 2, f.size.height / 2};   // where grabMouse: warps (window coords)
     if (!vine_lock.on) vine_lock.prev = vine_lock.center;   // recentring: queued events still count from the last one
@@ -1346,13 +1353,17 @@ static void vine_app_sendEvent(id self, SEL _cmd, id event) {
 // newest position, deltas summed. Nothing else changes order.
 @interface NSObject (VineQueue) - (id)lastObject; - (unsigned long)count; - (void)replaceObjectAtIndex:(unsigned long)i withObject:(id)o;
 + (id)mouseEventWithType:(unsigned long)t location:(NSPoint)l modifierFlags:(unsigned long)f window:(id)w clickCount:(long)c deltaX:(double)dx deltaY:(double)dy; @end
+static double (*orig_deltaY)(id, SEL);
 static void (*orig_postEvent)(id, SEL, id, BOOL);
 static long vine_queue_ivar = -1;
 static void vine_postEvent(id self, SEL _cmd, id ev, BOOL atStart) {
     unsigned long t = [ev type];
     if (vine_lock.on && (t == 5 || t == 6 || t == 7 || t == 27)) {
         NSPoint l = [ev locationInWindow];
-        double dx = l.x - vine_lock.prev.x, dy = l.y - vine_lock.prev.y;
+        // (y stays in Darling's convention here; -deltaY flips it for every motion event, below)
+        static double sens = -1;
+        if (sens < 0) { const char *v = getenv("VINE_MOUSE_SENSITIVITY"); sens = v ? atof(v) : 1; if (sens <= 0 || sens > 20) sens = 1; }
+        double dx = (l.x - vine_lock.prev.x) * sens, dy = (l.y - vine_lock.prev.y) * sens;
         double cx = l.x - vine_lock.center.x, cy = l.y - vine_lock.center.y;
         if (vine_lock.awaiting && cx * cx + cy * cy <= 4) { dx = dy = 0; vine_lock.awaiting = 0; }   // the recentring warp (±2 px rounding)
         vine_lock.prev = l;
@@ -1367,14 +1378,27 @@ static void vine_postEvent(id self, SEL _cmd, id ev, BOOL atStart) {
         if (last && [last type] == t && [last window] == [ev window] && [last modifierFlags] == [ev modifierFlags]) {
             id merged = [objc_getClass("NSEvent") mouseEventWithType:t location:[ev locationInWindow] modifierFlags:[ev modifierFlags]
                                                                window:[ev window] clickCount:1
-                                                               deltaX:[last deltaX] + [ev deltaX] deltaY:[last deltaY] + [ev deltaY]];
+                                                               deltaX:[last deltaX] + [ev deltaX]
+                                                               deltaY:(orig_deltaY ? orig_deltaY(last, sel_registerName("deltaY")) + orig_deltaY(ev, sel_registerName("deltaY")) : [last deltaY] + [ev deltaY])];
             if (merged) { [q replaceObjectAtIndex:[q count] - 1 withObject:merged]; return; }
         }
     }
     orig_postEvent(self, _cmd, ev, atStart);
 }
 
+// Mouse motion deltaY: macOS reports y growing downwards; Darling computes it in its y-up window
+// coordinates, so vertical camera movement was inverted (MacOBlox flips it the same way).
+static double vine_deltaY(id self, SEL _cmd) {
+    unsigned long t = [self type];
+    double d = orig_deltaY(self, _cmd);
+    return t == 5 || t == 6 || t == 7 || t == 27 ? -d : d;
+}
 __attribute__((constructor)) static void vine_event_monitors(void) {
+    {
+        Class mc = objc_getClass("NSEvent_mouse");   // Darling's mouse events (may override NSEvent's)
+        Method dm = class_getInstanceMethod(mc ? mc : objc_getClass("NSEvent"), sel_registerName("deltaY"));
+        if (dm) orig_deltaY = (double (*)(id, SEL))method_setImplementation(dm, (IMP)vine_deltaY);
+    }
     {
         Class d = objc_getClass("NSDisplay");
         Ivar iv = d ? class_getInstanceVariable(d, "_eventQueue") : 0;
