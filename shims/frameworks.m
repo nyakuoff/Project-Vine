@@ -1125,6 +1125,56 @@ void glShaderSource(GLuint shader, GLsizei count, const GLchar *const *strings, 
     orig(shader, count, strs, lens);
     free(copy);
 }
+// OpenGL core profile for contexts that ask for one (finding credited to MacOBlox, gl_profile.c).
+// Roblox's pixel format requests kCGLPFAOpenGLProfile 3.2 Core, as macOS requires for modern GL;
+// Darling keeps the attribute but CGLCreateContext calls eglCreateContext with no attributes, i.e. a
+// Compatibility context. There Roblox detected no multisample textures ("Caps: Texture: ... MSAA 0")
+// and never enabled MSAA (graphics settings changed little). The Compatibility context Darling made is
+// replaced by a Core one with the same config and sharing; contexts without a profile request
+// (Darling's own compositor) are untouched. Darling's layout (OpenGL.c): pixel format attributes at
+// +8, context egl_context at +72; display/config are file statics.
+#define GL_IMG "/System/Library/Frameworks/OpenGL.framework/Versions/A/OpenGL.darling"
+void *vine_local_symbol(const char *image_suffix, const char *sym);
+void *dlopen(const char *, int); void *dlsym(void *, const char *);
+// Darling's CGLChoosePixelFormat copies the attribute list only up to the first 0, and attribute
+// values can be 0 (e.g. a stencil size), so the profile request was usually lost before CGL saw it.
+// The AppKit wrapper reads NSOpenGLPixelFormat's attributes properly and marks the CGL pixel format.
+static struct { void *pix; int profile; } vine_core_pix[16];
+void vine_gl_mark_profile(void *cglpix, int profile) {
+    for (int i = 0; i < 16; i++) if (!vine_core_pix[i].pix || vine_core_pix[i].pix == cglpix) { vine_core_pix[i].pix = cglpix; vine_core_pix[i].profile = profile; return; }
+}
+int CGLCreateContext(void *pix, void *share, void **out) {
+    static int (*orig)(void *, void *, void **);
+    static void *(*egl_create)(void *, void *, void *, const int *); static unsigned (*egl_destroy)(void *, void *);
+    static void **display, **config; static int ready = -1;
+    if (!orig) orig = vine_orig(GL_IMG, "CGLCreateContext");
+    int r = orig ? orig(pix, share, out) : 10000;
+    if (ready < 0) {
+        void *egl = dlopen("/usr/lib/native/libEGL.dylib", 1);
+        egl_create = egl ? dlsym(egl, "eglCreateContext") : 0; egl_destroy = egl ? dlsym(egl, "eglDestroyContext") : 0;
+        display = vine_local_symbol("OpenGL.framework/Versions/A/OpenGL.darling", "_display");
+        config = vine_local_symbol("OpenGL.framework/Versions/A/OpenGL.darling", "_config");
+        ready = egl_create && egl_destroy && display && config && !getenv("VINE_GL_COMPAT");
+        if (!ready) dprintf(2, "vine-gl: core profile unavailable (egl %d/%d, display %p, config %p)\n", !!egl_create, !!egl_destroy, display, config);
+    }
+    if (r || !ready || !pix || !out || !*out) return r;
+    const int *attrs = *(const int **)((char *)pix + 8);
+    int profile = 0;
+    for (int i = 0; attrs && attrs[i] && i < 128; i++)
+        if (attrs[i] == 99 /* kCGLPFAOpenGLProfile */) { profile = attrs[i + 1]; break; }
+    for (int i = 0; !profile && i < 16; i++) if (vine_core_pix[i].pix == pix) profile = vine_core_pix[i].profile;
+    if (profile < 0x3200 /* kCGLOGLPVersion_3_2_Core */) return r;
+    void **ctx = (void **)((char *)*out + 72);
+    void *shared = share ? *(void **)((char *)share + 72) : 0;
+    const int core[] = {0x3098 /* MAJOR */, 3, 0x30FB /* MINOR */, 2, 0x30FD /* PROFILE_MASK */, 1 /* CORE */, 0x3038 /* NONE */};
+    void *c = egl_create(*display, *config, shared, core);
+    if (c) {
+        egl_destroy(*display, *ctx); *ctx = c;
+        static int said; if (!said++) dprintf(2, "vine-gl: core profile context (requested 0x%x)\n", profile);
+    }
+    return r;
+}
+
 // Shader compile/link time in the log ("vine-gl: ... ms" for calls over 5 ms, with running totals):
 // in game, framerate drops to ~20 whenever abilities/particles appear; compiling new programs on
 // first use would show up here.
@@ -1498,7 +1548,33 @@ static double vine_deltaY(id self, SEL _cmd) {
     double d = orig_deltaY(self, _cmd);
     return t == 5 || t == 6 || t == 7 || t == 27 ? -d : d;
 }
+// NSOpenGLPixelFormat attributes, walked with their values (see vine_gl_mark_profile in the
+// OpenGL wrapper): the core profile request reaches CGLCreateContext.
+static id (*orig_pf_init)(id, SEL, const uint32_t *);
+static id vine_pf_init(id self, SEL _cmd, const uint32_t *a) {
+    id r = orig_pf_init(self, _cmd, a);
+    int profile = 0;
+    for (int i = 0; a && a[i] && i < 128; ) {
+        uint32_t k = a[i];
+        if (k == 99) { profile = a[i + 1]; break; }
+        // attributes followed by a value (NSOpenGLPFA...): AuxBuffers, ColorSize, AlphaSize, DepthSize,
+        // StencilSize, AccumSize, SampleBuffers, Samples, RendererID, ScreenMask,
+        // VirtualScreenCount, OpenGLProfile
+        int arg = k == 7 || k == 8 || k == 11 || k == 12 || k == 13 || k == 14 || k == 55 || k == 56 ||
+                  k == 70 || k == 84 || k == 128 || k == 99;
+        i += arg ? 2 : 1;
+    }
+    Ivar iv = r ? class_getInstanceVariable(object_getClass(r), "_cglPixelFormat") : 0;
+    static void (*mark)(void *, int);   // in Vine's OpenGL wrapper (resolved at run time)
+    if (!mark) mark = (void (*)(void *, int))dlsym((void *)-2 /* RTLD_DEFAULT */, "vine_gl_mark_profile");
+    if (profile && iv && mark) mark(*(void **)((char *)r + ivar_getOffset(iv)), profile);
+    return r;
+}
 __attribute__((constructor)) static void vine_event_monitors(void) {
+    {
+        Method m = class_getInstanceMethod(objc_getClass("NSOpenGLPixelFormat"), sel_registerName("initWithAttributes:"));
+        if (m) orig_pf_init = (id (*)(id, SEL, const uint32_t *))method_setImplementation(m, (IMP)vine_pf_init);
+    }
     {
         Class mc = objc_getClass("NSEvent_mouse");   // Darling's mouse events (may override NSEvent's)
         Method dm = class_getInstanceMethod(mc ? mc : objc_getClass("NSEvent"), sel_registerName("deltaY"));
