@@ -6,7 +6,7 @@
 
 </div>
 
-Vine runs Roblox's macOS client unmodified (apart from two optional, documented patches) on Linux, with no root and no install. You can sign in, join experiences, hear sound, and play with mouse and keyboard.
+Vine runs Roblox's macOS client unmodified (apart from two optional, documented patches) on Linux, with no root and no install. You can sign in, join experiences, and play natively.
 It is an unofficial compatibility project, not affiliated with Roblox. It uses normal account sign-in and does not touch Roblox's anti-cheat (see [Scope](#scope)).
 
 ## Status
