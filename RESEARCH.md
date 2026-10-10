@@ -193,6 +193,10 @@ renders on radeonsi, but XTest input doesn't reach clients there.
 
 | Still lagging (workers 50-81%, darlingserver 28%) | user's 2nd profile: worker stacks dominated by `_os_log_impl` → `sbuf_printf`/`vasprintf`/`os_log_buffer_to_hex_string` → `asl_msg_set_key_val_op`/`asl_log`: Darling's `os_log_type_enabled` is always true (debug too) and `_os_log_impl` formats + sends to ASL synchronously | `shims/trace.c` (libsystem_trace wrapper): os_log off (`os_log_cost.m`: 0.001 µs/call). ulock already uses futexes (no change) |
 
+| Lag still present (user's 2nd profile also showed `_platform_memmove` often) | `libc_speed.m`: Darling's unoptimized libsystem_platform: memcpy 6.8 GB/s (100 B: 3.1), memset 0.4 GB/s, strlen 4.2 GB/s | `shims/platform.c` (MacOBlox finding, own code): 22 / 17.9 / 60.6 / 19.0 GB/s, overlap and alignment checks pass |
+| Low-memory warning at every join, menu unloaded | `vm_stats.m`: host_statistics64 free pages 0 | /proc/meminfo counts (MacOBlox finding) |
+| RakNet connect takes 7.5-19.6 s per join (black screen) | log: "binding socket" → "Connection accepted"; SO_SNDTIMEO with junk padding → EDOM (fixed) | `VINE_TRACE_UDP` per-socket trace for the next join |
+
 Not verified in a game yet (needs the user's account): sound, the black screen (it lasted only the ~4 s
 before the crash, so it may just be the loading phase), sustained play.
 

@@ -57,6 +57,10 @@ cwrap /usr/lib/libresolv.9.dylib "$SRC/resolv.c"                # thread-safe re
 # libsystem_pthread: condition variables and contended mutex waits on futexes. The helper gives the
 # wrapper Darling's own mutex lock/unlock (pthread_orig.c).
 cwrap /usr/lib/system/libsystem_trace.dylib "$SRC/trace.c"     # os_log off (formatting cost)
+cwrap /usr/lib/system/libsystem_platform.dylib "$SRC/platform.c"  # fast memmove/memset/strlen...
+# the compiler must not have turned a loop back into a call to one of these names (recursion)
+if llvm-objdump -d --macho "$O/usr/lib/system/libsystem_platform.dylib" | grep -E 'call.*(_platform_mem|_mem(cpy|move|set)|_bzero|_strlen)'; then
+  echo "error: platform.c calls itself through a libc name" >&2; exit 1; fi
 PTH=/usr/lib/system/libsystem_pthread.dylib; PTHO=/usr/lib/vine/libvine_pthread_orig.dylib
 mktbd "$D$PTH" "$PTH.darling" "$TMP/pth_orig.tbd"
 clang -target x86_64-apple-macos10.13 -dynamiclib -nostdlib -ffreestanding -fno-builtin -fno-stack-protector -fuse-ld=lld -O2 \
