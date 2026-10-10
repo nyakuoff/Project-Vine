@@ -42,6 +42,9 @@ for t in inf.threads():
         if nrbp <= rbp: break
         rbp = nrbp
     out.write('T %d %s\n' % (t.ptid[1], ' '.join(hex(a) for a in addrs)))
+    try: sc = int(gdb.parse_and_eval('$orig_rax'))   # Linux syscall number if stopped in one
+    except Exception: sc = -1
+    out.write('C %d %d\n' % (t.ptid[1], sc))
     rsp = int(gdb.parse_and_eval('$rsp')) & (2**64 - 1)   # stack scan: frame pointers end in ELF code
     try: words = struct.unpack('<2048Q', bytes(inf.read_memory(rsp, 16384)))
     except Exception: words = ()
@@ -73,6 +76,7 @@ def code(v):
     return i >= 0 and v < ex[i][1]
 for line in open(sys.argv[2]):
     w = line.split()
+    if w[0] == 'C': continue
     for i, v in enumerate(w[2:]):
         if w[0] == 'T' or code(int(v, 16)): print('#%d %s' % (i, v))
 PY
@@ -98,7 +102,13 @@ def code(v):
     i = bisect.bisect_right(starts, v) - 1
     return i >= 0 and v < ex[i][1]
 clean = lambda n: re.sub(r' \[0x[0-9a-f]+\]$', '', n)
+LINUX = {0: 'read', 1: 'write', 7: 'poll', 23: 'select', 24: 'sched_yield', 35: 'nanosleep', 44: 'sendto', 45: 'recvfrom',
+         46: 'sendmsg', 47: 'recvmsg', 202: 'futex', 232: 'epoll_wait', 270: 'pselect6', 271: 'ppoll', 281: 'epoll_pwait', 230: 'clock_nanosleep'}
+calls = collections.defaultdict(collections.Counter)
 for s in stacks:
+    if s[0] == 'C':
+        n = int(s[2]); calls[s[1]][LINUX.get(n, 'syscall %d' % n) if n >= 0 else 'running (not in a syscall)'] += 1
+        continue
     kind, tid, frames = s[0], s[1], s[2:]
     if kind == 'S': frames = [f for f in frames if code(int(f, 16))]
     names = syms[k:k + len(frames)]; k += len(frames)
@@ -114,6 +124,8 @@ for tid in per:
     try: comm = open('/proc/%s/task/%s/comm' % (pid, tid)).read().strip()
     except Exception: comm = '?'
     print('\n# thread %s (%s): %d samples' % (tid, comm, per[tid]))
+    print('  Linux system call it was in:')
+    for n, c in calls[tid].most_common(6): print('    %3d  %s' % (c, n))
     print('  where it was (innermost frame):')
     for n, c in top[tid].most_common(8): print('    %3d  %s' % (c, n))
     print('  innermost non-Roblox frame (system library it is in):')

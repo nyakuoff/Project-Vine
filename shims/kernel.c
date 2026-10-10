@@ -299,10 +299,10 @@ static ssize_t vine_recvfrom(int nr, int fd, void *buf, size_t len, int flags, v
     if (t && r >= 0) udp_trace("recvfrom", fd, r, now_us() - t);
     return r;
 }
-ssize_t recvfrom(int fd, void *b, size_t n, int f, void *from, void *fl) { return vine_recvfrom(SYS_recvfrom, fd, b, n, f, from, fl); }
+ssize_t recvfrom(int fd, void *b, size_t n, int f, void *from, void *fl) { return vine_recvfrom(SYS_recvfrom_nocancel, fd, b, n, f, from, fl); }   // no cancellation RPC (see below)
 ssize_t recvfrom_nocancel(int, void *, size_t, int, void *, void *) __asm__("_recvfrom$NOCANCEL");
 ssize_t recvfrom_nocancel(int fd, void *b, size_t n, int f, void *from, void *fl) { return vine_recvfrom(SYS_recvfrom_nocancel, fd, b, n, f, from, fl); }
-ssize_t __recvfrom(int fd, void *b, size_t n, int f, void *from, void *fl) { return vine_recvfrom(SYS_recvfrom, fd, b, n, f, from, fl); }
+ssize_t __recvfrom(int fd, void *b, size_t n, int f, void *from, void *fl) { return vine_recvfrom(SYS_recvfrom_nocancel, fd, b, n, f, from, fl); }
 ssize_t __recvfrom_nocancel(int fd, void *b, size_t n, int f, void *from, void *fl) { return vine_recvfrom(SYS_recvfrom_nocancel, fd, b, n, f, from, fl); }
 
 // connectx: unimplemented in Darling (syscall 447, ENOSYS). Roblox's RbxTransport connects its UDP
@@ -542,8 +542,47 @@ static ssize_t vine_sendto(int nr, int fd, const void *b, size_t n, int f, const
     if (r >= 0) udp_trace("sendto", fd, r, 0);
     return r;
 }
-ssize_t sendto(int fd, const void *b, size_t n, int f, const void *to, uint32_t tl) { return vine_sendto(SYS_sendto, fd, b, n, f, to, tl); }
+ssize_t sendto(int fd, const void *b, size_t n, int f, const void *to, uint32_t tl) { return vine_sendto(SYS_sendto_nocancel, fd, b, n, f, to, tl); }
 ssize_t sendto_nocancel(int, const void *, size_t, int, const void *, uint32_t) __asm__("_sendto$NOCANCEL");
 ssize_t sendto_nocancel(int fd, const void *b, size_t n, int f, const void *to, uint32_t tl) { return vine_sendto(SYS_sendto_nocancel, fd, b, n, f, to, tl); }
-ssize_t __sendto(int fd, const void *b, size_t n, int f, const void *to, uint32_t tl) { return vine_sendto(SYS_sendto, fd, b, n, f, to, tl); }
+ssize_t __sendto(int fd, const void *b, size_t n, int f, const void *to, uint32_t tl) { return vine_sendto(SYS_sendto_nocancel, fd, b, n, f, to, tl); }
 ssize_t __sendto_nocancel(int fd, const void *b, size_t n, int f, const void *to, uint32_t tl) { return vine_sendto(SYS_sendto_nocancel, fd, b, n, f, to, tl); }
+
+// ---- cancellation points ----------------------------------------------------------------------
+// Every cancellable Darling syscall (read, write, poll, select, close, open, fcntl, sendto, recvfrom,
+// sleeps, ...) starts with CANCELATION_POINT(): in a multithreaded process that is a darlingserver
+// request (dserver_rpc_pthread_canceled) asking whether the thread was cancelled. Roblox's in-game
+// stack samples showed poll -> sys_pthread_canceled -> RPC; darlingserver used 30-40% of a core.
+// Roblox never cancels threads (MacOBlox notes the same for sleeps), so the public names jump to
+// Darling's $NOCANCEL / _nocancel variants: same work, no request. A jump keeps every register, so
+// variadic open/fcntl are unaffected. ponytail: pthread_cancel no longer interrupts these calls.
+#define NOCANCEL(pub, target)                                                                     \
+    extern char vine_nc_target_##pub[] __asm__(target);                                          \
+    __attribute__((visibility("hidden"))) void *volatile vine_nc_##pub = vine_nc_target_##pub;   \
+    __asm__(".text\n.globl \"" #pub "\"\n\"" #pub "\":\n  jmpq *_vine_nc_" #pub "(%rip)\n");
+#define NOCANCEL_Q(id, pub, target)                                                               \
+    extern char vine_nc_target_##id[] __asm__(target);                                           \
+    __attribute__((visibility("hidden"))) void *volatile vine_nc_##id = vine_nc_target_##id;     \
+    __asm__(".text\n.globl \"" pub "\"\n\"" pub "\":\n  jmpq *_vine_nc_" #id "(%rip)\n");
+NOCANCEL(_read, "_read$NOCANCEL")
+NOCANCEL(_write, "_write$NOCANCEL")
+NOCANCEL(_close, "_close$NOCANCEL")
+NOCANCEL(_poll, "_poll$NOCANCEL")
+NOCANCEL(_fcntl, "_fcntl$NOCANCEL")
+NOCANCEL(_open, "_open$NOCANCEL")
+NOCANCEL(_openat, "_openat$NOCANCEL")
+NOCANCEL(_connect, "_connect$NOCANCEL")
+NOCANCEL(_accept, "_accept$NOCANCEL")
+NOCANCEL(_readv, "_readv$NOCANCEL")
+NOCANCEL(_writev, "_writev$NOCANCEL")
+NOCANCEL(_pread, "_pread$NOCANCEL")
+NOCANCEL(_pwrite, "_pwrite$NOCANCEL")
+NOCANCEL(_msync, "_msync$NOCANCEL")
+NOCANCEL(_fsync, "_fsync$NOCANCEL")
+NOCANCEL(_sem_wait, "_sem_wait$NOCANCEL")
+NOCANCEL(_select, "_select$NOCANCEL")
+NOCANCEL(_pselect, "_pselect$NOCANCEL")
+NOCANCEL(___semwait_signal, "___semwait_signal_nocancel")
+NOCANCEL_Q(select_ext, "_select$DARWIN_EXTSN", "_select$DARWIN_EXTSN$NOCANCEL")
+NOCANCEL_Q(select_1050, "_select$1050", "_select$DARWIN_EXTSN$NOCANCEL")
+NOCANCEL_Q(pselect_ext, "_pselect$DARWIN_EXTSN", "_pselect$DARWIN_EXTSN$NOCANCEL")

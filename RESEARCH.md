@@ -199,6 +199,9 @@ renders on radeonsi, but XTest input doesn't reach clients there.
 
 | Roblox assumes 64 MB of video memory ("Video memory size: 67108864", lowers quality/budgets) | it walks CGGetOnlineDisplayList → CGDisplayIOServicePort → IORegistryEntryCreateCFProperties → IOFBMemorySize; Darling's CGDisplayIOServicePort returns 0 | placeholder display entry answering IOFBMemorySize with the host VRAM (launcher: amdgpu sysfs) (MacOBlox finding): log now "Video memory size: 2147483648" (Roblox's cap) |
 
+| ~140 fps where native gives ~240; darlingserver 42% in game | profile (syscall numbers): main thread waiting in recvmsg on darlingserver; chains `poll` → `sys_pthread_canceled` → `dserver_rpc_pthread_canceled`. Every cancellable syscall (read, write, poll, select, close, open, fcntl, socket I/O, sleeps) asks darlingserver whether the thread was cancelled, in any threaded process: `cancel_cost.m` 58.9 µs per write | public names jump to Darling's `$NOCANCEL` variants (Roblox never cancels threads): 0.19 µs; menu darlingserver 29% → 14% |
+| Graphics settings change little | `GL Version: 4.6 (Compatibility Profile)`: Darling's CGLChoosePixelFormat copies attributes up to the first 0 and lost the 3.2 Core request | Core context (MacOBlox finding); quality level was already 20.9/21 (auto); "Texture: MSAA 0" remains on radeonsi |
+
 Not verified in a game yet (needs the user's account): sound, the black screen (it lasted only the ~4 s
 before the crash, so it may just be the loading phase), sustained play.
 
