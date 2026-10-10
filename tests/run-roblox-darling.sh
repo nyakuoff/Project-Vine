@@ -30,6 +30,9 @@ ENV=(MESA_SHADER_CACHE_DIR=/tmp/vine-mesa-cache DISPLAY="$DISP" VINE_OBJC_LENIEN
 # VRAM (amdgpu sysfs); unset -> 2 GiB.
 VRAM=$(cat /sys/class/drm/card*/device/mem_info_vram_total 2>/dev/null | sort -n | tail -1)
 [ -n "$VRAM" ] && ENV+=(VINE_VRAM_BYTES="$VRAM")
+# VINE_RENDERER=zink: Roblox's OpenGL renderer through Mesa Zink on the Vulkan driver (OpenGL over
+# Vulkan; the macOS client has no Vulkan renderer of its own). Default: the native OpenGL driver.
+[ "${VINE_RENDERER:-gl}" = zink ] && ENV+=(MESA_LOADER_DRIVER_OVERRIDE=zink GALLIUM_DRIVER=zink)
 [ -n "${VINE_ENV:-}" ] && ENV+=($VINE_ENV)   # extra env, e.g. VINE_ENV="GALLIUM_HUD=fps"
 [ "${VINE_XTRACE:-0}" = 1 ] && ENV+=(XTRACE_NO_COLOR=1 XTRACE_LOG_FILE=/private/tmp/rbx.xtrace XTRACE_LOG_FILE_PER_THREAD=1
                                    DYLD_INSERT_LIBRARIES=/usr/lib/darling/libxtrace.dylib)

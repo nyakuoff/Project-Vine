@@ -1175,7 +1175,7 @@ int CGLCreateContext(void *pix, void *share, void **out) {
     return r;
 }
 
-// GL_RENDERER without a leading "AMD ". Roblox turns multisample textures off (no MSAA at any quality)
+// GL_RENDERER without "AMD". Roblox turns multisample textures off (no MSAA at any quality)
 // when the renderer string contains "AMD" on newer macOS: a workaround for Apple's own AMD OpenGL
 // driver (Roblox 0.742: strstr(GL_RENDERER, "AMD") + NSAppKitVersionNumber check after reading
 // GL_MAX_SAMPLES). Mesa's radeonsi does not have that bug. The vendor string is unchanged.
@@ -1184,9 +1184,15 @@ const unsigned char *glGetString(unsigned int name) {
     static const unsigned char *(*orig)(unsigned int);
     if (!orig) orig = vine_orig("/System/Library/Frameworks/OpenGL.framework/Versions/A/OpenGL.darling", "glGetString");
     const unsigned char *r = orig ? orig(name) : 0;
-    if (name == 0x1F01 /* GL_RENDERER */ && r && r[0] == 'A' && r[1] == 'M' && r[2] == 'D' && r[3] == ' ' && !getenv("VINE_GL_FULL_RENDERER"))
-        r += 4;
-    return r;
+    if (name != 0x1F01 /* GL_RENDERER */ || !r || getenv("VINE_GL_FULL_RENDERER")) return r;
+    static char buf[256];   // "AMD" removed wherever it is (Zink: "zink Vulkan 1.4(AMD Radeon ...)")
+    size_t o = 0;
+    for (const unsigned char *p = r; *p && o < sizeof buf - 1; ) {
+        if (p[0] == 'A' && p[1] == 'M' && p[2] == 'D') { p += 3; if (*p == ' ') p++; continue; }
+        buf[o++] = *p++;
+    }
+    buf[o] = 0;
+    return (const unsigned char *)buf;
 }
 
 // Shader compile/link time in the log ("vine-gl: ... ms" for calls over 5 ms, with running totals):
