@@ -175,6 +175,10 @@ renders on radeonsi, but XTest input doesn't reach clients there.
 | Still kicked after the recvfrom fix (handshake 1.4 s instead of 4.4 s, channel open still fails at 10 s) | `udp_probe.m`: `recvmsg` returns sender `sin_len` 2 (only the family byte converted); `sendmsg` with a control message → EINVAL (only the first cmsg converted, Darwin type numbers kept); received control messages keep Linux types; `setsockopt` IP_RECVPKTINFO / IP_RECVTOS / IP_DONTFRAG (+IPv6 forms) → ENOTSUP. Roblox sets IP_DONTFRAG at two sites | `kernel.c`: sendmsg/recvmsg straight to Linux with full address + control-message conversion; setsockopt maps those options (IP_DONTFRAG → IP_MTU_DISCOVER). If the transport still fails, MacOBlox's route is to select RakNet instead (binary patch of transport selection) |
 | Signed out at every launch (found) | trace: `.ROBLOSECURITY` arrives through `-[NSHTTPCookieStorage setCookies:forURL:mainDocumentURL:]`, an empty stub in Darling; the store stayed empty | implemented via `setCookie:` (`cookie_header.m`) |
 
+| In game (RakNet, D12): freezes at any movement | 285k "Warp to" lines in one session (~4000/s): with the mouse locked Roblox warps the cursor every frame, each warp is a real X move that Darling's grab turns into a huge-delta motion event and warps back (MacOBlox notes describe the same fight) | CoreGraphics: `CGWarpMouseCursorPosition` ignored while the mouse is disassociated; X11Display `warpMouse:` without its per-call log line |
+| Game list / menus don't scroll | log: `scrollingDeltaY`, `hasPreciseScrollingDeltas`, `phase`, `momentumPhase` unimplemented on Darling's NSEvent | category on NSEvent (wheel: line deltas, not precise, no phases); verified on Xvfb (home page scrolls) |
+| No sound: FMOD now lists "PulseAudio 44100/2" but `System::init` fails (51) | — | failing AudioUnit calls logged as `vine-audio:` for the next in-game run |
+
 Not verified in a game yet (needs the user's account): sound, the black screen (it lasted only the ~4 s
 before the crash, so it may just be the loading phase), sustained play.
 

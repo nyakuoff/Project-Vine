@@ -383,12 +383,43 @@ id NSThreadSharedInstance(NSString *);
 @interface NSThread : NSObject + (BOOL)isMainThread; @end
 @interface NSDisplay : NSObject @end
 static id vine_main_display;
+static void vine_quiet_warp(void);
 @implementation NSDisplay (VineSharedDisplay)
 + (id)currentDisplay {
-    if ([NSThread isMainThread]) return vine_main_display = NSThreadSharedInstance(@"NSDisplay");
+    if ([NSThread isMainThread]) { vine_main_display = NSThreadSharedInstance(@"NSDisplay"); vine_quiet_warp(); return vine_main_display; }
     return vine_main_display ? vine_main_display : NSThreadSharedInstance(@"NSDisplay");
 }
 @end
+// -[X11Display warpMouse:] logs "Warp to: ..." on every call; with the pointer grabbed (mouse lock)
+// it runs once per mouse motion event, i.e. hundreds of log writes per second. Same warp, no log.
+// Installed once the X11 backend bundle (which defines X11Display) is loaded.
+typedef void *Ivar;
+Ivar class_getInstanceVariable(Class, const char *);
+long ivar_getOffset(Ivar);
+static int (*x_warp)(void *, unsigned long, unsigned long, int, int, unsigned, unsigned, int, int);
+static int (*x_sync)(void *, int);
+static unsigned long (*x_root)(void *);
+static ptrdiff_t x_display_ivar;
+static void vine_warp_mouse(id self, SEL _cmd, struct { double x, y; } p) {
+    void *dpy = *(void **)((char *)self + x_display_ivar);
+    x_warp(dpy, 0, x_root(dpy), 0, 0, 0, 0, (int)p.x, (int)p.y);
+    x_sync(dpy, 0);
+}
+static void vine_quiet_warp(void) {
+    static int done;
+    Class c = done ? 0 : objc_getClass("X11Display");
+    if (!c) return;
+    done = 1;
+    void *x11 = dlopen("/usr/lib/native/libX11.dylib", 1);
+    Ivar iv = class_getInstanceVariable(c, "_display");
+    Method m = class_getInstanceMethod(c, sel_registerName("warpMouse:"));
+    x_warp = x11 ? dlsym(x11, "XWarpPointer") : 0; x_sync = x11 ? dlsym(x11, "XSync") : 0; x_root = x11 ? dlsym(x11, "XDefaultRootWindow") : 0;
+    if (!iv || !m || !x_warp || !x_sync || !x_root) return;
+    x_display_ivar = ivar_getOffset(iv);
+    method_setImplementation(m, (IMP)vine_warp_mouse);
+}
+
+
 __attribute__((constructor)) static void vine_appkit_init(void) {
     void *x11 = dlopen("/usr/lib/native/libX11.dylib", 1);
     int (*init_threads)(void) = x11 ? (int (*)(void))dlsym(x11, "XInitThreads") : 0;
@@ -610,6 +641,18 @@ __attribute__((constructor)) static void vine_quartzcore_init(void) {
 - (long)buttonNumber; - (long)clickCount; - (double)timestamp; - (long)windowNumber;
 - (unsigned short)keyCode; - (id)characters; - (unsigned long)modifierFlags; @end
 @interface NSObject (VineUTF8) - (const char *)UTF8String; @end
+// Scroll wheel: Darling's NSEvent has deltaX/deltaY (one line per wheel notch) but not the 10.7
+// accessors Roblox reads, so every scroll read as 0 (game list and menus did not scroll). A wheel
+// is a line-based, non-precise device without gesture phases, which is what these report.
+@interface NSEvent (VineDeltas) - (double)deltaX; - (double)deltaY; @end
+@implementation NSEvent (VineScrolling)
+- (double)scrollingDeltaX { return [self deltaX]; }
+- (double)scrollingDeltaY { return [self deltaY]; }
+- (BOOL)hasPreciseScrollingDeltas { return 0; }
+- (BOOL)isDirectionInvertedFromDevice { return 0; }
+- (unsigned long)phase { return 0; }          // NSEventPhaseNone
+- (unsigned long)momentumPhase { return 0; }
+@end
 @interface NSProcessInfo : NSObject + (id)processInfo; - (double)systemUptime; @end
 @interface NSObject (VineFrame) - (NSRect)frame; @end
 @interface NSObject (VineFocus) - (BOOL)isKeyWindow; - (BOOL)isActive; @end
@@ -676,15 +719,29 @@ static void vine_event_trace_install(void) {
 // Correct sense, and only act when the state changes.
 Class objc_getClass(const char *);
 @interface NSObject (VineDisplay) + (id)currentDisplay; - (void)grabMouse:(BOOL)grab; @end
+static int vine_mouse_associated = 1;
 int CGAssociateMouseAndMouseCursorPosition(unsigned int connected) {
-    static int state = 1;   // associated
+    int state = vine_mouse_associated;
     connected = connected != 0;
     if ((int)connected == state) return 0;
-    state = connected;
+    vine_mouse_associated = connected;
     id display = [objc_getClass("NSDisplay") currentDisplay];
     if (!display) return 1001;   // kCGErrorInvalidConnection
     [display grabMouse:!connected];
     return 0;
+}
+// While the mouse is locked, Roblox warps the cursor every frame. On macOS that moves only the frozen
+// logical cursor; under Darling every warp is a real X pointer move, and the grab turns it into a
+// motion event with a huge delta, then warps back to its pin point: a ~4000 warps/s feedback loop
+// (285k "Warp to" lines in one session), the game froze at any movement, the camera jumped
+// (finding matches MacOBlox's notes). Darling's grab keeps the pointer pinned, so ignore them.
+typedef struct { double x, y; } VinePoint;
+void *vine_orig(const char *image, const char *sym);
+int CGWarpMouseCursorPosition(VinePoint p) {
+    static int (*orig)(VinePoint);
+    if (!vine_mouse_associated) return 0;
+    if (!orig) orig = (int (*)(VinePoint))vine_orig("/System/Library/Frameworks/CoreGraphics.framework/Versions/A/CoreGraphics.darling", "CGWarpMouseCursorPosition");
+    return orig ? orig(p) : 1001;
 }
 #endif
 
@@ -896,6 +953,40 @@ OSStatus AudioComponentInstanceNew(void *component, void **out) {
         if (vf) { patched = 1; vine_detour_addr(vf, (void *)vine_auhal_valid_format); }
         if (wf) vine_detour_addr(wf, (void *)vine_auhal_format_writable);
     }
+    return st;
+}
+
+// Failing AudioUnit calls are logged ("vine-audio: ..."): FMOD still reports FMOD_ERR_OUTPUT_INIT at
+// System::init in-game, and only a game join exercises its exact sequence.
+#define AT_FULL "/System/Library/Frameworks/AudioToolbox.framework/Versions/A/AudioToolbox.darling"
+#define AU_TRACE(name, st, prop, scope, elem) \
+    if (st) dprintf(2, "vine-audio: %s prop=%u scope=%u elem=%u -> %d\n", name, (unsigned)(prop), (unsigned)(scope), (unsigned)(elem), (int)(st))
+OSStatus AudioUnitSetProperty(void *u, uint32_t prop, uint32_t scope, uint32_t elem, const void *data, uint32_t size) {
+    static OSStatus (*o)(void *, uint32_t, uint32_t, uint32_t, const void *, uint32_t);
+    if (!o) o = vine_orig(AT_FULL, "AudioUnitSetProperty");
+    OSStatus st = o(u, prop, scope, elem, data, size);
+    AU_TRACE("AudioUnitSetProperty", st, prop, scope, elem);
+    return st;
+}
+OSStatus AudioUnitGetProperty(void *u, uint32_t prop, uint32_t scope, uint32_t elem, void *data, uint32_t *size) {
+    static OSStatus (*o)(void *, uint32_t, uint32_t, uint32_t, void *, uint32_t *);
+    if (!o) o = vine_orig(AT_FULL, "AudioUnitGetProperty");
+    OSStatus st = o(u, prop, scope, elem, data, size);
+    AU_TRACE("AudioUnitGetProperty", st, prop, scope, elem);
+    return st;
+}
+OSStatus AudioUnitInitialize(void *u) {
+    static OSStatus (*o)(void *);
+    if (!o) o = vine_orig(AT_FULL, "AudioUnitInitialize");
+    OSStatus st = o(u);
+    AU_TRACE("AudioUnitInitialize", st, 0, 0, 0);
+    return st;
+}
+OSStatus AudioOutputUnitStart(void *u) {
+    static OSStatus (*o)(void *);
+    if (!o) o = vine_orig(AT_FULL, "AudioOutputUnitStart");
+    OSStatus st = o(u);
+    AU_TRACE("AudioOutputUnitStart", st, 0, 0, 0);
     return st;
 }
 
