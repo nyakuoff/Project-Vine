@@ -172,6 +172,9 @@ renders on radeonsi, but XTest input doesn't reach clients there.
 
 | Kicked ~10 s after the game connection opens ("Disconnected", error 256; log: "Rejecting send channel open on failed connection") | `tests/darwin/udp_probe.m`: `recv(MSG_DONTWAIT)` on an empty UDP socket blocked until SO_RCVTIMEO: Darling's `sys_recvfrom` computes the Linux flags but passes the Darwin ones (0x80 = Linux MSG_EOR); `connectx` unimplemented (ENOSYS) | `kernel.c`: translate recvfrom flags; `connectx` as bind + connect + optional send (both also MacOBlox findings). kqueue EV_CLEAR read events: no loss seen (500/500) |
 
+| Still kicked after the recvfrom fix (handshake 1.4 s instead of 4.4 s, channel open still fails at 10 s) | `udp_probe.m`: `recvmsg` returns sender `sin_len` 2 (only the family byte converted); `sendmsg` with a control message → EINVAL (only the first cmsg converted, Darwin type numbers kept); received control messages keep Linux types; `setsockopt` IP_RECVPKTINFO / IP_RECVTOS / IP_DONTFRAG (+IPv6 forms) → ENOTSUP. Roblox sets IP_DONTFRAG at two sites | `kernel.c`: sendmsg/recvmsg straight to Linux with full address + control-message conversion; setsockopt maps those options (IP_DONTFRAG → IP_MTU_DISCOVER). If the transport still fails, MacOBlox's route is to select RakNet instead (binary patch of transport selection) |
+| Signed out at every launch (found) | trace: `.ROBLOSECURITY` arrives through `-[NSHTTPCookieStorage setCookies:forURL:mainDocumentURL:]`, an empty stub in Darling; the store stayed empty | implemented via `setCookie:` (`cookie_header.m`) |
+
 Not verified in a game yet (needs the user's account): sound, the black screen (it lasted only the ~4 s
 before the crash, so it may just be the loading phase), sustained play.
 

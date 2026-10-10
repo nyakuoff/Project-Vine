@@ -1054,9 +1054,16 @@ static void vine_cookie_trace(const char *op, id c) {
 }
 static void vine_setCookie(id self, SEL _cmd, id c) { vine_cookie_trace("set", c); orig_setCookie(self, _cmd, c); vine_cookies_save(self); }
 static void vine_deleteCookie(id self, SEL _cmd, id c) { vine_cookie_trace("delete", c); orig_deleteCookie(self, _cmd, c); vine_cookies_save(self); }
+// Darling's -setCookies:forURL:mainDocumentURL: is an empty stub, and it is how Roblox stores the
+// sign-in cookie (.ROBLOSECURITY): it was dropped, so the login lived only in Roblox's own jar for
+// one session. Store each cookie as -setCookie: does (cookies parsed from a response already carry
+// their domain).
 static void vine_setCookiesForURL(id self, SEL _cmd, id cs, id u, id m) {
-    for (unsigned long i = 0; i < [cs count]; i++) vine_cookie_trace("set-for-url", [cs objectAtIndex:i]);
-    orig_setCookiesForURL(self, _cmd, cs, u, m); vine_cookies_save(self);
+    for (unsigned long i = 0; i < [cs count]; i++) {
+        vine_cookie_trace("set-for-url", [cs objectAtIndex:i]);
+        orig_setCookie(self, sel_registerName("setCookie:"), [cs objectAtIndex:i]);
+    }
+    vine_cookies_save(self);
 }
 static id (*orig_cookiesForURL)(id, SEL, id);
 static id vine_cookiesForURL(id self, SEL _cmd, id url) {

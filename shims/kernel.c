@@ -264,3 +264,147 @@ int connectx(int s, const vine_sa_endpoints *ep, uint32_t assoc, unsigned flags,
     }
     return 0;
 }
+
+// sendmsg/recvmsg/setsockopt for UDP transports (Roblox's RbxTransport). Darling (network/*.c):
+//  - recvmsg sets only the family byte of the sender address: sin_len stays 2 (Linux's family low
+//    byte), so a peer check against the server's address fails;
+//  - sendmsg converts just the first control message and keeps the Darwin type numbers, which
+//    mean other options on Linux (Darwin IP_TOS 3 = Linux IP_RETOPTS) -> EINVAL, packet not sent;
+//  - recvmsg returns control messages with Linux type numbers;
+//  - setsockopt rejects IP_RECVPKTINFO, IP_RECVTOS, IP_DONTFRAG and their IPv6 forms (ENOTSUP).
+// All checked by tests/darwin/udp_probe.m. Here both calls go to Linux directly with full
+// conversion. ponytail: these are not cancellation points; add if a thread is ever pthread_cancel'ed
+// in one.
+enum { L_sendmsg = 46, L_recvmsg = 47, L_setsockopt = 54, SYS_setsockopt = 105 };
+static long net_err(long r) {   // Linux -errno -> Darwin errno, -1
+    static const short map[][2] = {{11, 35}, {90, 40}, {111, 61}, {101, 51}, {113, 65}, {105, 55}, {107, 57},
+        {88, 38}, {95, 45}, {89, 39}, {104, 54}, {99, 49}, {98, 48}, {110, 60}, {106, 56}, {97, 47}, {92, 42}, {93, 43}};
+    int e = (int)-r, d = e;
+    for (size_t i = 0; i < sizeof map / sizeof *map; i++) if (map[i][0] == e) d = map[i][1];
+    *__error() = d;
+    return -1;
+}
+// {level, Darwin type, Linux type} for control messages and the socket options that enable them.
+static const int cmsg_map[][3] = {
+    {0, 3, 1} /* IP_TOS */, {0, 27, 1} /* IP_RECVTOS (received as IP_TOS) */, {0, 26, 8} /* IP_PKTINFO */,
+    {0, 4, 2} /* IP_TTL */, {0, 24, 2} /* IP_RECVTTL (received as IP_TTL) */,
+    {41, 36, 67} /* IPV6_TCLASS */, {41, 46, 50} /* IPV6_PKTINFO */, {41, 47, 52} /* IPV6_HOPLIMIT */,
+    {41, 62, 62} /* IPV6_DONTFRAG */, {0xffff, 0x400, 29} /* SO_TIMESTAMP */, {0xffff, 1, 1} /* SCM_RIGHTS */,
+};
+static int cmsg_to_linux(int level, int type) {   // Darwin -> Linux (first match: the sending form)
+    for (size_t i = 0; i < sizeof cmsg_map / sizeof *cmsg_map; i++)
+        if (cmsg_map[i][0] == level && cmsg_map[i][1] == type) return cmsg_map[i][2];
+    return type;
+}
+static int cmsg_to_darwin(int level, int type) {   // Linux -> Darwin, received form
+    if (level == 0 && type == 1) return 27;   // IP_TOS arrives as IP_RECVTOS on Darwin
+    if (level == 0 && type == 2) return 24;   // IP_TTL arrives as IP_RECVTTL
+    for (size_t i = 0; i < sizeof cmsg_map / sizeof *cmsg_map; i++)
+        if (cmsg_map[i][0] == level && cmsg_map[i][2] == type) return cmsg_map[i][1];
+    return type;
+}
+static int level_to_linux(int l) { return l == 0xffff ? 1 : l; }
+static int level_to_darwin(int l) { return l == 1 ? 0xffff : l; }
+static int family_to_linux(int f) { return f == 30 ? 10 : f; }
+static int family_to_darwin(int f) { return f == 10 ? 30 : f; }
+
+struct d_msghdr { void *name; uint32_t namelen; void *iov; int iovlen; void *control; uint32_t controllen; int flags; };
+struct l_msghdr { void *name; uint32_t namelen; void *iov; size_t iovlen; void *control; size_t controllen; int flags; };
+struct d_cmsg { uint32_t len; int level, type; };
+struct l_cmsg { size_t len; int level, type; };
+#define D_ALIGN(n) (((n) + 3) & ~(size_t)3)
+#define L_ALIGN(n) (((n) + 7) & ~(size_t)7)
+static void copy_bytes(void *d, const void *s, size_t n) { for (size_t i = 0; i < n; i++) ((char *)d)[i] = ((const char *)s)[i]; }
+
+static int msg_flags_darwin(int f) {   // received msg_flags: Linux -> Darwin
+    static const int map[][2] = {{0x1, 0x1}, {0x80, 0x8}, {0x20, 0x10}, {0x8, 0x20}};   // OOB EOR TRUNC CTRUNC
+    int o = 0;
+    for (size_t i = 0; i < sizeof map / sizeof *map; i++) if (f & map[i][0]) o |= map[i][1];
+    return o;
+}
+
+static ssize_t vine_sendmsg(int fd, const struct d_msghdr *m, int flags) {
+    char name[128], ctl[1024];
+    struct l_msghdr l = {0, 0, m->iov, (size_t)m->iovlen, 0, 0, 0};
+    if (m->name && m->namelen) {
+        if (m->namelen > sizeof name) { *__error() = 22; return -1; }
+        copy_bytes(name, m->name, m->namelen);
+        *(uint16_t *)name = (uint16_t)family_to_linux(((uint8_t *)m->name)[1]);
+        l.name = name; l.namelen = m->namelen;
+    }
+    size_t out = 0;
+    for (size_t pos = 0; m->control && pos + sizeof(struct d_cmsg) <= m->controllen; ) {
+        const struct d_cmsg *d = (const struct d_cmsg *)((char *)m->control + pos);
+        if (d->len < sizeof *d || pos + d->len > m->controllen) break;
+        size_t data = d->len - sizeof *d;
+        if (out + L_ALIGN(sizeof(struct l_cmsg) + data) > sizeof ctl) { *__error() = 55; return -1; }   // ENOBUFS
+        struct l_cmsg *c = (struct l_cmsg *)(ctl + out);
+        c->len = sizeof *c + data; c->level = level_to_linux(d->level); c->type = cmsg_to_linux(d->level, d->type);
+        copy_bytes(c + 1, d + 1, data);
+        out += L_ALIGN(c->len);
+        pos += D_ALIGN(d->len);
+    }
+    if (out) { l.control = ctl; l.controllen = out; }
+    long r = __linux_syscall(L_sendmsg, fd, &l, msg_flags_linux(flags));
+    return r < 0 ? net_err(r) : r;
+}
+
+static ssize_t vine_recvmsg(int fd, struct d_msghdr *m, int flags) {
+    char ctl[2048];
+    struct l_msghdr l = {m->name, m->namelen, m->iov, (size_t)m->iovlen, 0, 0, 0};
+    if (m->control && m->controllen) { l.control = ctl; l.controllen = sizeof ctl; }
+    long r = __linux_syscall(L_recvmsg, fd, &l, msg_flags_linux(flags));
+    if (r < 0) return net_err(r);
+    if (m->name && l.namelen >= 2) {   // sockaddr: Linux u16 family -> Darwin {len, family}
+        uint8_t *a = m->name;
+        int fam = family_to_darwin(*(uint16_t *)a);
+        a[0] = (uint8_t)(l.namelen < 255 ? l.namelen : 255); a[1] = (uint8_t)fam;
+    }
+    m->namelen = l.namelen;
+    int f = msg_flags_darwin(l.flags);
+    size_t out = 0;
+    for (size_t pos = 0; l.control && pos + sizeof(struct l_cmsg) <= l.controllen; ) {
+        const struct l_cmsg *c = (const struct l_cmsg *)(ctl + pos);
+        if (c->len < sizeof *c || pos + c->len > l.controllen) break;
+        size_t data = c->len - sizeof *c;
+        if (out + sizeof(struct d_cmsg) + data > m->controllen) { f |= 0x20; break; }   // MSG_CTRUNC
+        struct d_cmsg *d = (struct d_cmsg *)((char *)m->control + out);
+        d->len = (uint32_t)(sizeof *d + data); d->level = level_to_darwin(c->level); d->type = cmsg_to_darwin(c->level, c->type);
+        copy_bytes(d + 1, c + 1, data);
+        out += D_ALIGN(d->len);
+        pos += L_ALIGN(c->len);
+    }
+    if (m->control) m->controllen = (uint32_t)(out < m->controllen ? out : m->controllen);
+    m->flags = f;
+    return r;
+}
+ssize_t sendmsg(int fd, const struct d_msghdr *m, int f) { return vine_sendmsg(fd, m, f); }
+ssize_t sendmsg_nocancel(int, const struct d_msghdr *, int) __asm__("_sendmsg$NOCANCEL");
+ssize_t sendmsg_nocancel(int fd, const struct d_msghdr *m, int f) { return vine_sendmsg(fd, m, f); }
+ssize_t __sendmsg(int fd, const struct d_msghdr *m, int f) { return vine_sendmsg(fd, m, f); }
+ssize_t __sendmsg_nocancel(int fd, const struct d_msghdr *m, int f) { return vine_sendmsg(fd, m, f); }
+ssize_t recvmsg(int fd, struct d_msghdr *m, int f) { return vine_recvmsg(fd, m, f); }
+ssize_t recvmsg_nocancel(int, struct d_msghdr *, int) __asm__("_recvmsg$NOCANCEL");
+ssize_t recvmsg_nocancel(int fd, struct d_msghdr *m, int f) { return vine_recvmsg(fd, m, f); }
+ssize_t __recvmsg(int fd, struct d_msghdr *m, int f) { return vine_recvmsg(fd, m, f); }
+ssize_t __recvmsg_nocancel(int fd, struct d_msghdr *m, int f) { return vine_recvmsg(fd, m, f); }
+
+int setsockopt(int fd, int level, int name, const void *val, uint32_t len) {
+    static const int opt[][3] = {   // {level, Darwin option, Linux option}
+        {0, 26, 8} /* IP_RECVPKTINFO -> IP_PKTINFO */, {0, 27, 13} /* IP_RECVTOS */,
+        {41, 61, 49} /* IPV6_RECVPKTINFO */, {41, 35, 66} /* IPV6_RECVTCLASS */, {41, 36, 67} /* IPV6_TCLASS */,
+        {41, 62, 62} /* IPV6_DONTFRAG */, {41, 37, 51} /* IPV6_RECVHOPLIMIT */,
+    };
+    long r;
+    if (level == 0 && name == 28 && val && len >= 4) {   // IP_DONTFRAG -> IP_MTU_DISCOVER DO/DONT
+        int v = *(const int *)val ? 2 : 0;
+        r = __linux_syscall(L_setsockopt, fd, 0, 10, &v, 4);
+        return r < 0 ? (int)net_err(r) : 0;
+    }
+    for (size_t i = 0; i < sizeof opt / sizeof *opt; i++)
+        if (opt[i][0] == level && opt[i][1] == name) {
+            r = __linux_syscall(L_setsockopt, fd, level, opt[i][2], val, len);
+            return r < 0 ? (int)net_err(r) : 0;
+        }
+    return (int)p_bsd_syscall(SYS_setsockopt, fd, level, name, val, len);
+}
