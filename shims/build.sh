@@ -50,6 +50,7 @@ cwrap /usr/lib/system/libsystem_kernel.dylib "$SRC/kernel.c"   # xattr + fork/ex
 cwrap /usr/lib/libresolv.9.dylib "$SRC/resolv.c"                # thread-safe res_query
 # libsystem_pthread: condition variables and contended mutex waits on futexes. The helper gives the
 # wrapper Darling's own mutex lock/unlock (pthread_orig.c).
+cwrap /usr/lib/system/libsystem_trace.dylib "$SRC/trace.c"     # os_log off (formatting cost)
 PTH=/usr/lib/system/libsystem_pthread.dylib; PTHO=/usr/lib/vine/libvine_pthread_orig.dylib
 mktbd "$D$PTH" "$PTH.darling" "$TMP/pth_orig.tbd"
 clang -target x86_64-apple-macos10.13 -dynamiclib -nostdlib -ffreestanding -fno-builtin -fno-stack-protector -fuse-ld=lld -O2 \

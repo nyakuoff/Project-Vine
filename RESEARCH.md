@@ -191,6 +191,8 @@ renders on radeonsi, but XTest input doesn't reach clients there.
 
 | Lag in game: Roblox workers 50-82% CPU, darlingserver 33% (user's `tests/profile.sh`) | stack samples: `dserver_rpc_psynch_mutexwait` / `psynch_mutexdrop` — every contended mutex wait/release is a darlingserver request | `pthread.c`: contended `pthread_mutex_lock` spins, then sleeps on a futex picked by address; unlock wakes it (taking/releasing stay Darling's; 10 s fallback to Darling's wait). MacOBlox finding. `mutex_stress.m` 800k exact, darlingserver idle; `cond_stress` 1470 → 183 ms |
 
+| Still lagging (workers 50-81%, darlingserver 28%) | user's 2nd profile: worker stacks dominated by `_os_log_impl` → `sbuf_printf`/`vasprintf`/`os_log_buffer_to_hex_string` → `asl_msg_set_key_val_op`/`asl_log`: Darling's `os_log_type_enabled` is always true (debug too) and `_os_log_impl` formats + sends to ASL synchronously | `shims/trace.c` (libsystem_trace wrapper): os_log off (`os_log_cost.m`: 0.001 µs/call). ulock already uses futexes (no change) |
+
 Not verified in a game yet (needs the user's account): sound, the black screen (it lasted only the ~4 s
 before the crash, so it may just be the loading phase), sustained play.
 
